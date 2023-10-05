@@ -2427,13 +2427,6 @@
         "service.ieee8021x": {
             "type": "object",
             "properties": {
-                "ca-certificate": {
-                    "type": "string"
-                },
-                "use-local-certificates": {
-                    "type": "boolean",
-                    "default": false
-                },
                 "mode": {
                     "type": "string",
                     "enum": [
@@ -2451,12 +2444,6 @@
                             }
                         ]
                     }
-                },
-                "server-certificate": {
-                    "type": "string"
-                },
-                "private-key": {
-                    "type": "string"
                 },
                 "users": {
                     "type": "array",
