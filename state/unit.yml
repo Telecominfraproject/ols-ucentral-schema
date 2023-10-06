@@ -50,4 +50,28 @@ properties:
     type: array
     items:
       type: number
+  poe:
+    description:
+      This section describes the current state of the PoE unit on the device
+    type: object
+    properties:
+      max-power-budget:
+        description:
+          Reports the total power available (power budget) (in watts, W) device's Power sourcing equipment is able to source.
+        type: number
+      power-threshold:
+        description:
+          Reports configured power alarm threshold value for the Power sourcing equipment (in milliwatts, mW).
+        type: number
+      power-consumed:
+        description:
+          Reports a total power Powered Devices are draining from the device's Power sourcing equipment (in milliwatts, mW).
+        type: number
+      power-status:
+        description:
+          Reports power status of the device's Power sourcing equipment.
+        type: string
+        examples:
+          - "ON"
+          - "OFF"
 

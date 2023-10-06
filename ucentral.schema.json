@@ -97,6 +97,25 @@
                             "type": "integer"
                         }
                     }
+                },
+                "poe": {
+                    "type": "object",
+                    "properties": {
+                        "power-management": {
+                            "type": "string",
+                            "examples": [
+                                "class",
+                                "dynamic",
+                                "dynamic-priority",
+                                "static",
+                                "static-priority"
+                            ]
+                        },
+                        "usage-threshold": {
+                            "type": "number",
+                            "default": 90
+                        }
+                    }
                 }
             }
         },
@@ -202,6 +221,42 @@
                             "$ref": "#/$defs/globals.wireless-multimedia.profile"
                         }
                     ]
+                },
+                "ipv4-blackhole": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "prefix": {
+                                "type": "string",
+                                "format": "uc-cidr4",
+                                "examples": [
+                                    "192.168.1.0/24"
+                                ]
+                            },
+                            "vrf": {
+                                "type": "number"
+                            }
+                        }
+                    }
+                },
+                "ipv4-unreachable": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "prefix": {
+                                "type": "string",
+                                "format": "uc-cidr4",
+                                "examples": [
+                                    "192.168.1.0/24"
+                                ]
+                            },
+                            "vrf": {
+                                "type": "number"
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -291,7 +346,9 @@
                         1000,
                         2500,
                         5000,
-                        10000
+                        10000,
+                        25000,
+                        100000
                     ]
                 },
                 "duplex": {
@@ -312,6 +369,83 @@
                         "examples": [
                             "quality-of-service"
                         ]
+                    }
+                },
+                "poe": {
+                    "type": "object",
+                    "properties": {
+                        "admin-mode": {
+                            "type": "boolean",
+                            "default": false
+                        },
+                        "do-reset": {
+                            "type": "boolean"
+                        },
+                        "detection": {
+                            "type": "string",
+                            "examples": [
+                                "2pt-dot3af",
+                                "2pt-dot3af+legacy",
+                                "4pt-dot3af",
+                                "4pt-dot3af+legacy",
+                                "dot3bt",
+                                "dot3bt+legacy",
+                                "legacy"
+                            ],
+                            "default": "dot3bt"
+                        },
+                        "power-limit": {
+                            "type": "number",
+                            "default": 99900
+                        },
+                        "priority": {
+                            "type": "string",
+                            "default": "low",
+                            "examples": [
+                                "critical",
+                                "high",
+                                "medium",
+                                "low"
+                            ]
+                        }
+                    }
+                },
+                "ieee8021x": {
+                    "type": "object",
+                    "properties": {
+                        "is-authenticator": {
+                            "type": "boolean",
+                            "default": false
+                        },
+                        "authentication-mode": {
+                            "type": "string",
+                            "enum": [
+                                "force-authorized",
+                                "force-unauthorized",
+                                "auto"
+                            ],
+                            "default": "force-authorized"
+                        },
+                        "host-mode": {
+                            "type": "string",
+                            "enum": [
+                                "multi-auth",
+                                "multi-domain",
+                                "multi-host",
+                                "single-host"
+                            ],
+                            "default": "multi-auth"
+                        },
+                        "guest-vlan": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 4094
+                        },
+                        "unauthenticated-vlan": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 4094
+                        }
                     }
                 }
             }
@@ -339,7 +473,12 @@
                         "protocol": {
                             "type": "string",
                             "enum": [
-                                "rstp"
+                                "none",
+                                "stp",
+                                "rstp",
+                                "mstp",
+                                "pvstp",
+                                "rpvstp"
                             ],
                             "default": "rstp"
                         },
@@ -351,6 +490,77 @@
                                     "upstream",
                                     "downstream"
                                 ]
+                            }
+                        }
+                    },
+                    "instances": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "enabled": {
+                                    "type": "boolean",
+                                    "default": true
+                                },
+                                "priority": {
+                                    "type": "integer",
+                                    "default": 32768
+                                },
+                                "forward_delay": {
+                                    "type": "integer",
+                                    "default": 15
+                                },
+                                "hellow_time": {
+                                    "type": "integer",
+                                    "default": 2
+                                },
+                                "max_age": {
+                                    "type": "integer",
+                                    "default": 20
+                                }
+                            }
+                        }
+                    }
+                },
+                "ieee8021x": {
+                    "type": "object",
+                    "properties": {
+                        "auth-control-enable": {
+                            "type": "boolean",
+                            "default": false
+                        },
+                        "radius": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "server-host": {
+                                        "type": "string",
+                                        "examples": [
+                                            "192.168.1.1",
+                                            "somehost.com"
+                                        ]
+                                    },
+                                    "server-authentication-port": {
+                                        "type": "integer",
+                                        "maximum": 65535,
+                                        "minimum": 1
+                                    },
+                                    "server-key": {
+                                        "type": "string",
+                                        "examples": [
+                                            "somepassword"
+                                        ]
+                                    },
+                                    "server-priority": {
+                                        "type": "integer",
+                                        "maximum": 64,
+                                        "minimum": 1
+                                    }
+                                }
                             }
                         }
                     }
@@ -575,6 +785,10 @@
                         "802.1q"
                     ],
                     "default": "802.1q"
+                },
+                "stp-instance": {
+                    "decription": "MSTP instance identifier of the vlan. This field does nothing if MSTP is not enabled.",
+                    "type": "integer"
                 }
             }
         },
@@ -755,18 +969,68 @@
                     ]
                 },
                 "subnet": {
-                    "type": "string",
-                    "format": "uc-cidr4",
-                    "examples": [
-                        "auto/24"
-                    ]
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "prefix": {
+                                "type": "string",
+                                "format": "uc-cidr4",
+                                "examples": [
+                                    "192.168.1.0/24"
+                                ]
+                            },
+                            "vrf": {
+                                "type": "number"
+                            }
+                        }
+                    }
                 },
                 "gateway": {
-                    "type": "string",
-                    "format": "ipv4",
-                    "examples": [
-                        "192.168.1.1"
-                    ]
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "prefix": {
+                                "type": "string",
+                                "format": "uc-cidr4",
+                                "examples": [
+                                    "192.168.1.0/24"
+                                ]
+                            },
+                            "nexthop": {
+                                "type": "string",
+                                "format": "ipv4",
+                                "examples": [
+                                    "192.168.1.1"
+                                ]
+                            },
+                            "vrf": {
+                                "type": "number"
+                            },
+                            "metric": {
+                                "type": "number"
+                            }
+                        }
+                    }
+                },
+                "broadcast": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "prefix": {
+                                "type": "string",
+                                "format": "uc-cidr4",
+                                "examples": [
+                                    "192.168.1.0/24"
+                                ]
+                            },
+                            "vrf": {
+                                "type": "number"
+                            }
+                        }
+                    }
                 },
                 "send-hostname": {
                     "type": "boolean",

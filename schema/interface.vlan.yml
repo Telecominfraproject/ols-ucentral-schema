@@ -17,3 +17,8 @@ properties:
       - 802.1ad
       - 802.1q
     default: 802.1q
+  stp-instance:
+    decription:
+      MSTP instance identifier of the vlan.
+      This field does nothing if MSTP is not enabled.
+    type: integer

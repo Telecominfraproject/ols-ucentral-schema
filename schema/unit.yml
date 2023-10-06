@@ -54,4 +54,31 @@ properties:
         description:
           A provider specific ID for the network/venue that the device is part of.
         type: integer
+  poe:
+    description:
+      This section describes the system-wide (unit) PoE controller configuration object.
+    type: object
+    properties:
+      power-management:
+        description:
+          This configuration mode controls the power management algorithm used by the Power sourcing equipment to deliver
+          power to the requesting PDs.
+          "class" option - Class-based power management.
+          "dynamic" option - Power management is done by the POE controller and the maximum power for a
+          port is not reserved for each port.
+          "static" option - The power deducted from the total power pool is the maximum power for that port.
+          This mode ensures that the maximum power specified by you for the interface is always reserved and
+          cannot be shared by other PDs.
+        type: string
+        examples:
+          - "class"
+          - "dynamic"
+          - "dynamic-priority"
+          - "static"
+          - "static-priority"
+      usage-threshold:
+        description:
+          Configure a power alarm threshold for the Power sourcing equipment (in percentages %).
+        type: number
+        default: 90
 

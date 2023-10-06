@@ -27,7 +27,12 @@ properties:
           Define which protocol shall be used for loop detection.
         type: string
         enum:
+        - none
+        - stp
         - rstp
+        - mstp
+        - pvstp
+        - rpvstp
         default: rstp
       roles:
         description:
@@ -38,3 +43,89 @@ properties:
           enum:
           - upstream
           - downstream
+    instances:
+      description:
+        Define a list of configuration for each STP instance.
+        Meaning of this field depends on current
+        STP protocol (switch.loop-detection.protocol)
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            description:
+              Indicates instance to configure.
+              Depends on current STP protocol
+              If RPVSTP/PVSTP - vlan id
+              If MSTP - instance id
+            type: integer
+          enabled:
+            description:
+              Enable STP on this instance.
+            type: boolean
+            default: true
+          priority:
+            description:
+              Bridge priority.
+            type: integer
+            default: 32768
+          forward_delay:
+            description:
+              Defines the amount of time a switch port stays in the Listening
+              and Learning states before transitioning to the Forwarding state.
+            type: integer
+            default: 15
+          hellow_time:
+            description:
+              Determines how often switches send BPDU.
+            type: integer
+            default: 2
+          max_age:
+            description:
+              Specifies the maximum time that a switch port should wait to
+              receive a BPDU from its neighbor before
+              considering the link as failed or disconnected.
+            type: integer
+            default: 20
+  ieee8021x:
+    description:
+      This section describes the global 802.1X (port access control) configuration.
+    type: object
+    properties:
+      auth-control-enable:
+        description:
+          Enabled processing of PAE frames on ports that have .1X configured.
+        type: boolean
+        default: false
+      radius:
+        description:
+          Define a list of RADIUS server to forward auth requests to.
+        type: array
+        items:
+          type: object
+          properties:
+            server-host:
+              description:
+                Remote radius server address (IP or hostname).
+              type: string
+              examples:
+              - 192.168.1.1
+              - somehost.com
+            server-authentication-port:
+              description:
+                The port that the RADIUS authentication agent is running on.
+              type: integer
+              maximum: 65535
+              minimum: 1
+            server-key:
+              description:
+                Secret key text that is shared between a RADIUS server and the switch.
+              type: string
+              examples:
+              - somepassword
+            server-priority:
+              description:
+                The server's priority (used when multiple servers are present. Bigger prio value = higher priority).
+              type: integer
+              maximum: 64
+              minimum: 1

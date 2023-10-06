@@ -23,3 +23,39 @@ properties:
     anyOf:
      - $ref: 'https://ucentral.io/schema/v1/globals/wireless-multimedia/table/'
      - $ref: 'https://ucentral.io/schema/v1/globals/wireless-multimedia/profile/'
+  ipv4-blackhole:
+    description:
+      Define a list of non-interface specific BLACKHOLE (to-nowhere) routes.
+    type: array
+    items:
+      type: object
+      properties:
+        prefix:
+          description:
+            Defines a BLACKHOLE route's prefix.
+          type: string
+          format: uc-cidr4
+          examples:
+          - 192.168.1.0/24
+        vrf:
+          description:
+            VRF id.
+          type: number
+  ipv4-unreachable:
+    description:
+      Define a list of non-interface specific UNREACHABLE routes.
+    type: array
+    items:
+      type: object
+      properties:
+        prefix:
+          description:
+            Defines a UNREACHABLE route's prefix.
+          type: string
+          format: uc-cidr4
+          examples:
+          - 192.168.1.0/24
+        vrf:
+          description:
+            VRF id.
+          type: number

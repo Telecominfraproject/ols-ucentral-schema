@@ -15,20 +15,69 @@ properties:
     - static
   subnet:
     description:
-      This option defines the static IPv4 of the logical interface in CIDR notation.
-      auto/24 can be used, causing the configuration layer to automatically use
-      and address range from globals.ipv4-network.
-    type: string
-    format: uc-cidr4
-    examples:
-    - auto/24
+      This option defines a list of CONNECTED routes (with VRF id) in CIDR notation.
+    type: array
+    items:
+      type: object
+      properties:
+        prefix:
+          description:
+            Defines a CONNECTED route's prefix (network).
+          type: string
+          format: uc-cidr4
+          examples:
+          - 192.168.1.0/24
+        vrf:
+          description:
+            VRF id.
+          type: number
   gateway:
     description:
       This option defines the static IPv4 gateway of the logical interface.
-    type: string
-    format: ipv4
-    examples:
-    - 192.168.1.1
+    type: array
+    items:
+      type: object
+      properties:
+        prefix:
+          description:
+            Defines a NEXTHOP route's prefix (network).
+          type: string
+          format: uc-cidr4
+          examples:
+          - 192.168.1.0/24
+        nexthop:
+          description:
+            Gateway (nexthop) address.
+          type: string
+          format: ipv4
+          examples:
+          - 192.168.1.1
+        vrf:
+          description:
+            VRF id.
+          type: number
+        metric:
+          description:
+            Optional metric value (define a NH route's weight / metric).
+          type: number
+  broadcast:
+    description:
+      This option defines a list of BROADCAST routes (with VRF id) in CIDR notation.
+    type: array
+    items:
+      type: object
+      properties:
+        prefix:
+          description:
+            Defines a BROADCAST route's prefix (network).
+          type: string
+          format: uc-cidr4
+          examples:
+          - 192.168.1.0/24
+        vrf:
+          description:
+            VRF id.
+          type: number
   send-hostname:
     description:
       include the devices hostname inside DHCP requests
