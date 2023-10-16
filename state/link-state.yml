@@ -107,36 +107,36 @@ properties:
       Present only in case if port has enabled EAP processing and has any authenticated clients.
     type: object
     properties:
-    authenticated-clients:
-      description:
-        List of authenticated clients and (their) authentication data.
-      type: array
-      items:
-        type: object
-        properties:
-          authenticated-method:
-            description:
-              Authentication method used by client for it's authentication.
-            type: string
-          mac-address:
-            description:
-              MAC address of authenticated client.
-            type: string
-            format: uc-mac
-          session-time:
-            description:
-              Client session time.
-            type: integer
-          username:
-            description:
-              Client username.
-            type: string
-          vlan-type:
-            description:
-              Vlan type of authenticated client (Authorization status of the client).
-            type: string
-          vlan-id:
-            description:
-              Vlan type of authenticated client (Authorization status of the client).
-            type: integer
-            maximum: 4095
+      authenticated-clients:
+        description:
+          List of authenticated clients and (their) authentication data.
+        type: array
+        items:
+          type: object
+          properties:
+            authenticated-method:
+              description:
+                Authentication method used by client for it's authentication.
+              type: string
+            mac-address:
+              description:
+                MAC address of authenticated client.
+              type: string
+              format: uc-mac
+            session-time:
+              description:
+                Client session time.
+              type: integer
+            username:
+              description:
+                Client username.
+              type: string
+            vlan-type:
+              description:
+                Vlan type of authenticated client (Authorization status of the client).
+              type: string
+            vlan-id:
+              description:
+                Vlan type of authenticated client (Authorization status of the client).
+              type: integer
+              maximum: 4095
