@@ -81,4 +81,18 @@ properties:
           Configure a power alarm threshold for the Power sourcing equipment (in percentages %).
         type: number
         default: 90
-
+  multicast:
+    description:
+      This sections describes the system-wide (unit) multicast configuration object.
+    type: object
+    properties:
+      igmp-snooping-enable:
+        description:
+          Global config for controlling whether IGMP snooping is enabled. If this global setting is disabled, all VLANs are treated as disabled, whether they are enabled or not.
+        type: boolean
+        default: true
+      mld-snooping-enable:
+        description:
+          Global config for controlling whether MLD snooping is enabled. If this global setting is disabled, all VLANs are treated as disabled, whether they are enabled or not.
+        type: boolean
+        default: true

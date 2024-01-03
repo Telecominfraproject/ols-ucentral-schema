@@ -78,6 +78,78 @@ properties:
           description:
             VRF id.
           type: number
+  multicast:
+    type: object
+    properties:
+      unknown-multicast-flood-control:
+        description:
+          The unknown multicast flood control feature enables the system to forward unknown multicast packets only to a multicast router (mrouter).
+        type: boolean
+        default: true
+      igmp:
+        type: object
+        properties:
+          snooping-enable:
+            description:
+              Enable or disable IGMP snooping on per-VLAN basis.
+            type: boolean
+            default: true
+          version:
+            description:
+              Configures the IGMP version. Configurable versions are IGMPv1, IGMPv2, and IGMPv3
+            type: integer
+            enum:
+            - 1
+            - 2
+            - 3
+            examples:
+            - 3
+            default: 3
+          querier-enable:
+            description:
+              Configure this interface to act as a querier (multicast router)
+            type: boolean
+            default: false
+          fast-leave-enable:
+            description:
+              Removes the group state when it receives an IGMP Leave report without sending an IGMP query message
+            type: boolean
+            default: false
+          query-interval:
+            description:
+              Defines the interval between sending IGMP general queries
+            type: integer
+            default: 1000
+          last-member-query-interval:
+            description:
+              Defines the maximum response time (milliseconds) advertised in IGMP group-specific queries
+            type: integer
+            default: 1000
+          max-response-time:
+            description:
+              Configures a query maximum response time (in seconds) that is advertised on IGMP queries.
+            type: integer
+            default: 10
+          static-mcast-groups:
+            description:
+              Configures a Layer 2 port of a VLAN as a static member of an IGMP multicast group(s).
+            type: array
+            items:
+              type: object
+              properties:
+                egress-ports:
+                  description:
+                    Specify egress port(s) to forward mcast traffc of static group to.
+                  type: array
+                  items:
+                    type: string
+                address:
+                  description:
+                    Specify IPV4 address (group) this interface is statically configured to be member of.
+                  type: string
+                  format: ipv4
+                  examples:
+                  - 225.0.0.1
   send-hostname:
     description:
       include the devices hostname inside DHCP requests
