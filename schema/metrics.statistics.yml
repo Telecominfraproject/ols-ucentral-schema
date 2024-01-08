@@ -18,3 +18,10 @@ properties:
         - lldp
         - clients
         - tid-stats
+  wired-clients-max-num:
+    description:
+      Configure maximum number of FDB entries device's allowed to report.
+      If omitted, device-default number should be used (2000).
+      Setting to zero means no entries should be reported, flag should be raised.
+      If device's current FDB size exceeds configured value, flag should be raised as well.
+    type: integer
