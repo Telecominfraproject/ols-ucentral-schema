@@ -74,4 +74,50 @@ properties:
         examples:
           - "ON"
           - "OFF"
-
+  ieee8021x:
+    description:
+      This section describes the global (device-wise) 802.1X (port access control) state and config applied.
+    type: object
+    properties:
+      dynamic-authorization:
+        description:
+          Reported DAS-related state info.
+        type: object
+        properties:
+          stats:
+            description:
+              Cumulative statistics for all configured DACs.
+            type: object
+            properties:
+              coa_req_received:
+                description:
+                  Number of CoA requests received.
+                type: number
+              coa_ack_sent:
+                description:
+                  Number of CoA ACK responses sent.
+                type: number
+              coa_nak_sent:
+                description:
+                  Number of CoA NAK responses sent.
+                type: number
+              coa_ignored:
+                description:
+                  Number of CoA requests ignored.
+                type: number
+              coa_wrong_attr:
+                description:
+                  Number of CoA requests received with invalid (unsupported) attributes.
+                type: number
+              coa_wrong_attr_value:
+                description:
+                  Number of CoA requests received with invalid (unsupported) attribute value.
+                type: number
+              coa_wrong_session_context:
+                description:
+                  Number of CoA requests received with inexisting session context.
+                type: number
+              administratively_prohibited_req:
+                description:
+                  Number of CoA requests that are sent if the NAS is configured to prohibit honoring of CoA-Request or Disconnect-Request packets for the specified session.
+                type: number

@@ -129,3 +129,58 @@ properties:
               type: integer
               maximum: 64
               minimum: 1
+      dynamic-authorization:
+        description:
+          Additional dynamic authorization (RFC 5176 compliant) - configure option for DAS that enable RM and CoA processing.
+        type: object
+        properties:
+          auth-type:
+            description:
+              Sets the accepted authorization types for dynamic RADIUS clients.
+              all - Selects all COA client authentication types. All authentication attributes must match for the authentication to succeed.
+              any - Selects any COA client authentication type. Any authentication attribute may match for the authentication to succeed.
+              session-key - Indicates that the session-key must match for authentication to succeed.
+            type: string
+            enum:
+            - all
+            - any
+            - session-key
+          bounce-port-ignore:
+            description:
+              Sets the switch to ignore bounce-port requests from dynamic authorization clients.
+            type: boolean
+            default: false
+          disable-port-ignore:
+            description:
+              Sets the switch to ignore requests from dynamic authorization clients.
+            type: boolean
+            default: false
+          ignore-server-key:
+            description:
+              Do not attmept to authenticate with the server key.
+            type: boolean
+            default: false
+          ignore-session-key:
+            description:
+              Do not attmept to authenticate with the session key.
+            type: boolean
+            default: false
+          server-key:
+            description:
+              Sets the shared secret to verify client COA requests for this server.
+            type: string
+          client:
+            description:
+              Configure DAC.
+            type: array
+            items:
+              type: object
+              properties:
+                address:
+                  description:
+                    A valid IP address or hostname of a DAC.
+                  type: string
+                server-key:
+                  description:
+                    Sets the shared secret to verify client COA requests for this server.
+                  type: string
