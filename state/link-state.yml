@@ -10,7 +10,7 @@ properties:
     type: number
     description:
       The speed of the physical link.
-  duplex: 
+  duplex:
     type: string
     description:
       The physical links duplex mode.
