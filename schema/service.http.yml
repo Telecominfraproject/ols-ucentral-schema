@@ -9,3 +9,7 @@ properties:
     maximum: 65535
     minimum: 1
     default: 80
+  enable:
+    description:
+      This option whether http server should be enabled or disabled.
+    type: boolean

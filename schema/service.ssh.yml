@@ -25,3 +25,7 @@ properties:
       to false, only ssh key based authentication is possible.
     type: boolean
     default: true
+  enable:
+    description:
+      This option whether SSH server should be enabled or disabled.
+    type: boolean

@@ -1,0 +1,8 @@
+description:
+  This section can be used to setup a Telnet server on the device.
+type: object
+properties:
+  enable:
+    description:
+      This option whether telnet server should be enabled or disabled.
+    type: boolean
