@@ -140,3 +140,51 @@ properties:
                 Vlan type of authenticated client (Authorization status of the client).
               type: integer
               maximum: 4095
+  transceiver-info:
+    description:
+      Object holds information about underlying SFP module currently inserted into port's cage.
+      Some of information is read directly from module's EEPROM, while other data is measured in runtime by device's hardware (vcc for example).
+    type: object
+    properties:
+      vendor-name:
+        description:
+          Vendor (name) identifier
+        type: string
+      form-factor:
+        description:
+          Form-factor of the module itself (For example - QSFP28, QSFP56-DD etc)
+        type: string
+      supported-link-modes:
+        description:
+          Reports supported link modes of inserted module
+        type: array
+        items:
+          type: string
+      part-number:
+        description:
+          Module's part number (vendor's specific)
+        type: string
+      serial-number:
+        description:
+          Serial number of connected module
+        type: string
+      revision:
+        description:
+          Module's HW revision (same part number can have multiple revisions)
+        type: string
+      temperature:
+        description:
+          Current module's temperature
+        type: number
+      tx-optical-power:
+        description:
+          Current module's transmit optical level (power)
+        type: number
+      rx-optical-power:
+        description:
+          Current module's receive optical level (power)
+        type: number
+      max-module-power:
+        description:
+          Max power (in Watts) module can drain.
+        type: number
