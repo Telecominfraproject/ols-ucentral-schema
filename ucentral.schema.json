@@ -349,14 +349,16 @@
                         10000,
                         25000,
                         100000
-                    ]
+                    ],
+                    "default": 1000
                 },
                 "duplex": {
                     "type": "string",
                     "enum": [
                         "half",
                         "full"
-                    ]
+                    ],
+                    "default": "full"
                 },
                 "enabled": {
                     "type": "boolean",
@@ -395,7 +397,7 @@
                             "default": "dot3bt"
                         },
                         "power-limit": {
-                            "type": "number",
+                            "type": "integer",
                             "default": 99900
                         },
                         "priority": {
@@ -969,22 +971,11 @@
                     ]
                 },
                 "subnet": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "prefix": {
-                                "type": "string",
-                                "format": "uc-cidr4",
-                                "examples": [
-                                    "192.168.1.0/24"
-                                ]
-                            },
-                            "vrf": {
-                                "type": "number"
-                            }
-                        }
-                    }
+                    "type": "string",
+                    "format": "uc-cidr4",
+                    "examples": [
+                        "192.168.1.0/24"
+                    ]
                 },
                 "gateway": {
                     "type": "array",

@@ -132,6 +132,32 @@
                     "items": {
                         "type": "number"
                     }
+                },
+                "poe": {
+                    "description": "This section describes the current state of the PoE unit on the device",
+                    "type": "object",
+                    "properties": {
+                        "max-power-budget": {
+                            "description": "Reports the total power available (power budget) (in watts, W) device's Power sourcing equipment is able to source.",
+                            "type": "number"
+                        },
+                        "power-threshold": {
+                            "description": "Reports configured power alarm threshold value for the Power sourcing equipment (in milliwatts, mW).",
+                            "type": "number"
+                        },
+                        "power-consumed": {
+                            "description": "Reports a total power Powered Devices are draining from the device's Power sourcing equipment (in milliwatts, mW).",
+                            "type": "number"
+                        },
+                        "power-status": {
+                            "description": "Reports power status of the device's Power sourcing equipment.",
+                            "type": "string",
+                            "examples": [
+                                "ON",
+                                "OFF"
+                            ]
+                        }
+                    }
                 }
             }
         },
@@ -767,6 +793,124 @@
                 },
                 "counters": {
                     "$ref": "#/$defs/interface.counter"
+                },
+                "poe": {
+                    "description": "This section describes the ethernet poe-port link-state object (statistics + PD info). Present only in case if port has any Power sourcing capabilities.",
+                    "type": "object",
+                    "properties": {
+                        "class-requested": {
+                            "description": "Reports which PoE power class PD requested.",
+                            "type": "number"
+                        },
+                        "class-assigned": {
+                            "description": "Reports which PoE power class PD has been assigned by the Power sourcing equipment.",
+                            "type": "number"
+                        },
+                        "output-power": {
+                            "description": "Reports the power-value (in milliwatts, mW) poe-port's Powered Device is currently draining.",
+                            "type": "number"
+                        },
+                        "output-current": {
+                            "description": "Reports the current value (in milliamps, mA) poe-port's Powered Device is currently draining.",
+                            "type": "number"
+                        },
+                        "output-voltage": {
+                            "description": "Reports the operational voltage-level-value of poe-port's Power sourcing equipment (in Volts, V).",
+                            "type": "string",
+                            "examples": [
+                                "54.14"
+                            ]
+                        },
+                        "temp": {
+                            "description": "Reports the operational temperature of poe-port's Power sourcing equipment (in Celsius, C).",
+                            "type": "string",
+                            "examples": [
+                                "22.5"
+                            ]
+                        },
+                        "status": {
+                            "description": "Reports the operational status of poe-port's Power sourcing equipment. Searching option - the poe-port's PSE is trying to detect a Powered Device. Delivering option - the poe-port's PSE is delivering power to a Powered Device. Disabled option - the poe-port's PSE is either disabled or PoE power is enabled but the PoE module does not have enough power available to supply the port's power needs. Fault option - the poe-port's PSE detects a problem with the Powered Device. Other Fault option - the PSE has detected an internal fault that prevents it from supplying power on that port.",
+                            "type": "string",
+                            "examples": [
+                                "DELIVERING_POWER",
+                                "DISABLED"
+                            ]
+                        },
+                        "fault-status": {
+                            "description": "Reports the fault status of poe-port's PSE (in case if any).",
+                            "type": "string",
+                            "examples": [
+                                "NO_ERROR"
+                            ]
+                        },
+                        "counters": {
+                            "description": null,
+                            "type": "object",
+                            "properties": {
+                                "overload": {
+                                    "description": "Displays the total number of power overload occurrences. (Powered Device is consuming more power than the maximum limit of a port)",
+                                    "type": "number"
+                                },
+                                "short": {
+                                    "description": "Displays the total number of power shortage occurrences.",
+                                    "type": "number"
+                                },
+                                "power-denied": {
+                                    "description": "Displays the number of times that the powered device was denied power. (possible cause could be that Requested power exceeds PSE capability)",
+                                    "type": "number"
+                                },
+                                "absent": {
+                                    "description": "Displays the number of times that the power was stopped to the powered device because the powered device was no longer detected.",
+                                    "type": "number"
+                                },
+                                "invalid-signature": {
+                                    "description": "Displays the times that an invalid signature was received. Signatures are the means by which the powered device identifies itself to the PSE. Signatures are generated during powered device detection, classification, or maintenance.",
+                                    "type": "number"
+                                }
+                            }
+                        }
+                    }
+                },
+                "ieee8021x": {
+                    "description": "This section describes the per-port specific 802.1X (port access control) link-state object (authenticated clients). Present only in case if port has enabled EAP processing and has any authenticated clients.",
+                    "type": "object",
+                    "properties": {
+                        "authenticated-clients": {
+                            "description": "List of authenticated clients and (their) authentication data.",
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "authenticated-method": {
+                                        "description": "Authentication method used by client for it's authentication.",
+                                        "type": "string"
+                                    },
+                                    "mac-address": {
+                                        "description": "MAC address of authenticated client.",
+                                        "type": "string",
+                                        "format": "uc-mac"
+                                    },
+                                    "session-time": {
+                                        "description": "Client session time.",
+                                        "type": "integer"
+                                    },
+                                    "username": {
+                                        "description": "Client username.",
+                                        "type": "string"
+                                    },
+                                    "vlan-type": {
+                                        "description": "Vlan type of authenticated client (Authorization status of the client).",
+                                        "type": "string"
+                                    },
+                                    "vlan-id": {
+                                        "description": "Vlan type of authenticated client (Authorization status of the client).",
+                                        "type": "integer",
+                                        "maximum": 4095
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
