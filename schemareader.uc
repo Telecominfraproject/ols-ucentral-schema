@@ -226,8 +226,8 @@ function instantiateUnit(location, value, errors) {
 				}
 
 				function parseUsageThreshold(location, value, errors) {
-					if (!(type(value) in [ "int", "double" ]))
-						push(errors, [ location, "must be of type number" ]);
+					if (type(value) != "int")
+						push(errors, [ location, "must be of type integer" ]);
 
 					return value;
 				}

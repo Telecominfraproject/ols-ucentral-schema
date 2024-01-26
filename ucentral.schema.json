@@ -112,7 +112,7 @@
                             ]
                         },
                         "usage-threshold": {
-                            "type": "number",
+                            "type": "integer",
                             "default": 90
                         }
                     }

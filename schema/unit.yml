@@ -79,6 +79,6 @@ properties:
       usage-threshold:
         description:
           Configure a power alarm threshold for the Power sourcing equipment (in percentages %).
-        type: number
+        type: integer
         default: 90
 
