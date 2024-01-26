@@ -31,6 +31,7 @@ properties:
     - 10000
     - 25000
     - 100000
+    default: 1000
   duplex:
     description:
       The duplex mode that shall be forced.
@@ -38,6 +39,7 @@ properties:
     enum:
     - half
     - full
+    default: full
   enabled:
     description:
       This allows forcing the port to down state by default.
