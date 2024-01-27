@@ -1204,12 +1204,25 @@
                                 ]
                             },
                             "subnet": {
-                                "description": "This option defines the static IPv4 of the logical interface in CIDR notation. auto/24 can be used, causing the configuration layer to automatically use and address range from globals.ipv4-network.",
-                                "type": "string",
-                                "format": "uc-cidr4",
-                                "examples": [
-                                    "192.168.1.0/24"
-                                ]
+                                "description": "This option defines a list of CONNECTED routes (with VRF id) in CIDR notation.",
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "prefix": {
+                                            "description": "Defines a CONNECTED route's prefix (network).",
+                                            "type": "string",
+                                            "format": "uc-cidr4",
+                                            "examples": [
+                                                "192.168.1.0/24"
+                                            ]
+                                        },
+                                        "vrf": {
+                                            "description": "VRF id.",
+                                            "type": "number"
+                                        }
+                                    }
+                                }
                             },
                             "gateway": {
                                 "description": "This option defines the static IPv4 gateway of the logical interface.",

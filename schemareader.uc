@@ -2160,14 +2160,53 @@ function instantiateInterfaceIpv4(location, value, errors) {
 		}
 
 		function parseSubnet(location, value, errors) {
-			if (type(value) == "string") {
-				if (!matchUcCidr4(value))
-					push(errors, [ location, "must be a valid IPv4 CIDR" ]);
+			if (type(value) == "array") {
+				function parseItem(location, value, errors) {
+					if (type(value) == "object") {
+						let obj = {};
 
+						function parsePrefix(location, value, errors) {
+							if (type(value) == "string") {
+								if (!matchUcCidr4(value))
+									push(errors, [ location, "must be a valid IPv4 CIDR" ]);
+
+							}
+
+							if (type(value) != "string")
+								push(errors, [ location, "must be of type string" ]);
+
+							return value;
+						}
+
+						if (exists(value, "prefix")) {
+							obj.prefix = parsePrefix(location + "/prefix", value["prefix"], errors);
+						}
+
+						function parseVrf(location, value, errors) {
+							if (!(type(value) in [ "int", "double" ]))
+								push(errors, [ location, "must be of type number" ]);
+
+							return value;
+						}
+
+						if (exists(value, "vrf")) {
+							obj.vrf = parseVrf(location + "/vrf", value["vrf"], errors);
+						}
+
+						return obj;
+					}
+
+					if (type(value) != "object")
+						push(errors, [ location, "must be of type object" ]);
+
+					return value;
+				}
+
+				return map(value, (item, i) => parseItem(location + "/" + i, item, errors));
 			}
 
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
+			if (type(value) != "array")
+				push(errors, [ location, "must be of type array" ]);
 
 			return value;
 		}
