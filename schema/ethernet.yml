@@ -137,10 +137,10 @@ properties:
         - auto
         default: force-authorized
       host-mode:
-        description:
-          Multi-auth — While in this mode, multiple devices are allowed to independently authenticate through the same port.
-          Multi-domain — While in this mode, the authenticator will allow one host from the data domain and one from the voice domain.
-          Multi-host — While in this mode, the first device to authenticate will open to the switchport so that all other devices can use the port. These other devices are not required to be authenticated independently.
+        description: |
+          Multi-auth - While in this mode, multiple devices are allowed to independently authenticate through the same port.
+          Multi-domain - While in this mode, the authenticator will allow one host from the data domain and one from the voice domain.
+          Multi-host - While in this mode, the first device to authenticate will open to the switchport so that all other devices can use the port. These other devices are not required to be authenticated independently.
           Single-host - While in this mode, the switchport will only allow a single host to be authenticated and to pass traffic at a time.
         type: string
         enum:
