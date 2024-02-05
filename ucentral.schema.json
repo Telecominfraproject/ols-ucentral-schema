@@ -84,6 +84,9 @@
                     "type": "boolean",
                     "default": false
                 },
+                "system-password": {
+                    "type": "string"
+                },
                 "beacon-advertisement": {
                     "type": "object",
                     "properties": {
@@ -114,6 +117,19 @@
                         "usage-threshold": {
                             "type": "number",
                             "default": 90
+                        }
+                    }
+                },
+                "multicast": {
+                    "type": "object",
+                    "properties": {
+                        "igmp-snooping-enable": {
+                            "type": "boolean",
+                            "default": true
+                        },
+                        "mld-snooping-enable": {
+                            "type": "boolean",
+                            "default": true
                         }
                     }
                 }
@@ -349,14 +365,16 @@
                         10000,
                         25000,
                         100000
-                    ]
+                    ],
+                    "default": 1000
                 },
                 "duplex": {
                     "type": "string",
                     "enum": [
                         "half",
                         "full"
-                    ]
+                    ],
+                    "default": "full"
                 },
                 "enabled": {
                     "type": "boolean",
@@ -445,6 +463,44 @@
                             "type": "integer",
                             "minimum": 1,
                             "maximum": 4094
+                        }
+                    }
+                },
+                "port-isolation": {
+                    "type": "object",
+                    "properties": {
+                        "sessions": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "integer"
+                                    },
+                                    "uplink": {
+                                        "type": "object",
+                                        "properties": {
+                                            "interface-list": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "downlink": {
+                                        "type": "object",
+                                        "properties": {
+                                            "interface-list": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -559,6 +615,52 @@
                                         "type": "integer",
                                         "maximum": 64,
                                         "minimum": 1
+                                    }
+                                }
+                            }
+                        },
+                        "dynamic-authorization": {
+                            "type": "object",
+                            "properties": {
+                                "auth-type": {
+                                    "type": "string",
+                                    "enum": [
+                                        "all",
+                                        "any",
+                                        "session-key"
+                                    ]
+                                },
+                                "bounce-port-ignore": {
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "disable-port-ignore": {
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "ignore-server-key": {
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "ignore-session-key": {
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "server-key": {
+                                    "type": "string"
+                                },
+                                "client": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "address": {
+                                                "type": "string"
+                                            },
+                                            "server-key": {
+                                                "type": "string"
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -1028,6 +1130,77 @@
                             },
                             "vrf": {
                                 "type": "number"
+                            }
+                        }
+                    }
+                },
+                "multicast": {
+                    "type": "object",
+                    "properties": {
+                        "unknown-multicast-flood-control": {
+                            "type": "boolean",
+                            "default": true
+                        },
+                        "igmp": {
+                            "type": "object",
+                            "properties": {
+                                "snooping-enable": {
+                                    "type": "boolean",
+                                    "default": true
+                                },
+                                "version": {
+                                    "type": "integer",
+                                    "enum": [
+                                        1,
+                                        2,
+                                        3
+                                    ],
+                                    "examples": [
+                                        3
+                                    ],
+                                    "default": 3
+                                },
+                                "querier-enable": {
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "fast-leave-enable": {
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "query-interval": {
+                                    "type": "integer",
+                                    "default": 1000
+                                },
+                                "last-member-query-interval": {
+                                    "type": "integer",
+                                    "default": 1000
+                                },
+                                "max-response-time": {
+                                    "type": "integer",
+                                    "default": 10
+                                },
+                                "static-mcast-groups": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "egress-ports": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "address": {
+                                                "type": "string",
+                                                "format": "ipv4",
+                                                "examples": [
+                                                    "225.0.0.1"
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
@@ -2568,6 +2741,9 @@
                 "password-authentication": {
                     "type": "boolean",
                     "default": true
+                },
+                "enable": {
+                    "type": "boolean"
                 }
             }
         },
@@ -2676,6 +2852,9 @@
                     "maximum": 65535,
                     "minimum": 1,
                     "default": 80
+                },
+                "enable": {
+                    "type": "boolean"
                 }
             }
         },
@@ -3424,6 +3603,14 @@
                 }
             }
         },
+        "service.telnet": {
+            "type": "object",
+            "properties": {
+                "enable": {
+                    "type": "boolean"
+                }
+            }
+        },
         "service": {
             "type": "object",
             "properties": {
@@ -3492,6 +3679,9 @@
                 },
                 "rrm": {
                     "$ref": "#/$defs/service.rrm"
+                },
+                "telnet": {
+                    "$ref": "#/$defs/service.telnet"
                 }
             }
         },
@@ -3513,6 +3703,9 @@
                             "tid-stats"
                         ]
                     }
+                },
+                "wired-clients-max-num": {
+                    "type": "integer"
                 }
             }
         },

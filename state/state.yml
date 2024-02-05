@@ -52,3 +52,5 @@ properties:
         patternProperties:
           "^(eth|lan|wan)[0-9]*$":
             $ref: "https://ucentral.io/state/v1/link-state/"
+  mac-address-list:
+    $ref: "https://ucentral.io/state/v1/mac-address-list/"

@@ -1,0 +1,22 @@
+type: object
+description:
+  This section describes the global (device-wise) mac-address-list (FDB table / wired clients).
+properties:
+  overflow:
+    description:
+      Flag indicates that device could report an amount of FDB entries, which is bigger than what cloud had requested.
+    type: boolean
+additionalProperties:
+  type: object
+  additionalProperties:
+    description:
+      VID (vlan id) identifier
+    type: array
+    items:
+      type: string
+examples:
+  - overflow: true
+    Ethernet1:
+      '1': [ 'AABBCCDDEEFF', '112233445566']
+    Ethernet2:
+      '10': [ '11BBCCDDEEFF', '332233445566']

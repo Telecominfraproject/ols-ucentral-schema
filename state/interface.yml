@@ -42,4 +42,33 @@ items:
       $ref: "https://ucentral.io/state/v1/interface/mesh-path/"
     ssids:
       $ref: "https://ucentral.io/state/v1/interface/ssid/"
-
+    multicast:
+      type: object
+      description:
+        Detailed information about all multicast-related data (groups joined, src address used etc)
+      properties:
+        igmp:
+          description:
+            Detailed information about IGMP configured / joined multicast groups, outgoing interfaces etc.
+          type: object
+          properties:
+            enabled-groups:
+              description:
+                List of joined IGMP multicast groups.
+              type: array
+              items:
+                type: object
+                properties:
+                  address:
+                    description:
+                      Address of single group this interface is member of.
+                    type: string
+                    format: ipv4
+                    examples:
+                    - 225.0.0.1
+                  egress-ports:
+                    description:
+                      List of ports where multicast traffic of this group is being replicated to.
+                    type: array
+                    items:
+                      type: string
