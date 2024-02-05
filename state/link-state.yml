@@ -74,6 +74,7 @@ properties:
           - "NO_ERROR"
       counters:
         description:
+          PoE-related descriptive statistics (counters).
         type: object
         properties:
           overload:
