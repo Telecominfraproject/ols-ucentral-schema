@@ -1,9 +1,10 @@
 type: array
 description:
+  This section describes an IPv6 lease that we have served.
 items:
   type: object
   description:
-    This section describes an IPv6 lease that we have served.
+    An object, that describes a single served IPv6 address.
   properties:
     addresses:
       type: array
