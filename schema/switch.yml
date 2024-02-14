@@ -75,7 +75,7 @@ properties:
               and Learning states before transitioning to the Forwarding state.
             type: integer
             default: 15
-          hellow_time:
+          hello_time:
             description:
               Determines how often switches send BPDU.
             type: integer

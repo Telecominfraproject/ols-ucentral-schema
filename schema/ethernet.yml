@@ -94,7 +94,7 @@ properties:
       power-limit:
         description:
           Option to configure user defined absolute power limit PoE port can dain (in milliwatts, mW).
-        type: number
+        type: integer
         default: 99900
       priority:
         description:
