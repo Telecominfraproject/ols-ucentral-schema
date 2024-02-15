@@ -20,3 +20,19 @@ properties:
     type: string
     format: uc-timeout
     default: 6h
+  relay-server:
+    description:
+      Use host at this IPv4 address to forward packets between clients and servers on different subnets.
+    type: string
+    format: ipv4
+    example: 192.168.2.1
+  circuit-id-format:
+    description:
+            This option selects what info shall be contained within a relayed frame's circuit ID.
+            The string passed in has placeholders that are placed inside a bracket pair "{}".
+            Any text not contained within brackets will be included as freetext.
+            Valid placeholders are "Interface, VLAN-ID"
+    type: string
+    example:
+    - \{Interface\}:\{VLAN-ID\}}
+

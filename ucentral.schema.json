@@ -413,7 +413,7 @@
                             "default": "dot3bt"
                         },
                         "power-limit": {
-                            "type": "number",
+                            "type": "integer",
                             "default": 99900
                         },
                         "priority": {
@@ -569,7 +569,7 @@
                                     "type": "integer",
                                     "default": 15
                                 },
-                                "hellow_time": {
+                                "hello_time": {
                                     "type": "integer",
                                     "default": 2
                                 },
@@ -985,6 +985,17 @@
                     "type": "string",
                     "format": "uc-timeout",
                     "default": "6h"
+                },
+                "relay-server": {
+                    "type": "string",
+                    "format": "ipv4",
+                    "example": "192.168.2.1"
+                },
+                "circuit-id-format": {
+                    "type": "string",
+                    "example": [
+                        "\\{Interface\\}:\\{VLAN-ID\\}}"
+                    ]
                 }
             }
         },
