@@ -429,7 +429,7 @@
                             },
                             "vrf": {
                                 "description": "VRF id.",
-                                "type": "number"
+                                "type": "integer"
                             }
                         }
                     }
@@ -450,7 +450,7 @@
                             },
                             "vrf": {
                                 "description": "VRF id.",
-                                "type": "number"
+                                "type": "integer"
                             }
                         }
                     }
@@ -1340,7 +1340,7 @@
                                         },
                                         "vrf": {
                                             "description": "VRF id.",
-                                            "type": "number"
+                                            "type": "integer"
                                         }
                                     }
                                 }
@@ -1369,7 +1369,7 @@
                                         },
                                         "vrf": {
                                             "description": "VRF id.",
-                                            "type": "number"
+                                            "type": "integer"
                                         },
                                         "metric": {
                                             "description": "Optional metric value (define a NH route's weight / metric).",
@@ -1394,7 +1394,7 @@
                                         },
                                         "vrf": {
                                             "description": "VRF id.",
-                                            "type": "number"
+                                            "type": "integer"
                                         }
                                     }
                                 }

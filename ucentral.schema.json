@@ -251,7 +251,7 @@
                                 ]
                             },
                             "vrf": {
-                                "type": "number"
+                                "type": "integer"
                             }
                         }
                     }
@@ -269,7 +269,7 @@
                                 ]
                             },
                             "vrf": {
-                                "type": "number"
+                                "type": "integer"
                             }
                         }
                     }
@@ -1094,7 +1094,7 @@
                                 ]
                             },
                             "vrf": {
-                                "type": "number"
+                                "type": "integer"
                             }
                         }
                     }
@@ -1119,7 +1119,7 @@
                                 ]
                             },
                             "vrf": {
-                                "type": "number"
+                                "type": "integer"
                             },
                             "metric": {
                                 "type": "number"
@@ -1140,7 +1140,7 @@
                                 ]
                             },
                             "vrf": {
-                                "type": "number"
+                                "type": "integer"
                             }
                         }
                     }

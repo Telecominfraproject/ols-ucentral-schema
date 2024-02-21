@@ -532,8 +532,8 @@ function instantiateGlobals(location, value, errors) {
 						}
 
 						function parseVrf(location, value, errors) {
-							if (!(type(value) in [ "int", "double" ]))
-								push(errors, [ location, "must be of type number" ]);
+							if (type(value) != "int")
+								push(errors, [ location, "must be of type integer" ]);
 
 							return value;
 						}
@@ -588,8 +588,8 @@ function instantiateGlobals(location, value, errors) {
 						}
 
 						function parseVrf(location, value, errors) {
-							if (!(type(value) in [ "int", "double" ]))
-								push(errors, [ location, "must be of type number" ]);
+							if (type(value) != "int")
+								push(errors, [ location, "must be of type integer" ]);
 
 							return value;
 						}
@@ -2549,8 +2549,8 @@ function instantiateInterfaceIpv4(location, value, errors) {
 						}
 
 						function parseVrf(location, value, errors) {
-							if (!(type(value) in [ "int", "double" ]))
-								push(errors, [ location, "must be of type number" ]);
+							if (type(value) != "int")
+								push(errors, [ location, "must be of type integer" ]);
 
 							return value;
 						}
@@ -2622,8 +2622,8 @@ function instantiateInterfaceIpv4(location, value, errors) {
 						}
 
 						function parseVrf(location, value, errors) {
-							if (!(type(value) in [ "int", "double" ]))
-								push(errors, [ location, "must be of type number" ]);
+							if (type(value) != "int")
+								push(errors, [ location, "must be of type integer" ]);
 
 							return value;
 						}
@@ -2689,8 +2689,8 @@ function instantiateInterfaceIpv4(location, value, errors) {
 						}
 
 						function parseVrf(location, value, errors) {
-							if (!(type(value) in [ "int", "double" ]))
-								push(errors, [ location, "must be of type number" ]);
+							if (type(value) != "int")
+								push(errors, [ location, "must be of type integer" ]);
 
 							return value;
 						}

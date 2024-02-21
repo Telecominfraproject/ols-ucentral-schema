@@ -40,7 +40,7 @@ properties:
         vrf:
           description:
             VRF id.
-          type: number
+          type: integer
   ipv4-unreachable:
     description:
       Define a list of non-interface specific UNREACHABLE routes.
@@ -58,4 +58,4 @@ properties:
         vrf:
           description:
             VRF id.
-          type: number
+          type: integer
