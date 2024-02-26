@@ -43,50 +43,50 @@ properties:
           enum:
           - upstream
           - downstream
-    instances:
-      description:
-        Define a list of configuration for each STP instance.
-        Meaning of this field depends on current
-        STP protocol (switch.loop-detection.protocol)
-      type: array
-      items:
-        type: object
-        properties:
-          id:
-            description:
-              Indicates instance to configure.
-              Depends on current STP protocol
-              If RPVSTP/PVSTP - vlan id
-              If MSTP - instance id
-            type: integer
-          enabled:
-            description:
-              Enable STP on this instance.
-            type: boolean
-            default: true
-          priority:
-            description:
-              Bridge priority.
-            type: integer
-            default: 32768
-          forward_delay:
-            description:
-              Defines the amount of time a switch port stays in the Listening
-              and Learning states before transitioning to the Forwarding state.
-            type: integer
-            default: 15
-          hello_time:
-            description:
-              Determines how often switches send BPDU.
-            type: integer
-            default: 2
-          max_age:
-            description:
-              Specifies the maximum time that a switch port should wait to
-              receive a BPDU from its neighbor before
-              considering the link as failed or disconnected.
-            type: integer
-            default: 20
+      instances:
+        description:
+          Define a list of configuration for each STP instance.
+          Meaning of this field depends on current
+          STP protocol (switch.loop-detection.protocol)
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              description:
+                Indicates instance to configure.
+                Depends on current STP protocol
+                If RPVSTP/PVSTP - vlan id
+                If MSTP - instance id
+              type: integer
+            enabled:
+              description:
+                Enable STP on this instance.
+              type: boolean
+              default: true
+            priority:
+              description:
+                Bridge priority.
+              type: integer
+              default: 32768
+            forward_delay:
+              description:
+                Defines the amount of time a switch port stays in the Listening
+                and Learning states before transitioning to the Forwarding state.
+              type: integer
+              default: 15
+            hello_time:
+              description:
+                Determines how often switches send BPDU.
+              type: integer
+              default: 2
+            max_age:
+              description:
+                Specifies the maximum time that a switch port should wait to
+                receive a BPDU from its neighbor before
+                considering the link as failed or disconnected.
+              type: integer
+              default: 20
   ieee8021x:
     description:
       This section describes the global 802.1X (port access control) configuration.

@@ -1259,6 +1259,115 @@ function instantiateSwitch(location, value, errors) {
 					obj.roles = parseRoles(location + "/roles", value["roles"], errors);
 				}
 
+				function parseInstances(location, value, errors) {
+					if (type(value) == "array") {
+						function parseItem(location, value, errors) {
+							if (type(value) == "object") {
+								let obj = {};
+
+								function parseId(location, value, errors) {
+									if (type(value) != "int")
+										push(errors, [ location, "must be of type integer" ]);
+
+									return value;
+								}
+
+								if (exists(value, "id")) {
+									obj.id = parseId(location + "/id", value["id"], errors);
+								}
+
+								function parseEnabled(location, value, errors) {
+									if (type(value) != "bool")
+										push(errors, [ location, "must be of type boolean" ]);
+
+									return value;
+								}
+
+								if (exists(value, "enabled")) {
+									obj.enabled = parseEnabled(location + "/enabled", value["enabled"], errors);
+								}
+								else {
+									obj.enabled = true;
+								}
+
+								function parsePriority(location, value, errors) {
+									if (type(value) != "int")
+										push(errors, [ location, "must be of type integer" ]);
+
+									return value;
+								}
+
+								if (exists(value, "priority")) {
+									obj.priority = parsePriority(location + "/priority", value["priority"], errors);
+								}
+								else {
+									obj.priority = 32768;
+								}
+
+								function parseForward_delay(location, value, errors) {
+									if (type(value) != "int")
+										push(errors, [ location, "must be of type integer" ]);
+
+									return value;
+								}
+
+								if (exists(value, "forward_delay")) {
+									obj.forward_delay = parseForward_delay(location + "/forward_delay", value["forward_delay"], errors);
+								}
+								else {
+									obj.forward_delay = 15;
+								}
+
+								function parseHello_time(location, value, errors) {
+									if (type(value) != "int")
+										push(errors, [ location, "must be of type integer" ]);
+
+									return value;
+								}
+
+								if (exists(value, "hello_time")) {
+									obj.hello_time = parseHello_time(location + "/hello_time", value["hello_time"], errors);
+								}
+								else {
+									obj.hello_time = 2;
+								}
+
+								function parseMax_age(location, value, errors) {
+									if (type(value) != "int")
+										push(errors, [ location, "must be of type integer" ]);
+
+									return value;
+								}
+
+								if (exists(value, "max_age")) {
+									obj.max_age = parseMax_age(location + "/max_age", value["max_age"], errors);
+								}
+								else {
+									obj.max_age = 20;
+								}
+
+								return obj;
+							}
+
+							if (type(value) != "object")
+								push(errors, [ location, "must be of type object" ]);
+
+							return value;
+						}
+
+						return map(value, (item, i) => parseItem(location + "/" + i, item, errors));
+					}
+
+					if (type(value) != "array")
+						push(errors, [ location, "must be of type array" ]);
+
+					return value;
+				}
+
+				if (exists(value, "instances")) {
+					obj.instances = parseInstances(location + "/instances", value["instances"], errors);
+				}
+
 				return obj;
 			}
 
