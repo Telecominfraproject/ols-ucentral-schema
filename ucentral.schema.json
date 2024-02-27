@@ -547,35 +547,35 @@
                                     "downstream"
                                 ]
                             }
-                        }
-                    },
-                    "instances": {
-                        "type": "array",
-                        "items": {
-                            "type": "object",
-                            "properties": {
-                                "id": {
-                                    "type": "integer"
-                                },
-                                "enabled": {
-                                    "type": "boolean",
-                                    "default": true
-                                },
-                                "priority": {
-                                    "type": "integer",
-                                    "default": 32768
-                                },
-                                "forward_delay": {
-                                    "type": "integer",
-                                    "default": 15
-                                },
-                                "hello_time": {
-                                    "type": "integer",
-                                    "default": 2
-                                },
-                                "max_age": {
-                                    "type": "integer",
-                                    "default": 20
+                        },
+                        "instances": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "integer"
+                                    },
+                                    "enabled": {
+                                        "type": "boolean",
+                                        "default": true
+                                    },
+                                    "priority": {
+                                        "type": "integer",
+                                        "default": 32768
+                                    },
+                                    "forward_delay": {
+                                        "type": "integer",
+                                        "default": 15
+                                    },
+                                    "hello_time": {
+                                        "type": "integer",
+                                        "default": 2
+                                    },
+                                    "max_age": {
+                                        "type": "integer",
+                                        "default": 20
+                                    }
                                 }
                             }
                         }
