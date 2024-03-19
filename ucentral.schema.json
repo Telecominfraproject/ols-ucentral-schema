@@ -465,44 +465,6 @@
                             "maximum": 4094
                         }
                     }
-                },
-                "port-isolation": {
-                    "type": "object",
-                    "properties": {
-                        "sessions": {
-                            "type": "array",
-                            "items": {
-                                "type": "object",
-                                "properties": {
-                                    "id": {
-                                        "type": "integer"
-                                    },
-                                    "uplink": {
-                                        "type": "object",
-                                        "properties": {
-                                            "interface-list": {
-                                                "type": "array",
-                                                "items": {
-                                                    "type": "string"
-                                                }
-                                            }
-                                        }
-                                    },
-                                    "downlink": {
-                                        "type": "object",
-                                        "properties": {
-                                            "interface-list": {
-                                                "type": "array",
-                                                "items": {
-                                                    "type": "string"
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
                 }
             }
         },
@@ -659,6 +621,44 @@
                                             },
                                             "server-key": {
                                                 "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "port-isolation": {
+                    "type": "object",
+                    "properties": {
+                        "sessions": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "integer"
+                                    },
+                                    "uplink": {
+                                        "type": "object",
+                                        "properties": {
+                                            "interface-list": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "downlink": {
+                                        "type": "object",
+                                        "properties": {
+                                            "interface-list": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "string"
+                                                }
                                             }
                                         }
                                     }

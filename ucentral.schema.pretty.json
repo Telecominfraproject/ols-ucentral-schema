@@ -522,51 +522,6 @@
                             "maximum": 4094
                         }
                     }
-                },
-                "port-isolation": {
-                    "description": "This section describes the per-port specific port-isolation matrix (to which ports selected port can forward traffic to) configuration. Omitting this configuration completely fully disables any port-isolation configuration on this given port.",
-                    "type": "object",
-                    "properties": {
-                        "sessions": {
-                            "description": "Allow selected port to forward traffic in the provided session-based format.",
-                            "type": "array",
-                            "items": {
-                                "type": "object",
-                                "properties": {
-                                    "id": {
-                                        "description": "Session id to configure.",
-                                        "type": "integer"
-                                    },
-                                    "uplink": {
-                                        "description": "Configuration object for uplink interface(s)",
-                                        "type": "object",
-                                        "properties": {
-                                            "interface-list": {
-                                                "description": "List of interfaces (either physical or trunk ports)",
-                                                "type": "array",
-                                                "items": {
-                                                    "type": "string"
-                                                }
-                                            }
-                                        }
-                                    },
-                                    "downlink": {
-                                        "description": "Configuration object for downlink interface(s)",
-                                        "type": "object",
-                                        "properties": {
-                                            "interface-list": {
-                                                "description": "List of interfaces (either physical or trunk ports)",
-                                                "type": "array",
-                                                "items": {
-                                                    "type": "string"
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
                 }
             }
         },
@@ -754,6 +709,51 @@
                                             "server-key": {
                                                 "description": "Sets the shared secret to verify client COA requests for this server.",
                                                 "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "port-isolation": {
+                    "description": "This section describes the per-port specific port-isolation matrix (to which ports selected port can forward traffic to) configuration. Omitting this configuration completely fully disables any port-isolation configuration on this given port.",
+                    "type": "object",
+                    "properties": {
+                        "sessions": {
+                            "description": "Allow selected port to forward traffic in the provided session-based format.",
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "description": "Session id to configure.",
+                                        "type": "integer"
+                                    },
+                                    "uplink": {
+                                        "description": "Configuration object for uplink interface(s)",
+                                        "type": "object",
+                                        "properties": {
+                                            "interface-list": {
+                                                "description": "List of interfaces (either physical or trunk ports)",
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "downlink": {
+                                        "description": "Configuration object for downlink interface(s)",
+                                        "type": "object",
+                                        "properties": {
+                                            "interface-list": {
+                                                "description": "List of interfaces (either physical or trunk ports)",
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "string"
+                                                }
                                             }
                                         }
                                     }
