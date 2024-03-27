@@ -325,6 +325,10 @@
                         "description": "An IPv4 addreess."
                     }
                 },
+                "public_ip": {
+                    "type": "string",
+                    "description": "The public IP address of internet connection."
+                },
                 "leasetime": {
                     "type": "number",
                     "description": "This is the leasetime if the IPv4 address of this logical interface was acquired via DHCPv4."
