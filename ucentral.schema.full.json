@@ -111,6 +111,16 @@
                             "description": "Global config for controlling whether MLD snooping is enabled. If this global setting is disabled, all VLANs are treated as disabled, whether they are enabled or not.",
                             "type": "boolean",
                             "default": true
+                        },
+                        "unknown-multicast-flood-control": {
+                            "description": "Global config for the unknown multicast flood control feature. This enables the system to forward unknown multicast packets only to a multicast router (mrouter).",
+                            "type": "boolean",
+                            "default": false
+                        },
+                        "querier-enable": {
+                            "description": "Global IGMP querier config. This enables all Vlan interfaces to act as a querier.",
+                            "type": "boolean",
+                            "default": false
                         }
                     }
                 }

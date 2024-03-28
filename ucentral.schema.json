@@ -134,6 +134,14 @@
                         "mld-snooping-enable": {
                             "type": "boolean",
                             "default": true
+                        },
+                        "unknown-multicast-flood-control": {
+                            "type": "boolean",
+                            "default": false
+                        },
+                        "querier-enable": {
+                            "type": "boolean",
+                            "default": false
                         }
                     }
                 }
