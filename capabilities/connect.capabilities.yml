@@ -1,0 +1,192 @@
+description:
+  uCentral protocol (OpenLan) device and features capabilities schema
+type: object
+properties:
+  serial:
+    type: string
+    examples:
+    - aabbccddeeff
+  firmware:
+    type: string
+    description:
+      Platform revision
+    examples:
+    - Rel 1.6 build 5
+  platform:
+    type: string
+    enum:
+    - Switch
+    - AP
+  model:
+    type: string
+    description:
+      Device model
+  hw-sku:
+    type: string
+    description:
+      Stock keeping unit
+  base-mac:
+    type: string
+    description:
+      Switch MAC address
+    format: uc-mac
+    examples:
+    - aa:bb:cc:dd:ee:ff
+  port-list:
+    type: array
+    description:
+      The list of physical network devices
+    items:
+      type: object
+      properties:
+        name:
+          type: string
+          description:
+            The logical name of the port that is used by the OS
+          examples:
+          - Ethernet0
+          - Ethernet1
+          - Ethernet76
+        front-panel-number:
+          type: integer
+          description:
+            The identification number of the port as can be seen on the front-panel of the device
+  port-capabilities:
+    type: object
+    description:
+      Description of physical ports and their form-factors
+    properties:
+      form-factors:
+        type: array
+        items:
+          type: string
+          enum:
+          - RJ45
+          - SFP
+          - SFP+
+          - SFP28
+          - SFP-DD
+          - QSFP
+          - QSFP+
+          - QSFP28
+          - QSFP-DD
+      ports-list:
+        type: array
+        items:
+          type: object
+          properties:
+            type:
+              type: string
+              examples:
+              - RJ45
+            ports:
+              type: array
+              items:
+                type: string
+                examples:
+                - Ethernet1
+  poe-capabilities:
+    type: object
+    description:
+      Description of physical ports and their PoE capabilities
+    properties:
+      supported-standards:
+        type: array
+        items:
+          type: string
+          enum:
+          - .3AF-POE
+          - .3AT-POE+
+          - .3BT-PoE++
+          - PreStandard-Passive
+      power-budget:
+        type: integer
+        examples:
+        - 2000
+      poe-ports:
+        type: array
+        items:
+          type: object
+          properties:
+            type:
+              type: string
+              examples:
+              - .3AF-POE
+            budget-capacity:
+              type: integer
+            ports:
+              type: array
+              items:
+                type: string
+                examples:
+                - Ethernet1
+  supported-features:
+    type: array
+    description:
+      List of all features supported by the device
+    items:
+      type: string
+      enum:
+      # L2
+      - VLAN
+      - Port-Isolation
+      - Spanning-Tree
+      - Spanning-Tree-Rapid
+      - Spanning-Tree-Per-VLAN
+      - Spanning-Tree-Per-VLAN-Rapid
+      - Spanning-Tree-MSTP
+      # L3
+      - SVI-StaticIPv4
+      - SVI-StaticIPv6
+      - Interface-StaticIPv4
+      - Interface-StaticIPv6
+      - Routing-VRF
+      - Routing-IPv4-Route-Blackhole
+      - Routing-IPv4-Route-Unreachable
+      - Routing-IPv4-Nexthop
+      - Routing-IPv4-Broadcast
+      - Routing-IPv4-Multicast-IGMP-Snooping
+      - Routing-IPv4-Multicast-IGMP-Querier
+      - Routing-IPv4-Multicast-IGMP-Static
+      - Routing-IPv4-DHCP-Server
+      - Routing-IPv4-DHCP-Relay
+      - Routing-IPv4-DHCP-Snooping
+      - Routing-IPv4-Port-Forward
+      - Routing-IPv6-DHCP-Relay
+      - Routing-IPv6-DHCP-Stateful
+      - Routing-IPv6-DHCP-Stateless
+      - Routing-IPv6-Port-Forward
+      # PoE
+      - PoE-Reset
+      # .1X
+      - Port-Access-Control
+      - PAC-Dynamic-Auth
+      # System
+      - System-PasswordChange
+      - System-SwUpdate
+      - System-SwUpdate-Partial
+      - Port-Mirroring
+      # Services
+      - Service-SSH
+      - Service-RSSH
+      - Service-Telnet
+      - Service-LLDP
+      - Service-HTTP
+      - Service-GPS
+      - Service-IGMP
+      - Service-NTP
+      - Service-MDNS
+      - Service-QoS
+      - Service-Syslog
+      - Service-PAC
+      - Service-Wireguard-Overlay
+      - Service-Radius-Proxy
+      - Service-Online-Check
+      - Service-CaptivePortal
+      - Service-PublicIpCheck
+      # Tunneling
+      - Tunneling-VxLAN
+      - Tunneling-GRE
+      - Tunneling-GRE6
+      - Tunneling-L2TP
+      - Tunneling-Mesh
