@@ -25,6 +25,10 @@ properties:
     type: string
     description:
       Stock keeping unit
+  compatible:
+    type: string
+    description:
+      Compatibility string, that defines the family of the device
   base-mac:
     type: string
     description:
