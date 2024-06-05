@@ -49,3 +49,5 @@ properties:
     $ref: 'https://ucentral.io/schema/v1/service/rrm/'
   telnet:
     $ref: "https://ucentral.io/schema/v1/service/telnet/"
+  https:
+    $ref: "https://ucentral.io/schema/v1/service/https/"

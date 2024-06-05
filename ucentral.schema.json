@@ -3634,6 +3634,20 @@
                 }
             }
         },
+        "service.https": {
+            "type": "object",
+            "properties": {
+                "https-port": {
+                    "type": "integer",
+                    "maximum": 65535,
+                    "minimum": 443,
+                    "default": 80
+                },
+                "enable": {
+                    "type": "boolean"
+                }
+            }
+        },
         "service": {
             "type": "object",
             "properties": {
@@ -3705,6 +3719,9 @@
                 },
                 "telnet": {
                     "$ref": "#/$defs/service.telnet"
+                },
+                "https": {
+                    "$ref": "#/$defs/service.https"
                 }
             }
         },
