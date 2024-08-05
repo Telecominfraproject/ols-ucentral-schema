@@ -3640,8 +3640,8 @@
                 "https-port": {
                     "type": "integer",
                     "maximum": 65535,
-                    "minimum": 443,
-                    "default": 80
+                    "minimum": 1,
+                    "default": 443
                 },
                 "enable": {
                     "type": "boolean"
