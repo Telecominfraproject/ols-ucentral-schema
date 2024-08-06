@@ -161,3 +161,8 @@ properties:
         type: integer
         minimum: 1
         maximum: 4094
+  trunk-group:
+    description: Associates this port to a trunk or a port-channel.
+    type: integer
+    minimum: 1
+    maximum: 64
