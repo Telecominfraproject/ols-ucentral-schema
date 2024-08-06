@@ -223,3 +223,8 @@ properties:
                   type: array
                   items:
                     type: string
+  jumbo-frames:
+    description:
+      Enables Jumbo frames
+    type: boolean
+    default: false
