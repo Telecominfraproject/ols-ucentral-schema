@@ -223,3 +223,15 @@ properties:
                   type: array
                   items:
                     type: string
+  trunk-balance-method:
+    description:
+      Sets the load-distribution method among ports in aggregated links for both static and LACP based trunks.
+    type: string
+    enum:
+    - dst-ip
+    - dst-mac
+    - src-dst-ip
+    - src-dst-mac
+    - src-ip
+    - src-mac
+    default: src-dst-mac
