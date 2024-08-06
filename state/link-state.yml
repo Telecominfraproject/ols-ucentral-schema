@@ -19,6 +19,8 @@ properties:
     - half
   counters:
     $ref: "https://ucentral.io/state/v1/interface/counter/"
+  delta_counters:
+    $ref: "https://ucentral.io/state/v1/interface/counter/"
   poe:
     description:
       This section describes the ethernet poe-port link-state object (statistics + PD info).
