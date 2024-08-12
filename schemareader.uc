@@ -10440,6 +10440,53 @@ function instantiateServiceTelnet(location, value, errors) {
 	return value;
 }
 
+function instantiateServiceHttps(location, value, errors) {
+	if (type(value) == "object") {
+		let obj = {};
+
+		function parseHttpsPort(location, value, errors) {
+			if (type(value) in [ "int", "double" ]) {
+				if (value > 65535)
+					push(errors, [ location, "must be lower than or equal to 65535" ]);
+
+				if (value < 1)
+					push(errors, [ location, "must be bigger than or equal to 1" ]);
+
+			}
+
+			if (type(value) != "int")
+				push(errors, [ location, "must be of type integer" ]);
+
+			return value;
+		}
+
+		if (exists(value, "https-port")) {
+			obj.https_port = parseHttpsPort(location + "/https-port", value["https-port"], errors);
+		}
+		else {
+			obj.https_port = 443;
+		}
+
+		function parseEnable(location, value, errors) {
+			if (type(value) != "bool")
+				push(errors, [ location, "must be of type boolean" ]);
+
+			return value;
+		}
+
+		if (exists(value, "enable")) {
+			obj.enable = parseEnable(location + "/enable", value["enable"], errors);
+		}
+
+		return obj;
+	}
+
+	if (type(value) != "object")
+		push(errors, [ location, "must be of type object" ]);
+
+	return value;
+}
+
 function instantiateService(location, value, errors) {
 	if (type(value) == "object") {
 		let obj = {};
@@ -10534,6 +10581,10 @@ function instantiateService(location, value, errors) {
 
 		if (exists(value, "telnet")) {
 			obj.telnet = instantiateServiceTelnet(location + "/telnet", value["telnet"], errors);
+		}
+
+		if (exists(value, "https")) {
+			obj.https = instantiateServiceHttps(location + "/https", value["https"], errors);
 		}
 
 		return obj;

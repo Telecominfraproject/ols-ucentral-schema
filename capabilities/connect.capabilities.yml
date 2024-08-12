@@ -176,6 +176,7 @@ properties:
       - Service-Telnet
       - Service-LLDP
       - Service-HTTP
+      - Service-HTTPS
       - Service-GPS
       - Service-IGMP
       - Service-NTP

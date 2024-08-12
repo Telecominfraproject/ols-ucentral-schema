@@ -762,6 +762,9 @@
                     "counters": {
                         "$ref": "#/$defs/interface.counter"
                     },
+                    "delta_counters": {
+                        "$ref": "#/$defs/interface.counter"
+                    },
                     "mesh-path": {
                         "$ref": "#/$defs/interface.mesh-path"
                     },
@@ -888,6 +891,9 @@
                     ]
                 },
                 "counters": {
+                    "$ref": "#/$defs/interface.counter"
+                },
+                "delta_counters": {
                     "$ref": "#/$defs/interface.counter"
                 },
                 "poe": {
