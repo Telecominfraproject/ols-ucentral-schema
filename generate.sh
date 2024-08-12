@@ -7,7 +7,8 @@ set -x
 ./merge-schema.py schema schema ucentral.yml ucentral.schema.pretty.json 0 1
 ./merge-schema.py schema schema ucentral.yml ucentral.schema.full.json 0 0
 ./merge-schema.py state state state.yml ucentral.state.pretty.json 0 1
-./generate-reader.uc  > schemareader.uc
+./merge-schema.py capabilities capabilities connect.capabilities.yml ucentral.capabilities.pretty.json 0 1 
+#./generate-reader.uc  > schemareader.uc
 #./generate-example.uc > input.json
 mkdir -p docs
 which generate-schema-doc > /dev/null
