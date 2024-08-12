@@ -4748,6 +4748,23 @@
                             "type": "boolean"
                         }
                     }
+                },
+                "https": {
+                    "description": "Enable the webserver with the on-boarding webui",
+                    "type": "object",
+                    "properties": {
+                        "https-port": {
+                            "description": "The port that the secure HTTP server should run on.",
+                            "type": "integer",
+                            "maximum": 65535,
+                            "minimum": 1,
+                            "default": 443
+                        },
+                        "enable": {
+                            "description": "This option whether secure http server should be enabled or disabled.",
+                            "type": "boolean"
+                        }
+                    }
                 }
             }
         },
