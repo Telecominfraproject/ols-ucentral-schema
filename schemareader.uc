@@ -295,6 +295,34 @@ function instantiateUnit(location, value, errors) {
 					obj.mld_snooping_enable = true;
 				}
 
+				function parseUnknownMulticastFloodControl(location, value, errors) {
+					if (type(value) != "bool")
+						push(errors, [ location, "must be of type boolean" ]);
+
+					return value;
+				}
+
+				if (exists(value, "unknown-multicast-flood-control")) {
+					obj.unknown_multicast_flood_control = parseUnknownMulticastFloodControl(location + "/unknown-multicast-flood-control", value["unknown-multicast-flood-control"], errors);
+				}
+				else {
+					obj.unknown_multicast_flood_control = false;
+				}
+
+				function parseQuerierEnable(location, value, errors) {
+					if (type(value) != "bool")
+						push(errors, [ location, "must be of type boolean" ]);
+
+					return value;
+				}
+
+				if (exists(value, "querier-enable")) {
+					obj.querier_enable = parseQuerierEnable(location + "/querier-enable", value["querier-enable"], errors);
+				}
+				else {
+					obj.querier_enable = false;
+				}
+
 				return obj;
 			}
 
@@ -1016,138 +1044,24 @@ function instantiateEthernet(location, value, errors) {
 			obj.ieee8021x = parseIeee8021x(location + "/ieee8021x", value["ieee8021x"], errors);
 		}
 
-		function parsePortIsolation(location, value, errors) {
-			if (type(value) == "object") {
-				let obj = {};
+		function parseTrunkGroup(location, value, errors) {
+			if (type(value) in [ "int", "double" ]) {
+				if (value > 64)
+					push(errors, [ location, "must be lower than or equal to 64" ]);
 
-				function parseSessions(location, value, errors) {
-					if (type(value) == "array") {
-						function parseItem(location, value, errors) {
-							if (type(value) == "object") {
-								let obj = {};
+				if (value < 1)
+					push(errors, [ location, "must be bigger than or equal to 1" ]);
 
-								function parseId(location, value, errors) {
-									if (type(value) != "int")
-										push(errors, [ location, "must be of type integer" ]);
-
-									return value;
-								}
-
-								if (exists(value, "id")) {
-									obj.id = parseId(location + "/id", value["id"], errors);
-								}
-
-								function parseUplink(location, value, errors) {
-									if (type(value) == "object") {
-										let obj = {};
-
-										function parseInterfaceList(location, value, errors) {
-											if (type(value) == "array") {
-												function parseItem(location, value, errors) {
-													if (type(value) != "string")
-														push(errors, [ location, "must be of type string" ]);
-
-													return value;
-												}
-
-												return map(value, (item, i) => parseItem(location + "/" + i, item, errors));
-											}
-
-											if (type(value) != "array")
-												push(errors, [ location, "must be of type array" ]);
-
-											return value;
-										}
-
-										if (exists(value, "interface-list")) {
-											obj.interface_list = parseInterfaceList(location + "/interface-list", value["interface-list"], errors);
-										}
-
-										return obj;
-									}
-
-									if (type(value) != "object")
-										push(errors, [ location, "must be of type object" ]);
-
-									return value;
-								}
-
-								if (exists(value, "uplink")) {
-									obj.uplink = parseUplink(location + "/uplink", value["uplink"], errors);
-								}
-
-								function parseDownlink(location, value, errors) {
-									if (type(value) == "object") {
-										let obj = {};
-
-										function parseInterfaceList(location, value, errors) {
-											if (type(value) == "array") {
-												function parseItem(location, value, errors) {
-													if (type(value) != "string")
-														push(errors, [ location, "must be of type string" ]);
-
-													return value;
-												}
-
-												return map(value, (item, i) => parseItem(location + "/" + i, item, errors));
-											}
-
-											if (type(value) != "array")
-												push(errors, [ location, "must be of type array" ]);
-
-											return value;
-										}
-
-										if (exists(value, "interface-list")) {
-											obj.interface_list = parseInterfaceList(location + "/interface-list", value["interface-list"], errors);
-										}
-
-										return obj;
-									}
-
-									if (type(value) != "object")
-										push(errors, [ location, "must be of type object" ]);
-
-									return value;
-								}
-
-								if (exists(value, "downlink")) {
-									obj.downlink = parseDownlink(location + "/downlink", value["downlink"], errors);
-								}
-
-								return obj;
-							}
-
-							if (type(value) != "object")
-								push(errors, [ location, "must be of type object" ]);
-
-							return value;
-						}
-
-						return map(value, (item, i) => parseItem(location + "/" + i, item, errors));
-					}
-
-					if (type(value) != "array")
-						push(errors, [ location, "must be of type array" ]);
-
-					return value;
-				}
-
-				if (exists(value, "sessions")) {
-					obj.sessions = parseSessions(location + "/sessions", value["sessions"], errors);
-				}
-
-				return obj;
 			}
 
-			if (type(value) != "object")
-				push(errors, [ location, "must be of type object" ]);
+			if (type(value) != "int")
+				push(errors, [ location, "must be of type integer" ]);
 
 			return value;
 		}
 
-		if (exists(value, "port-isolation")) {
-			obj.port_isolation = parsePortIsolation(location + "/port-isolation", value["port-isolation"], errors);
+		if (exists(value, "trunk-group")) {
+			obj.trunk_group = parseTrunkGroup(location + "/trunk-group", value["trunk-group"], errors);
 		}
 
 		return obj;
@@ -1648,6 +1562,157 @@ function instantiateSwitch(location, value, errors) {
 
 		if (exists(value, "ieee8021x")) {
 			obj.ieee8021x = parseIeee8021x(location + "/ieee8021x", value["ieee8021x"], errors);
+		}
+
+		function parsePortIsolation(location, value, errors) {
+			if (type(value) == "object") {
+				let obj = {};
+
+				function parseSessions(location, value, errors) {
+					if (type(value) == "array") {
+						function parseItem(location, value, errors) {
+							if (type(value) == "object") {
+								let obj = {};
+
+								function parseId(location, value, errors) {
+									if (type(value) != "int")
+										push(errors, [ location, "must be of type integer" ]);
+
+									return value;
+								}
+
+								if (exists(value, "id")) {
+									obj.id = parseId(location + "/id", value["id"], errors);
+								}
+
+								function parseUplink(location, value, errors) {
+									if (type(value) == "object") {
+										let obj = {};
+
+										function parseInterfaceList(location, value, errors) {
+											if (type(value) == "array") {
+												function parseItem(location, value, errors) {
+													if (type(value) != "string")
+														push(errors, [ location, "must be of type string" ]);
+
+													return value;
+												}
+
+												return map(value, (item, i) => parseItem(location + "/" + i, item, errors));
+											}
+
+											if (type(value) != "array")
+												push(errors, [ location, "must be of type array" ]);
+
+											return value;
+										}
+
+										if (exists(value, "interface-list")) {
+											obj.interface_list = parseInterfaceList(location + "/interface-list", value["interface-list"], errors);
+										}
+
+										return obj;
+									}
+
+									if (type(value) != "object")
+										push(errors, [ location, "must be of type object" ]);
+
+									return value;
+								}
+
+								if (exists(value, "uplink")) {
+									obj.uplink = parseUplink(location + "/uplink", value["uplink"], errors);
+								}
+
+								function parseDownlink(location, value, errors) {
+									if (type(value) == "object") {
+										let obj = {};
+
+										function parseInterfaceList(location, value, errors) {
+											if (type(value) == "array") {
+												function parseItem(location, value, errors) {
+													if (type(value) != "string")
+														push(errors, [ location, "must be of type string" ]);
+
+													return value;
+												}
+
+												return map(value, (item, i) => parseItem(location + "/" + i, item, errors));
+											}
+
+											if (type(value) != "array")
+												push(errors, [ location, "must be of type array" ]);
+
+											return value;
+										}
+
+										if (exists(value, "interface-list")) {
+											obj.interface_list = parseInterfaceList(location + "/interface-list", value["interface-list"], errors);
+										}
+
+										return obj;
+									}
+
+									if (type(value) != "object")
+										push(errors, [ location, "must be of type object" ]);
+
+									return value;
+								}
+
+								if (exists(value, "downlink")) {
+									obj.downlink = parseDownlink(location + "/downlink", value["downlink"], errors);
+								}
+
+								return obj;
+							}
+
+							if (type(value) != "object")
+								push(errors, [ location, "must be of type object" ]);
+
+							return value;
+						}
+
+						return map(value, (item, i) => parseItem(location + "/" + i, item, errors));
+					}
+
+					if (type(value) != "array")
+						push(errors, [ location, "must be of type array" ]);
+
+					return value;
+				}
+
+				if (exists(value, "sessions")) {
+					obj.sessions = parseSessions(location + "/sessions", value["sessions"], errors);
+				}
+
+				return obj;
+			}
+
+			if (type(value) != "object")
+				push(errors, [ location, "must be of type object" ]);
+
+			return value;
+		}
+
+		if (exists(value, "port-isolation")) {
+			obj.port_isolation = parsePortIsolation(location + "/port-isolation", value["port-isolation"], errors);
+		}
+
+		function parseTrunkBalanceMethod(location, value, errors) {
+			if (type(value) != "string")
+				push(errors, [ location, "must be of type string" ]);
+
+			if (!(value in [ "dst-ip", "dst-mac", "src-dst-ip", "src-dst-mac", "src-ip", "src-mac" ]))
+				push(errors, [ location, "must be one of \"dst-ip\", \"dst-mac\", \"src-dst-ip\", \"src-dst-mac\", \"src-ip\" or \"src-mac\"" ]);
+
+			return value;
+		}
+
+		if (exists(value, "trunk-balance-method")) {
+			obj.trunk_balance_method = parseTrunkBalanceMethod(location + "/trunk-balance-method", value["trunk-balance-method"], errors);
+		}
+		else {
+			obj.trunk_balance_method = "src-dst-mac";
 		}
 
 		return obj;

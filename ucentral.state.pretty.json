@@ -78,6 +78,9 @@
         },
         "mac-address-list": {
             "$ref": "#/$defs/mac-address-list"
+        },
+        "static-trunks": {
+            "$ref": "#/$defs/static-trunks"
         }
     },
     "$defs": {
@@ -1092,6 +1095,28 @@
                     }
                 }
             ]
+        },
+        "static-trunks": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "description": "List of statically created trunks.",
+                "properties": {
+                    "trunk-identifier": {
+                        "type": "integer",
+                        "description": "Logical identifier for the trunk.",
+                        "minimum": 1,
+                        "maximum": 64
+                    },
+                    "member-ports": {
+                        "type": "array",
+                        "description": "List of member ports under this static trunk.",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
         }
     }
 }

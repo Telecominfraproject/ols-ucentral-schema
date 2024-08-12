@@ -685,6 +685,12 @@
                                 "maximum": 4094
                             }
                         }
+                    },
+                    "trunk-group": {
+                        "description": "Associates this port to a trunk or a port-channel.",
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 64
                     }
                 }
             }
@@ -925,6 +931,19 @@
                             }
                         }
                     }
+                },
+                "trunk-balance-method": {
+                    "description": "Sets the load-distribution method among ports in aggregated links for both static and LACP based trunks.",
+                    "type": "string",
+                    "enum": [
+                        "dst-ip",
+                        "dst-mac",
+                        "src-dst-ip",
+                        "src-dst-mac",
+                        "src-ip",
+                        "src-mac"
+                    ],
+                    "default": "src-dst-mac"
                 }
             }
         },
