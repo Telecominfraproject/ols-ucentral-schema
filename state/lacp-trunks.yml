@@ -1,0 +1,67 @@
+type: array
+items:
+  type: object
+  description:
+    List of dynamically created trunks.
+  properties:
+    trunk-identifier:
+      type: integer
+      description:
+        Logical identifier for the trunk. 
+      minimum: 1
+      maximum: 64
+    member-port:
+      type: string
+      description: List of member ports under this trunk.
+    system-priority:
+      type: number
+      description:
+        LACP System priority.
+    port-priority:
+      type: number
+      description:
+        LACP port priority.
+    port-state:
+      type: string
+      description:
+        Port state.
+    lacpdu-sent:
+      type: number
+      description:
+        Number of LACP Data Units (PDUs) sent.
+    lacpdu-recv:
+      type: number
+      description:
+        Number of LACP Data Units (PDUs) received.
+    markerpdu-sent:
+      type: number
+      description:
+        Number of Marker PDUs sent.
+    markerpdu-recv:
+      type: number
+      description:
+        Number of Marker PDUs received.
+    unknownpkt-recv:
+      type: number
+      description:
+        Number of unknown packets received.
+    illegalpkt-recv:
+      type: number
+      description:
+        Number of illegal packets received.
+    port-oper-key:
+      type: number
+      description:
+        Operational key for the port.
+    partner-oper-key:
+      type: number
+      description:
+        Operational key for the partner.
+    oper-state:
+      type: string
+      description:
+        Operational state.
+    partner-oper-state:
+      type: string
+      description:
+        Operational state of the partner.
