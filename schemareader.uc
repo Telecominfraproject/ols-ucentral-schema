@@ -1215,6 +1215,26 @@ function instantiateEthernet(location, value, errors) {
 			obj.lacp_config = parseLacpConfig(location + "/lacp-config", value["lacp-config"], errors);
 		}
 
+		function parseTrunkGroup(location, value, errors) {
+			if (type(value) in [ "int", "double" ]) {
+				if (value > 64)
+					push(errors, [ location, "must be lower than or equal to 64" ]);
+
+				if (value < 1)
+					push(errors, [ location, "must be bigger than or equal to 1" ]);
+
+			}
+
+			if (type(value) != "int")
+				push(errors, [ location, "must be of type integer" ]);
+
+			return value;
+		}
+
+		if (exists(value, "trunk-group")) {
+			obj.trunk_group = parseTrunkGroup(location + "/trunk-group", value["trunk-group"], errors);
+		}
+
 		return obj;
 	}
 
@@ -1861,6 +1881,23 @@ function instantiateSwitch(location, value, errors) {
 		}
 		else {
 			obj.jumbo_frames = false;
+		}
+
+		function parseTrunkBalanceMethod(location, value, errors) {
+			if (type(value) != "string")
+				push(errors, [ location, "must be of type string" ]);
+
+			if (!(value in [ "dst-ip", "dst-mac", "src-dst-ip", "src-dst-mac", "src-ip", "src-mac" ]))
+				push(errors, [ location, "must be one of \"dst-ip\", \"dst-mac\", \"src-dst-ip\", \"src-dst-mac\", \"src-ip\" or \"src-mac\"" ]);
+
+			return value;
+		}
+
+		if (exists(value, "trunk-balance-method")) {
+			obj.trunk_balance_method = parseTrunkBalanceMethod(location + "/trunk-balance-method", value["trunk-balance-method"], errors);
+		}
+		else {
+			obj.trunk_balance_method = "src-dst-mac";
 		}
 
 		return obj;

@@ -478,6 +478,11 @@
                         }
                     }
                 },
+                "trunk-group": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 64
+                },
                 "lacp-config": {
                     "type": "object",
                     "properties": {
@@ -734,6 +739,18 @@
                             }
                         }
                     }
+                },
+                "trunk-balance-method": {
+                    "type": "string",
+                    "enum": [
+                        "dst-ip",
+                        "dst-mac",
+                        "src-dst-ip",
+                        "src-dst-mac",
+                        "src-ip",
+                        "src-mac"
+                    ],
+                    "default": "src-dst-mac"
                 },
                 "jumbo-frames": {
                     "type": "boolean",

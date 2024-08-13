@@ -538,6 +538,12 @@
                         }
                     }
                 },
+                "trunk-group": {
+                    "description": "Associates this port to a trunk or a port-channel.",
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 64
+                },
                 "lacp-config": {
                     "description": "This section describes the 802.3ad Link Aggregation Control Protocol (LACP) configuration for the current interface.",
                     "type": "object",
@@ -841,6 +847,19 @@
                             }
                         }
                     }
+                },
+                "trunk-balance-method": {
+                    "description": "Sets the load-distribution method among ports in aggregated links for both static and LACP based trunks.",
+                    "type": "string",
+                    "enum": [
+                        "dst-ip",
+                        "dst-mac",
+                        "src-dst-ip",
+                        "src-dst-mac",
+                        "src-ip",
+                        "src-mac"
+                    ],
+                    "default": "src-dst-mac"
                 },
                 "jumbo-frames": {
                     "description": "Enables Jumbo frames",

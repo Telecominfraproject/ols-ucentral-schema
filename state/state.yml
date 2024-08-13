@@ -54,6 +54,7 @@ properties:
             $ref: "https://ucentral.io/state/v1/link-state/"
   mac-address-list:
     $ref: "https://ucentral.io/state/v1/mac-address-list/"
+  static-trunks:
+    $ref: "https://ucentral.io/state/v1/static-trunks/"
   lacp-trunks:
     $ref: "https://ucentral.io/state/v1/lacp-trunks/"
-    

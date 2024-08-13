@@ -161,6 +161,11 @@ properties:
         type: integer
         minimum: 1
         maximum: 4094
+  trunk-group:
+    description: Associates this port to a trunk or a port-channel.
+    type: integer
+    minimum: 1
+    maximum: 64
   lacp-config:
     description:
       This section describes the 802.3ad Link Aggregation Control Protocol (LACP) configuration for the current interface.
