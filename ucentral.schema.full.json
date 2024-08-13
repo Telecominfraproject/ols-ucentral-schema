@@ -990,6 +990,11 @@
                             }
                         }
                     }
+                },
+                "jumbo-frames": {
+                    "description": "Enables Jumbo frames",
+                    "type": "boolean",
+                    "default": false
                 }
             }
         },

@@ -1849,6 +1849,20 @@ function instantiateSwitch(location, value, errors) {
 			obj.port_isolation = parsePortIsolation(location + "/port-isolation", value["port-isolation"], errors);
 		}
 
+		function parseJumboFrames(location, value, errors) {
+			if (type(value) != "bool")
+				push(errors, [ location, "must be of type boolean" ]);
+
+			return value;
+		}
+
+		if (exists(value, "jumbo-frames")) {
+			obj.jumbo_frames = parseJumboFrames(location + "/jumbo-frames", value["jumbo-frames"], errors);
+		}
+		else {
+			obj.jumbo_frames = false;
+		}
+
 		return obj;
 	}
 

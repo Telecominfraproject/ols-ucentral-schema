@@ -734,6 +734,10 @@
                             }
                         }
                     }
+                },
+                "jumbo-frames": {
+                    "type": "boolean",
+                    "default": false
                 }
             }
         },
