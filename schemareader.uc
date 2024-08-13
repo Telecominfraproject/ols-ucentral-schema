@@ -1044,6 +1044,177 @@ function instantiateEthernet(location, value, errors) {
 			obj.ieee8021x = parseIeee8021x(location + "/ieee8021x", value["ieee8021x"], errors);
 		}
 
+		function parseLacpConfig(location, value, errors) {
+			if (type(value) == "object") {
+				let obj = {};
+
+				function parseLacpEnable(location, value, errors) {
+					if (type(value) != "bool")
+						push(errors, [ location, "must be of type boolean" ]);
+
+					return value;
+				}
+
+				if (exists(value, "lacp-enable")) {
+					obj.lacp_enable = parseLacpEnable(location + "/lacp-enable", value["lacp-enable"], errors);
+				}
+				else {
+					obj.lacp_enable = false;
+				}
+
+				function parseLacpRole(location, value, errors) {
+					if (type(value) != "string")
+						push(errors, [ location, "must be of type string" ]);
+
+					if (!(value in [ "actor", "partner" ]))
+						push(errors, [ location, "must be one of \"actor\" or \"partner\"" ]);
+
+					return value;
+				}
+
+				if (exists(value, "lacp-role")) {
+					obj.lacp_role = parseLacpRole(location + "/lacp-role", value["lacp-role"], errors);
+				}
+				else {
+					obj.lacp_role = "actor";
+				}
+
+				function parseLacpMode(location, value, errors) {
+					if (type(value) != "string")
+						push(errors, [ location, "must be of type string" ]);
+
+					if (!(value in [ "active", "passive" ]))
+						push(errors, [ location, "must be one of \"active\" or \"passive\"" ]);
+
+					return value;
+				}
+
+				if (exists(value, "lacp-mode")) {
+					obj.lacp_mode = parseLacpMode(location + "/lacp-mode", value["lacp-mode"], errors);
+				}
+				else {
+					obj.lacp_mode = "passive";
+				}
+
+				function parseLacpPortAdminKey(location, value, errors) {
+					if (type(value) in [ "int", "double" ]) {
+						if (value > 65535)
+							push(errors, [ location, "must be lower than or equal to 65535" ]);
+
+						if (value < 1)
+							push(errors, [ location, "must be bigger than or equal to 1" ]);
+
+					}
+
+					if (type(value) != "int")
+						push(errors, [ location, "must be of type integer" ]);
+
+					return value;
+				}
+
+				if (exists(value, "lacp-port-admin-key")) {
+					obj.lacp_port_admin_key = parseLacpPortAdminKey(location + "/lacp-port-admin-key", value["lacp-port-admin-key"], errors);
+				}
+				else {
+					obj.lacp_port_admin_key = 1;
+				}
+
+				function parseLacpPortPriority(location, value, errors) {
+					if (type(value) in [ "int", "double" ]) {
+						if (value > 65535)
+							push(errors, [ location, "must be lower than or equal to 65535" ]);
+
+						if (value < 1)
+							push(errors, [ location, "must be bigger than or equal to 1" ]);
+
+					}
+
+					if (type(value) != "int")
+						push(errors, [ location, "must be of type integer" ]);
+
+					return value;
+				}
+
+				if (exists(value, "lacp-port-priority")) {
+					obj.lacp_port_priority = parseLacpPortPriority(location + "/lacp-port-priority", value["lacp-port-priority"], errors);
+				}
+				else {
+					obj.lacp_port_priority = 32768;
+				}
+
+				function parseLacpSystemPriority(location, value, errors) {
+					if (type(value) in [ "int", "double" ]) {
+						if (value > 65535)
+							push(errors, [ location, "must be lower than or equal to 65535" ]);
+
+						if (value < 1)
+							push(errors, [ location, "must be bigger than or equal to 1" ]);
+
+					}
+
+					if (type(value) != "int")
+						push(errors, [ location, "must be of type integer" ]);
+
+					return value;
+				}
+
+				if (exists(value, "lacp-system-priority")) {
+					obj.lacp_system_priority = parseLacpSystemPriority(location + "/lacp-system-priority", value["lacp-system-priority"], errors);
+				}
+				else {
+					obj.lacp_system_priority = 32768;
+				}
+
+				function parseLacpPchanAdminKey(location, value, errors) {
+					if (type(value) in [ "int", "double" ]) {
+						if (value > 65535)
+							push(errors, [ location, "must be lower than or equal to 65535" ]);
+
+						if (value < 1)
+							push(errors, [ location, "must be bigger than or equal to 1" ]);
+
+					}
+
+					if (type(value) != "int")
+						push(errors, [ location, "must be of type integer" ]);
+
+					return value;
+				}
+
+				if (exists(value, "lacp-pchan-admin-key")) {
+					obj.lacp_pchan_admin_key = parseLacpPchanAdminKey(location + "/lacp-pchan-admin-key", value["lacp-pchan-admin-key"], errors);
+				}
+
+				function parseLacpTimeout(location, value, errors) {
+					if (type(value) != "string")
+						push(errors, [ location, "must be of type string" ]);
+
+					if (!(value in [ "short", "long" ]))
+						push(errors, [ location, "must be one of \"short\" or \"long\"" ]);
+
+					return value;
+				}
+
+				if (exists(value, "lacp-timeout")) {
+					obj.lacp_timeout = parseLacpTimeout(location + "/lacp-timeout", value["lacp-timeout"], errors);
+				}
+				else {
+					obj.lacp_timeout = "long";
+				}
+
+				return obj;
+			}
+
+			if (type(value) != "object")
+				push(errors, [ location, "must be of type object" ]);
+
+			return value;
+		}
+
+		if (exists(value, "lacp-config")) {
+			obj.lacp_config = parseLacpConfig(location + "/lacp-config", value["lacp-config"], errors);
+		}
+
 		function parseTrunkGroup(location, value, errors) {
 			if (type(value) in [ "int", "double" ]) {
 				if (value > 64)
@@ -1696,6 +1867,20 @@ function instantiateSwitch(location, value, errors) {
 
 		if (exists(value, "port-isolation")) {
 			obj.port_isolation = parsePortIsolation(location + "/port-isolation", value["port-isolation"], errors);
+		}
+
+		function parseJumboFrames(location, value, errors) {
+			if (type(value) != "bool")
+				push(errors, [ location, "must be of type boolean" ]);
+
+			return value;
+		}
+
+		if (exists(value, "jumbo-frames")) {
+			obj.jumbo_frames = parseJumboFrames(location + "/jumbo-frames", value["jumbo-frames"], errors);
+		}
+		else {
+			obj.jumbo_frames = false;
 		}
 
 		function parseTrunkBalanceMethod(location, value, errors) {

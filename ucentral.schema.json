@@ -482,6 +482,62 @@
                     "type": "integer",
                     "minimum": 1,
                     "maximum": 64
+                },
+                "lacp-config": {
+                    "type": "object",
+                    "properties": {
+                        "lacp-enable": {
+                            "type": "boolean",
+                            "default": false
+                        },
+                        "lacp-role": {
+                            "type": "string",
+                            "enum": [
+                                "actor",
+                                "partner"
+                            ],
+                            "default": "actor"
+                        },
+                        "lacp-mode": {
+                            "type": "string",
+                            "enum": [
+                                "active",
+                                "passive"
+                            ],
+                            "default": "passive"
+                        },
+                        "lacp-port-admin-key": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 65535,
+                            "default": 1
+                        },
+                        "lacp-port-priority": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 65535,
+                            "default": 32768
+                        },
+                        "lacp-system-priority": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 65535,
+                            "default": 32768
+                        },
+                        "lacp-pchan-admin-key": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 65535
+                        },
+                        "lacp-timeout": {
+                            "type": "string",
+                            "enum": [
+                                "short",
+                                "long"
+                            ],
+                            "default": "long"
+                        }
+                    }
                 }
             }
         },
@@ -695,6 +751,10 @@
                         "src-mac"
                     ],
                     "default": "src-dst-mac"
+                },
+                "jumbo-frames": {
+                    "type": "boolean",
+                    "default": false
                 }
             }
         },

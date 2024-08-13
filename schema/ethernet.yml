@@ -166,3 +166,64 @@ properties:
     type: integer
     minimum: 1
     maximum: 64
+  lacp-config:
+    description:
+      This section describes the 802.3ad Link Aggregation Control Protocol (LACP) configuration for the current interface.
+    type: object
+    properties:
+      lacp-enable:
+        description:
+          Enables 802.3ad Link Aggregation Control Protocol (LACP) for the current interface.
+        type: boolean
+        default: false
+      lacp-role:
+        description:
+          Configures the port LACP role as actor or partner.
+        type: string
+        enum:
+        - actor
+        - partner
+        default: actor
+      lacp-mode:
+        description:
+          Configures the LACP negotiation activity mode as active or passive.
+        type: string
+        enum:
+        - active
+        - passive
+        default: passive
+      lacp-port-admin-key:
+        description:
+          Configures the port's LACP administration key.
+        type: integer
+        minimum: 1
+        maximum: 65535
+        default: 1
+      lacp-port-priority:
+        description:
+          Configures the LACP port priority.
+        type: integer
+        minimum: 1
+        maximum: 65535
+        default: 32768
+      lacp-system-priority:
+        description:
+          Configures the LACP System priority.
+        type: integer
+        minimum: 1
+        maximum: 65535
+        default: 32768
+      lacp-pchan-admin-key:
+        description:
+          Configures the port channel's LACP administration key (optional).
+        type: integer
+        minimum: 1
+        maximum: 65535
+      lacp-timeout:
+        description:
+          Configures the timeout to wait for the next LACP data unit.
+        type: string
+        enum:
+        - short
+        - long
+        default: long
