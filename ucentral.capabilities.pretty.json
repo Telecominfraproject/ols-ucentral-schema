@@ -167,6 +167,9 @@
                 "type": "string",
                 "enum": [
                     "VLAN",
+                    "Jumbo-Frames",
+                    "LACP",
+                    "Link-Aggregation",
                     "Port-Isolation",
                     "Spanning-Tree",
                     "Spanning-Tree-Rapid",
