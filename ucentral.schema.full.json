@@ -1009,6 +1009,7 @@
                         "src-mac"
                     ],
                     "default": "src-dst-mac"
+                },
                 "jumbo-frames": {
                     "description": "Enables Jumbo frames",
                     "type": "boolean",

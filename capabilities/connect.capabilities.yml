@@ -133,6 +133,9 @@ properties:
       enum:
       # L2
       - VLAN
+      - Jumbo-Frames
+      - LACP
+      - Link-Aggregation
       - Port-Isolation
       - Spanning-Tree
       - Spanning-Tree-Rapid
