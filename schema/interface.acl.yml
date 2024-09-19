@@ -1,0 +1,39 @@
+description: A collection of access control entries that define the rules for filtering traffic through a network interface.
+type: array
+items:
+  type: object
+  properties:
+    acl-inf-policy-preference:
+      description: Determines the priority of multiple ACL policies when more than one is applied to an interface, if any.
+      type: integer
+      minimum: 1
+      maximum: 64
+      default: 1
+    acl-inf-policy-ingress:
+      description: Specifies the ACL policy that is applied to incoming traffic on an interface.
+      type: string
+      maxLength: 32
+      minLength: 1
+      examples:
+        - blacklisted-macs
+    acl-inf-counters-ingress:
+      description: Tracks the number and type of packets that match the ingress ACL rules on an interface.
+      type: boolean
+      default: false
+      enum:
+        - true
+        - false
+    acl-inf-policy-egress:
+      description: Specifies the ACL policy that is applied to outgoing traffic from an interface.
+      type: string
+      maxLength: 32
+      minLength: 1
+      examples:
+        - blacklisted-macs
+    acl-inf-counters-egress:
+      description: Tracks the number and type of packets that match the egress ACL rules on an interface.
+      type: boolean
+      default: false
+      enum:
+        - true
+        - false
