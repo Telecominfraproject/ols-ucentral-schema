@@ -74,3 +74,126 @@ items:
                     type: array
                     items:
                       type: string
+    mvr:
+      type: object
+      description: MVR statistics on interface
+      properties:
+        mvr-intf-fwd-status:
+          description: Shows if MVR traffic is being forwarded or discarded.
+          type: boolean
+          default: false
+          enum:
+            - true
+            - false
+        mvr-intf-igmp-count-reports:
+          description: The number of IGMP membership reports received on this interface.
+          type: integer
+        mvr-intf-igmp-count-leave:
+          description: The number of leave messages received on this interface.
+          type: integer
+        mvr-intf-igmp-count-gquery:
+          description: The number of general query messages received on this interface.
+          type: integer
+        mvr-intf-igmp-count-gssquery:
+          description: The number of group specific or group-and-source specific query messages received on this interface.
+          type: integer
+        mvr-intf-igmp-count-drop:
+          description: The number of times a report, leave, or query was dropped.
+          type: integer
+        mvr-intf-igmp-count-joinsucc:
+          description: The number of times a multicast group was successfully joined.
+          type: integer
+        mvr-intf-igmp-count-actgroups:
+          description: The number of MVR groups active on this interface.
+          type: integer
+    acl-stats:
+      description: "Represents the overall statistics for ACLs on the OLS device."
+      type: object
+      properties:
+        acl-intf-stats:
+          description: "A list of ACL-related statistics, each corresponding to a specific interface or port."
+          type: array
+          items:
+            type: object
+            properties:
+              acl-intf-id:
+                description: "The identifier for the interface or port to which the ACL statistics apply."
+                type: string
+              acl-type:
+                description: "Type of the access control list."
+                type: string
+                enum:
+                  - none
+                  - ipv4
+                  - ipv6
+                  - ipv4Ext
+                  - ipv6Ext
+                  - mac
+                  - arp
+                default: None
+              acl-rule-action:
+                description: "Indicates the action (permit or deny) taken when an ACL rule is matched."
+                type: string
+                enum:
+                  - permit
+                  - deny
+                default: permit
+              acl-hit-count:
+                description: "The number of times an ACL rule has been matched by traffic."
+                type: number
+              acl-rule-resource-util:
+                description: "Shows the percentage of this user-configured ACL rule as a percentage of total ACL rules."
+                type: integer
+                minimum: 0
+                maximum: 100
+    acl-resource-stats:
+      description: "Represents the overall resource utilization statistics for ACLs."
+      type: object
+      properties:
+        acl-total-resource-util:
+          description: "Percentage of total ACL consumed resources amongst the resources available."
+          type: integer
+          minimum: 0
+          maximum: 100
+    dhcp-snoop-binding:
+      description: State message entry to show the binding table for DHCP Snooping
+      type: object
+      properties:
+        entries:
+          description: List of DHCP Snooping binding entries
+          type: array
+          items:
+            type: object
+            properties:
+              dhcp-snoop-bind-mac-address:
+                description: MAC address of the DHCP client in the DHCP Snooping binding table
+                type: string
+                format: uc-mac
+              dhcp-snoop-bind-ip-address:
+                description: IP address assigned to the MAC address in the DHCP Snooping binding table
+                type: string
+                format: ipv4
+              dhcp-snoop-bind-lease-seconds:
+                description: >
+                  This indicates the lease time in seconds for the IP address assigned
+                  to the DHCP client, after which the IP address may be reassigned
+                type: integer
+              dhcp-snoop-bind-type:
+                description: Specifies the type of binding entry, such as dynamic or static, indicating how the IP address was assigned to the client
+                type: string
+                enum:
+                  - dynamic
+                  - static
+              dhcp-snoop-bind-vlan:
+                description: VLAN ID associated with the DHCP client’s IP address, which helps in managing network segments
+                type: integer
+                minimum: 1
+                maximum: 4094
+              dhcp-snoop-bind-interf:
+                description: Identifies the interface through which the DHCP client is connected, aiding in network topology management
+                type: string
+                examples:
+                  - "Ethernet1"
+                  - "Unit-1/Port-2"
+                  - "1-2"
+                  - "Trunk 1"

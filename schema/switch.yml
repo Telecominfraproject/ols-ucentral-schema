@@ -242,3 +242,294 @@ properties:
       Enables Jumbo frames
     type: boolean
     default: false
+  dhcp-snooping:
+      description: DHCP Snooping configuration parameters
+      type: object
+      properties:
+        dhcp-snoop-enable:
+          description: "Enables DHCP Snooping on the network switch, which is a security feature that prevents unauthorized DHCP servers from offering IP addresses"
+          type: boolean
+          default: false
+          enum: 
+            - true
+            - false
+        dhcp-snoop-rate-limit:
+          description: "Sets a limit on the number of DHCP packets per second that can be received on an untrusted interface to prevent DHCP flooding attacks"
+          type: integer
+          minimum: 1
+          maximum: 2048
+        dhcp-snoop-mac-verify:
+          description: "This option ensures that the MAC address in a DHCP request matches the source MAC address of the packet, providing an additional layer of security"
+          type: boolean
+          default: false
+          enum: 
+            - true
+            - false
+        dhcp-snoop-inf-opt-82:
+          description: "This refers to the insertion of information option 82 in DHCP packets, which adds more details about the client’s location and network information for tracking and control purposes"
+          type: boolean
+          default: false
+          enum: 
+            - true
+            - false
+        dhcp-snoop-inf-opt-encode-subopt:
+          description: "This parameter allows for the encoding of sub-options within option 82 to further specify client information"
+          type: boolean
+          default: false
+          enum: 
+            - true
+            - false
+        dhcp-snoop-inf-opt-remoteid:
+          description: "It specifies the remote ID sub-option in option 82, which typically includes information like the circuit ID or remote host identifier"
+          type: string
+          maxLength: 32
+          minLength: 1
+        dhcp-snoop-inf-opt-policy:
+          description: "This defines the policy for handling packets with option 82, determining whether they should be forwarded or dropped based on the configuration"
+          type: string
+          enum: 
+            - drop
+            - keep
+            - replace
+  acl:
+    description: Contains all the access control rule definitions
+    type: array
+    items:
+      type: object
+      properties:
+        acl-type:
+          description: Type of the access control list
+          type: string
+          enum:
+            - ipv4
+            - ipv6
+            - ipv4Ext
+            - ipv6Ext
+            - mac
+            - arp
+        acl-name:
+          description: The identifier or name for the Access Control List
+          type: string
+          maxLength: 32
+          minLength: 1
+        acl-rule-action:
+          description: Defines whether to permit or deny traffic matching the rule
+          type: string
+          enum:
+            - permit
+            - deny
+        acl-source-macaddress:
+          description: Specifies the source MAC address to filter on
+          type: string
+          format: uc-mac
+        acl-source-macbitmask:
+          description: The mask applied to the source MAC address
+          type: string
+          format: uc-mac
+        acl-dest-macaddress:
+          description: Specifies the destination MAC address for the filter
+          type: string
+          format: uc-mac
+        acl-dest-macbitmask:
+          description: The mask applied to the destination MAC address
+          type: string
+          format: uc-mac
+        acl-packet-format:
+          description: Identifies the protocol encapsulated in the Ethernet frame by its EtherType
+          type: string
+          enum:
+            - any
+            - untagged-eth2
+            - untagged-802.3
+            - tagged-eth2
+            - tagged-802.3
+        acl-vlanid:
+          description: Specifies a VLAN ID to filter traffic from a specific VLAN
+          type: integer
+          minimum: 1
+          maximum: 4094
+        acl-vid-bitmask:
+          description: The mask applied to the VLAN ID
+          type: integer
+          minimum: 1
+          maximum: 4095
+        acl-ethertype:
+          description: Filters packets based on the custom EtherType field in the Ethernet frame
+          type: string
+          default: "800"
+        acl-ethertype-bitmask:
+          description: The mask applied to the EtherType field
+          type: string
+          default: "FFFF"
+        acl-cos:
+          description: Filters based on the Class of Service (CoS) field in the frame
+          type: integer
+          minimum: 0
+          maximum: 7
+        acl-cos-bitmask:
+          description: The mask applied to the CoS field
+          type: integer
+          minimum: 0
+          maximum: 7
+        acl-ip-type:
+          description: Filters traffic based on the IP protocol type (none, IPv4, or IPv6)
+          type: string
+          enum:
+            - none
+            - ipv4
+            - ipv6
+        acl-ipv4-source-address:
+          description: The IPv4 address of the source to filter on
+          type: string
+          format: ipv4
+        acl-ipv4-source-subnetmask:
+          description: The subnet mask applied to the source IPv4 address
+          type: string
+          format: ipv4
+        acl-ipv4-dest-address:
+          description: The IPv4 address of the destination to filter on
+          type: string
+          format: ipv4
+        acl-ipv4-dest-subnetmask:
+          description: The subnet mask applied to the destination IPv4 address
+          type: string
+          format: ipv4
+        acl-ip-proto:
+          description: Filters based on the IP protocol number
+          type: integer
+          minimum: 0
+          maximum: 255
+        acl-ip-source-port:
+          description: Specifies the source port number for filtering
+          type: integer
+          minimum: 0
+          maximum: 65535
+        acl-ip-source-port-bitmask:
+          description: The mask applied to the source port number
+          type: integer
+          minimum: 0
+          maximum: 65535
+        acl-ip-dest-port:
+          description: Specifies the destination port number for filtering
+          type: integer
+          minimum: 0
+          maximum: 65535
+        acl-ip-dest-port-bitmask:
+          description: The mask applied to the destination port number
+          type: integer
+          minimum: 0
+          maximum: 65535
+  mvr-config:
+    description: This section defines the Multicast VLAN Registration (MVR) general configuration.
+    type: object
+    properties:
+      mvr-enable:
+        description: Enable/Disable MVR globally on the switch.
+        type: boolean
+        default: false
+        enum:
+          - true
+          - false
+      mvr-proxy-query-intvl:
+        description:
+          This command configures the interval (in seconds) at which the receiver port sends out general queries. 
+          The maximum value is determined based on 12 hours as maximum interval, and minimum as 1 second as allowed value.
+        type: integer
+        default: 125
+        maximum: 43200
+        minimum: 1
+      mvr-proxy-switching:
+        description:
+          Enable the MVR proxy switching mode, where the source port acts as a host, and the receiver port 
+          acts as an MVR router with querier service enabled.
+        type: boolean
+        default: false
+        enum:
+          - true
+          - false
+      mvr-robustness-val:
+        description:
+          Configure the expected packet loss, and thereby the number of times to generate report 
+          and group-specific queries when changes are learned about downstream groups, 
+          and the number of times group-specific queries are sent to downstream receiver ports. 
+          Right configuration ensures that multicast group memberships are correctly maintained 
+          even if some control messages are lost due to network issues.
+        type: integer
+        default: 2
+        maximum: 255
+        minimum: 1
+      mvr-source-port-mode:
+        description:
+          Configure the switch to forward only multicast streams that a source port has dynamically 
+          joined or to forward all multicast groups.
+        type: string
+        default: forward
+        enum:
+          - dynamic
+          - forward
+  mvr-domain-config:
+    description: Configure the Multicast VLAN Registration (MVR) domains.
+    type: array
+    items:
+      type: object
+      properties:
+        mvr-domain-id:
+          description: Unique identifier for a Multicast Domain defined under the MVR.
+          type: integer
+          minimum: 1
+          maximum: 10
+          default: 1
+        mvr-domain-enable:
+          description: Enable/disable Multicast VLAN Registration (MVR) for a specific domain.
+          type: boolean
+          default: false
+          enum:
+            - true
+            - false
+        mvr-domain-vlan-id:
+          description:
+            Per domain Level Multicast VLAN ID. Specifies the VLAN through which MVR multicast data is received. 
+            This is the VLAN to which all source ports must be assigned.
+          type: integer
+          minimum: 1
+          maximum: 4094
+          default: 1
+        mvr-domain-upstream-sip:
+          description: Configures the source IP address assigned to all MVR control packets sent upstream on all domains or on a specified domain.
+          type: string
+          format: ipv4
+          default: 0.0.0.0
+          examples:
+           - 192.168.0.5
+  mvr-group-config:
+    type: array
+    description: List of MVR groups (or profiles) configuration.
+    items:
+      type: object
+      properties:
+        mvr-group-name:
+          type: string
+          description: The name of a MVR group that consists of one or more MVR group addresses
+          maxLength: 16
+          minLength: 1
+        mvr-group-range-start:
+          type: string
+          format: ipv4
+          description: Start IP address on the range of MVR group addresses that maps to a profile/MVR group
+        mvr-group-range-end:
+          type: string
+          format: ipv4
+          description: Statically configure all multicast group addresses that will join an MVR VLAN. Map a range of MVR group addresses to a profile
+        mvr-group-assoc-domain:
+          type: array
+          items:
+            type: integer
+            description: Map the MVR Group to a specific domain. There can be many profiles under a single domain
+            maximum: 10
+            minimum: 1
+          description: Configures the associated domains where this group is mapped to.
+      required:
+        - mvr-group-name
+        - mvr-group-range-start
+        - mvr-group-range-end
+        - mvr-group-assoc-domain

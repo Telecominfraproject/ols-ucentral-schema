@@ -12,7 +12,7 @@ properties:
     type: integer
   serial:
     description:
-      The unique serial number of the device..
+      The unique serial number of the device.
     type: string
   unit:
     $ref: "https://ucentral.io/state/v1/unit/"

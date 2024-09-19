@@ -18,6 +18,13 @@ properties:
       - LAN*
       - WAN*
       - "*"
+  name:
+    description:
+      This is a free text field, stating the administrative name of the
+      port. It may contain spaces and special characters, not exceeding 64 characters.
+    type: string
+    examples:
+    - 'cloud_uplink_port'
   speed:
     description:
       The link speed that shall be forced.
