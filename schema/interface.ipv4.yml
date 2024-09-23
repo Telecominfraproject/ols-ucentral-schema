@@ -150,6 +150,34 @@ properties:
                   format: ipv4
                   examples:
                   - 225.0.0.1
+      mvr:
+        type: object
+        description: MVR attributes on a given interface
+        properties:
+          mvr-intf-mvr-role:
+            type: string
+            description: Configure an interface as an MVR receiver or source port. A port which is not configured as an MVR receiver or source port can use IGMP snooping to join or leave multicast groups using the standard rules for multicast filtering.
+            enum:
+              - none
+              - source
+              - receiver
+          mvr-intf-immed-leave:
+            type: string
+            description: Switch to immediately remove an interface from a multicast stream as soon as it receives a leave message for that group. Applies to only receiver role ports.
+            enum:
+              - none
+              - by-host-ip
+              - by-group
+            default: by-group
+          mvr-intf-assoc-domain:
+            type: integer
+            description: Map the port to a specific domain.
+            maximum: 10
+            minimum: 1
+        required:
+          - mvr-intf-mvr-role
+          - mvr-intf-immed-leave
+          - mvr-intf-assoc-domain
   send-hostname:
     description:
       include the devices hostname inside DHCP requests
@@ -168,6 +196,10 @@ properties:
       examples:
       - 8.8.8.8
       - 4.4.4.4
+  dhcp-snoop-vlan-enable:
+    description: "Enables DHCP Snooping on a VLAN"
+    type: boolean
+    default: false
   dhcp:
     $ref: "https://ucentral.io/schema/v1/interface/ipv4/dhcp/"
   dhcp-leases:

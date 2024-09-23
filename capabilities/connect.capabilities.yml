@@ -134,8 +134,8 @@ properties:
       # L2
       - VLAN
       - Jumbo-Frames
-      - LACP
-      - Link-Aggregation
+      - Link-Aggregation-LACP
+      - Link-Aggregation-Static
       - Port-Isolation
       - Spanning-Tree
       - Spanning-Tree-Rapid
@@ -163,6 +163,7 @@ properties:
       - Routing-IPv6-DHCP-Stateful
       - Routing-IPv6-DHCP-Stateless
       - Routing-IPv6-Port-Forward
+      - Multicast-VLAN-Registration
       # PoE
       - PoE-Reset
       # .1X
@@ -173,6 +174,9 @@ properties:
       - System-SwUpdate
       - System-SwUpdate-Partial
       - Port-Mirroring
+      # Security
+      - MAC-ACL
+      - Guest-VLAN
       # Services
       - Service-SSH
       - Service-RSSH
@@ -183,6 +187,7 @@ properties:
       - Service-GPS
       - Service-IGMP
       - Service-NTP
+      - Service-NTP-Client
       - Service-MDNS
       - Service-QoS
       - Service-Syslog
