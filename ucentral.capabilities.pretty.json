@@ -204,7 +204,7 @@
                     "System-SwUpdate",
                     "System-SwUpdate-Partial",
                     "Port-Mirroring",
-                    "MAC-",
+                    "MAC-ACL",
                     "Guest-VLAN",
                     "Service-SSH",
                     "Service-RSSH",

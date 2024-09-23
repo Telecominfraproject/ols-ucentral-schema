@@ -770,11 +770,7 @@
                     "properties": {
                         "dhcp-snoop-enable": {
                             "type": "boolean",
-                            "default": false,
-                            "enum": [
-                                true,
-                                false
-                            ]
+                            "default": false
                         },
                         "dhcp-snoop-rate-limit": {
                             "type": "integer",
@@ -783,27 +779,15 @@
                         },
                         "dhcp-snoop-mac-verify": {
                             "type": "boolean",
-                            "default": false,
-                            "enum": [
-                                true,
-                                false
-                            ]
+                            "default": false
                         },
                         "dhcp-snoop-inf-opt-82": {
                             "type": "boolean",
-                            "default": false,
-                            "enum": [
-                                true,
-                                false
-                            ]
+                            "default": false
                         },
                         "dhcp-snoop-inf-opt-encode-subopt": {
                             "type": "boolean",
-                            "default": false,
-                            "enum": [
-                                true,
-                                false
-                            ]
+                            "default": false
                         },
                         "dhcp-snoop-inf-opt-remoteid": {
                             "type": "string",
@@ -933,7 +917,7 @@
                             },
                             "acl-ip-source-port": {
                                 "type": "integer",
-                                "minimum": 0,
+                                "minimum": 1,
                                 "maximum": 65535
                             },
                             "acl-ip-source-port-bitmask": {
@@ -943,7 +927,7 @@
                             },
                             "acl-ip-dest-port": {
                                 "type": "integer",
-                                "minimum": 0,
+                                "minimum": 1,
                                 "maximum": 65535
                             },
                             "acl-ip-dest-port-bitmask": {
@@ -959,11 +943,7 @@
                     "properties": {
                         "mvr-enable": {
                             "type": "boolean",
-                            "default": false,
-                            "enum": [
-                                true,
-                                false
-                            ]
+                            "default": false
                         },
                         "mvr-proxy-query-intvl": {
                             "type": "integer",
@@ -973,11 +953,7 @@
                         },
                         "mvr-proxy-switching": {
                             "type": "boolean",
-                            "default": false,
-                            "enum": [
-                                true,
-                                false
-                            ]
+                            "default": false
                         },
                         "mvr-robustness-val": {
                             "type": "integer",
@@ -1008,11 +984,7 @@
                             },
                             "mvr-domain-enable": {
                                 "type": "boolean",
-                                "default": false,
-                                "enum": [
-                                    true,
-                                    false
-                                ]
+                                "default": false
                             },
                             "mvr-domain-vlan-id": {
                                 "type": "integer",
@@ -1023,7 +995,6 @@
                             "mvr-domain-upstream-sip": {
                                 "type": "string",
                                 "format": "ipv4",
-                                "default": "0.0.0.0",
                                 "examples": [
                                     "192.168.0.5"
                                 ]
@@ -1050,6 +1021,7 @@
                                 "format": "ipv4"
                             },
                             "mvr-group-assoc-domain": {
+                                "descpription": "Map the MVR Group to a secific domain. There can be many profiles under a single domain",
                                 "type": "array",
                                 "items": {
                                     "type": "integer",
@@ -1667,11 +1639,7 @@
                 },
                 "dhcp-snoop-vlan-enable": {
                     "type": "boolean",
-                    "default": false,
-                    "enum": [
-                        true,
-                        false
-                    ]
+                    "default": false
                 },
                 "dhcp": {
                     "$ref": "#/$defs/interface.ipv4.dhcp"
@@ -1873,11 +1841,7 @@
                     },
                     "acl-inf-counters-ingress": {
                         "type": "boolean",
-                        "default": false,
-                        "enum": [
-                            true,
-                            false
-                        ]
+                        "default": false
                     },
                     "acl-inf-policy-egress": {
                         "type": "string",
@@ -1889,11 +1853,7 @@
                     },
                     "acl-inf-counters-egress": {
                         "type": "boolean",
-                        "default": false,
-                        "enum": [
-                            true,
-                            false
-                        ]
+                        "default": false
                     }
                 }
             }
@@ -1903,16 +1863,11 @@
             "properties": {
                 "dhcp-snoop-port-trust": {
                     "type": "boolean",
-                    "default": false,
-                    "enum": [
-                        true,
-                        false
-                    ]
+                    "default": false
                 },
                 "dhcp-snoop-port-client-limit": {
                     "type": "integer",
-                    "minimum": 1,
-                    "maximum": 16
+                    "minimum": 1
                 },
                 "dhcp-snoop-port-circuit-id": {
                     "type": "string",

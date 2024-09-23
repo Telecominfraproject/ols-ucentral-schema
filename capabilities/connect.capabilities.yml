@@ -175,7 +175,7 @@ properties:
       - System-SwUpdate-Partial
       - Port-Mirroring
       # Security
-      - MAC-
+      - MAC-ACL
       - Guest-VLAN
       # Services
       - Service-SSH

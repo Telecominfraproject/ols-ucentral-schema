@@ -883,11 +883,7 @@
                         "dhcp-snoop-enable": {
                             "description": "Enables DHCP Snooping on the network switch, which is a security feature that prevents unauthorized DHCP servers from offering IP addresses",
                             "type": "boolean",
-                            "default": false,
-                            "enum": [
-                                true,
-                                false
-                            ]
+                            "default": false
                         },
                         "dhcp-snoop-rate-limit": {
                             "description": "Sets a limit on the number of DHCP packets per second that can be received on an untrusted interface to prevent DHCP flooding attacks",
@@ -898,29 +894,17 @@
                         "dhcp-snoop-mac-verify": {
                             "description": "This option ensures that the MAC address in a DHCP request matches the source MAC address of the packet, providing an additional layer of security",
                             "type": "boolean",
-                            "default": false,
-                            "enum": [
-                                true,
-                                false
-                            ]
+                            "default": false
                         },
                         "dhcp-snoop-inf-opt-82": {
                             "description": "This refers to the insertion of information option 82 in DHCP packets, which adds more details about the client\u2019s location and network information for tracking and control purposes",
                             "type": "boolean",
-                            "default": false,
-                            "enum": [
-                                true,
-                                false
-                            ]
+                            "default": false
                         },
                         "dhcp-snoop-inf-opt-encode-subopt": {
                             "description": "This parameter allows for the encoding of sub-options within option 82 to further specify client information",
                             "type": "boolean",
-                            "default": false,
-                            "enum": [
-                                true,
-                                false
-                            ]
+                            "default": false
                         },
                         "dhcp-snoop-inf-opt-remoteid": {
                             "description": "It specifies the remote ID sub-option in option 82, which typically includes information like the circuit ID or remote host identifier",
@@ -1015,7 +999,7 @@
                                 "maximum": 4095
                             },
                             "acl-ethertype": {
-                                "description": "Filters packets based on the custom EtherType field in the Ethernet frame",
+                                "description": "Filters packets based on the custom EtherType field (HEX) in the Ethernet frame",
                                 "type": "string",
                                 "default": "800"
                             },
@@ -1074,7 +1058,7 @@
                             "acl-ip-source-port": {
                                 "description": "Specifies the source port number for filtering",
                                 "type": "integer",
-                                "minimum": 0,
+                                "minimum": 1,
                                 "maximum": 65535
                             },
                             "acl-ip-source-port-bitmask": {
@@ -1086,7 +1070,7 @@
                             "acl-ip-dest-port": {
                                 "description": "Specifies the destination port number for filtering",
                                 "type": "integer",
-                                "minimum": 0,
+                                "minimum": 1,
                                 "maximum": 65535
                             },
                             "acl-ip-dest-port-bitmask": {
@@ -1105,11 +1089,7 @@
                         "mvr-enable": {
                             "description": "Enable/Disable MVR globally on the switch.",
                             "type": "boolean",
-                            "default": false,
-                            "enum": [
-                                true,
-                                false
-                            ]
+                            "default": false
                         },
                         "mvr-proxy-query-intvl": {
                             "description": "This command configures the interval (in seconds) at which the receiver port sends out general queries. The maximum value is determined based on 12 hours as maximum interval, and minimum as 1 second as allowed value.",
@@ -1121,11 +1101,7 @@
                         "mvr-proxy-switching": {
                             "description": "Enable the MVR proxy switching mode, where the source port acts as a host, and the receiver port acts as an MVR router with querier service enabled.",
                             "type": "boolean",
-                            "default": false,
-                            "enum": [
-                                true,
-                                false
-                            ]
+                            "default": false
                         },
                         "mvr-robustness-val": {
                             "description": "Configure the expected packet loss, and thereby the number of times to generate report and group-specific queries when changes are learned about downstream groups, and the number of times group-specific queries are sent to downstream receiver ports. Right configuration ensures that multicast group memberships are correctly maintained even if some control messages are lost due to network issues.",
@@ -1161,11 +1137,7 @@
                             "mvr-domain-enable": {
                                 "description": "Enable/disable Multicast VLAN Registration (MVR) for a specific domain.",
                                 "type": "boolean",
-                                "default": false,
-                                "enum": [
-                                    true,
-                                    false
-                                ]
+                                "default": false
                             },
                             "mvr-domain-vlan-id": {
                                 "description": "Per domain Level Multicast VLAN ID. Specifies the VLAN through which MVR multicast data is received. This is the VLAN to which all source ports must be assigned.",
@@ -1178,7 +1150,6 @@
                                 "description": "Configures the source IP address assigned to all MVR control packets sent upstream on all domains or on a specified domain.",
                                 "type": "string",
                                 "format": "ipv4",
-                                "default": "0.0.0.0",
                                 "examples": [
                                     "192.168.0.5"
                                 ]
@@ -1209,14 +1180,13 @@
                                 "description": "Statically configure all multicast group addresses that will join an MVR VLAN. Map a range of MVR group addresses to a profile"
                             },
                             "mvr-group-assoc-domain": {
+                                "descpription": "Map the MVR Group to a secific domain. There can be many profiles under a single domain",
                                 "type": "array",
                                 "items": {
                                     "type": "integer",
-                                    "description": "Map the MVR Group to a specific domain. There can be many profiles under a single domain",
                                     "maximum": 10,
                                     "minimum": 1
-                                },
-                                "description": "Configures the associated domains where this group is mapped to."
+                                }
                             }
                         },
                         "required": [
@@ -1913,11 +1883,7 @@
                 "dhcp-snoop-vlan-enable": {
                     "description": "Enables DHCP Snooping on a VLAN",
                     "type": "boolean",
-                    "default": false,
-                    "enum": [
-                        true,
-                        false
-                    ]
+                    "default": false
                 },
                 "dhcp": {
                     "$ref": "#/$defs/interface.ipv4.dhcp"
@@ -2143,11 +2109,7 @@
                     "acl-inf-counters-ingress": {
                         "description": "Tracks the number and type of packets that match the ingress ACL rules on an interface.",
                         "type": "boolean",
-                        "default": false,
-                        "enum": [
-                            true,
-                            false
-                        ]
+                        "default": false
                     },
                     "acl-inf-policy-egress": {
                         "description": "Specifies the ACL policy that is applied to outgoing traffic from an interface.",
@@ -2161,11 +2123,7 @@
                     "acl-inf-counters-egress": {
                         "description": "Tracks the number and type of packets that match the egress ACL rules on an interface.",
                         "type": "boolean",
-                        "default": false,
-                        "enum": [
-                            true,
-                            false
-                        ]
+                        "default": false
                     }
                 }
             }
@@ -2177,17 +2135,12 @@
                 "dhcp-snoop-port-trust": {
                     "description": "This parameter designates a switch port as \u2018trusted\u2019 for DHCP messages, meaning it can forward DHCP offers and acknowledgments, which is essential for connecting to legitimate DHCP servers",
                     "type": "boolean",
-                    "default": false,
-                    "enum": [
-                        true,
-                        false
-                    ]
+                    "default": false
                 },
                 "dhcp-snoop-port-client-limit": {
                     "description": "It sets a limit on the number of DHCP clients that can be associated with a single port, helping to prevent a single port from exhausting the network\u2019s IP address pool",
                     "type": "integer",
-                    "minimum": 1,
-                    "maximum": 16
+                    "minimum": 1
                 },
                 "dhcp-snoop-port-circuit-id": {
                     "description": "Specifies DHCP Option 82 circuit ID suboption information. Often including information like the interface number and VLAN ID, this can be useful for network management and troubleshooting",

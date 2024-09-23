@@ -200,9 +200,6 @@ properties:
     description: "Enables DHCP Snooping on a VLAN"
     type: boolean
     default: false
-    enum: 
-      - true
-      - false
   dhcp:
     $ref: "https://ucentral.io/schema/v1/interface/ipv4/dhcp/"
   dhcp-leases:

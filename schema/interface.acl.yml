@@ -20,9 +20,6 @@ items:
       description: Tracks the number and type of packets that match the ingress ACL rules on an interface.
       type: boolean
       default: false
-      enum:
-        - true
-        - false
     acl-inf-policy-egress:
       description: Specifies the ACL policy that is applied to outgoing traffic from an interface.
       type: string
@@ -34,6 +31,3 @@ items:
       description: Tracks the number and type of packets that match the egress ACL rules on an interface.
       type: boolean
       default: false
-      enum:
-        - true
-        - false

@@ -24,7 +24,7 @@ properties:
       port. It may contain spaces and special characters, not exceeding 64 characters.
     type: string
     examples:
-    - 'cloud_uplink_port'
+    - cloud_uplink_port
   speed:
     description:
       The link speed that shall be forced.

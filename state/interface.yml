@@ -81,10 +81,6 @@ items:
         mvr-intf-fwd-status:
           description: Shows if MVR traffic is being forwarded or discarded.
           type: boolean
-          default: false
-          enum:
-            - true
-            - false
         mvr-intf-igmp-count-reports:
           description: The number of IGMP membership reports received on this interface.
           type: integer
@@ -130,14 +126,12 @@ items:
                   - ipv6Ext
                   - mac
                   - arp
-                default: None
               acl-rule-action:
                 description: "Indicates the action (permit or deny) taken when an ACL rule is matched."
                 type: string
                 enum:
                   - permit
                   - deny
-                default: permit
               acl-hit-count:
                 description: "The number of times an ACL rule has been matched by traffic."
                 type: number
@@ -174,9 +168,7 @@ items:
                 type: string
                 format: ipv4
               dhcp-snoop-bind-lease-seconds:
-                description: >
-                  This indicates the lease time in seconds for the IP address assigned
-                  to the DHCP client, after which the IP address may be reassigned
+                description: This indicates the lease time in seconds for the IP address assigned to the DHCP client, after which the IP address may be reassigned
                 type: integer
               dhcp-snoop-bind-type:
                 description: Specifies the type of binding entry, such as dynamic or static, indicating how the IP address was assigned to the client
