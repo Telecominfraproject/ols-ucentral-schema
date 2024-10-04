@@ -84,6 +84,10 @@
         },
         "lacp-trunks": {
             "$ref": "#/$defs/lacp-trunks"
+        },
+        "uplink_interface": {
+            "type": "string",
+            "description": "Current interface that serves as the Uplink. Example Ethernet2."
         }
     },
     "$defs": {
@@ -334,10 +338,6 @@
                 "public_ip": {
                     "type": "string",
                     "description": "The public IP address of internet connection."
-                },
-                "uplink_interface": {
-                    "type": "string",
-                    "description": "Current interface that serves as the Uplink. Example Ethernet2."
                 },
                 "leasetime": {
                     "type": "number",

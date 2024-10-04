@@ -58,3 +58,7 @@ properties:
     $ref: "https://ucentral.io/state/v1/static-trunks/"
   lacp-trunks:
     $ref: "https://ucentral.io/state/v1/lacp-trunks/"
+  uplink_interface:
+    type: string
+    description:
+      Current interface that serves as the Uplink. Example Ethernet2.
