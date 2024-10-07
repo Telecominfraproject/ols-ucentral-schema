@@ -15,6 +15,28 @@
                 "Rel 1.6 build 5"
             ]
         },
+        "version": {
+            "type": "object",
+            "description": "The ols schema version to be used with this Switch",
+            "properties": {
+                "major": {
+                    "type": "integer"
+                },
+                "minor": {
+                    "type": "integer"
+                },
+                "patch": {
+                    "type": "integer"
+                }
+            },
+            "examples": [
+                {
+                    "major": 3,
+                    "minor": 2,
+                    "patch": 0
+                }
+            ]
+        },
         "platform": {
             "type": "string",
             "enum": [
