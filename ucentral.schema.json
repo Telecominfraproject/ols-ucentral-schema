@@ -481,6 +481,14 @@
                             "type": "integer",
                             "minimum": 1,
                             "maximum": 4094
+                        },
+                        "mac-address-bypass": {
+                            "type": "boolean"
+                        },
+                        "mac-address-bypass-timout": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 30
                         }
                     }
                 },
@@ -542,6 +550,169 @@
                                 "long"
                             ],
                             "default": "long"
+                        }
+                    }
+                },
+                "voice-vlan-intf-config": {
+                    "type": "object",
+                    "properties": {
+                        "voice-vlan-intf-mode": {
+                            "type": "string",
+                            "default": "auto",
+                            "enum": [
+                                "none",
+                                "manual",
+                                "auto"
+                            ]
+                        },
+                        "voice-vlan-intf-priority": {
+                            "type": "integer",
+                            "default": 6,
+                            "minimum": 0,
+                            "maximum": 6
+                        },
+                        "voice-vlan-intf-detect-voice": {
+                            "type": "string",
+                            "default": "oui",
+                            "enum": [
+                                "oui",
+                                "lldp"
+                            ]
+                        },
+                        "voice-vlan-intf-security": {
+                            "type": "boolean",
+                            "default": false
+                        }
+                    }
+                },
+                "lldp-interface-config": {
+                    "type": "object",
+                    "properties": {
+                        "lldp-admin-status": {
+                            "type": "string",
+                            "enum": [
+                                "receive",
+                                "transmit",
+                                "tx-rx",
+                                "disabled"
+                            ]
+                        },
+                        "lldp-basic-tlv-mgmt-ip-v4": {
+                            "type": "boolean",
+                            "default": true
+                        },
+                        "lldp-basic-tlv-mgmt-ip-v6": {
+                            "type": "boolean",
+                            "default": false
+                        },
+                        "lldp-basic-tlv-port-descr": {
+                            "type": "boolean",
+                            "default": true
+                        },
+                        "lldp-basic-tlv-sys-capab": {
+                            "type": "boolean",
+                            "default": true
+                        },
+                        "lldp-basic-tlv-sys-descr": {
+                            "type": "boolean",
+                            "default": true
+                        },
+                        "lldp-basic-tlv-sys-name": {
+                            "type": "boolean",
+                            "default": true
+                        },
+                        "lldp-dot1-tlv-proto-ident": {
+                            "type": "boolean",
+                            "default": true
+                        },
+                        "lldp-dot1-tlv-proto-vid": {
+                            "type": "boolean",
+                            "default": true
+                        },
+                        "lldp-dot1-tlv-pvid": {
+                            "type": "boolean",
+                            "default": true
+                        },
+                        "lldp-dot1-tlv-vlan-name": {
+                            "type": "boolean",
+                            "default": true
+                        },
+                        "lldp-dot3-tlv-link-agg": {
+                            "type": "boolean",
+                            "default": true
+                        },
+                        "lldp-dot3-tlv-mac-phy": {
+                            "type": "boolean",
+                            "default": true
+                        },
+                        "lldp-dot3-tlv-max-frame": {
+                            "type": "boolean",
+                            "default": true
+                        },
+                        "lldp-dot3-tlv-poe": {
+                            "type": "boolean",
+                            "default": true
+                        },
+                        "lldp-med-location-civic-addr": {
+                            "type": "object",
+                            "properties": {
+                                "lldp-med-location-civic-addr-admin-status": {
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "lldp-med-location-civic-country-code": {
+                                    "type": "string"
+                                },
+                                "lldp-med-location-civic-device-type": {
+                                    "type": "integer"
+                                },
+                                "lldp-med-location-civic-ca": {
+                                    "type": "arrray",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "lldp-med-location-civic-ca-type": {
+                                                "type": "integer",
+                                                "maximum": 255,
+                                                "minimum": 0
+                                            },
+                                            "lldp-med-location-civic-ca-value": {
+                                                "type": "string",
+                                                "maxLength": 32,
+                                                "minLength": 1
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "lldp-med-notification": {
+                            "type": "boolean",
+                            "default": false
+                        },
+                        "lldp-med-tlv-ext-poe": {
+                            "type": "boolean",
+                            "default": true
+                        },
+                        "lldp-med-tlv-inventory": {
+                            "type": "boolean",
+                            "default": true
+                        },
+                        "lldp-med-tlv-location": {
+                            "type": "boolean",
+                            "default": true
+                        },
+                        "lldp-med-tlv-med-cap": {
+                            "type": "boolean",
+                            "default": true
+                        },
+                        "lldp-med-tlv-network-policy": {
+                            "type": "boolean",
+                            "default": true
+                        },
+                        "lldp-notification": {
+                            "type": "boolean",
+                            "default": false
                         }
                     }
                 }
@@ -910,14 +1081,42 @@
                                 "type": "string",
                                 "format": "ipv4"
                             },
+                            "acl-ipv6-source-address": {
+                                "type": "string",
+                                "format": "ipv6"
+                            },
+                            "acl-ipv6-source-prefix-length": {
+                                "type": "integer",
+                                "minimum": 0,
+                                "maximum": 128
+                            },
+                            "acl-ipv6-dest-address": {
+                                "type": "string",
+                                "format": "ipv6"
+                            },
+                            "acl-ipv6-dest-prefix-length": {
+                                "type": "integer",
+                                "minimum": 0,
+                                "maximum": 128
+                            },
                             "acl-ip-proto": {
                                 "type": "integer",
                                 "minimum": 0,
                                 "maximum": 255
                             },
+                            "acl-ipv6-next-header": {
+                                "type": "integer",
+                                "minimum": 0,
+                                "maximum": 255
+                            },
+                            "acl-ipv6-flow-label": {
+                                "type": "integer",
+                                "minimum": 0,
+                                "maximum": 1048575
+                            },
                             "acl-ip-source-port": {
                                 "type": "integer",
-                                "minimum": 1,
+                                "minimum": 0,
                                 "maximum": 65535
                             },
                             "acl-ip-source-port-bitmask": {
@@ -927,13 +1126,33 @@
                             },
                             "acl-ip-dest-port": {
                                 "type": "integer",
-                                "minimum": 1,
+                                "minimum": 0,
                                 "maximum": 65535
                             },
                             "acl-ip-dest-port-bitmask": {
                                 "type": "integer",
                                 "minimum": 0,
                                 "maximum": 65535
+                            },
+                            "acl-ipv4-fragment-offset": {
+                                "type": "integer",
+                                "minimum": 0,
+                                "maximum": 8191
+                            },
+                            "acl-ipv6-fragment-offset": {
+                                "type": "integer",
+                                "minimum": 0,
+                                "maximum": 8191
+                            },
+                            "acl-ip-ttl": {
+                                "type": "integer",
+                                "minimum": 0,
+                                "maximum": 255
+                            },
+                            "acl-ipv6-hop-limit": {
+                                "type": "integer",
+                                "minimum": 0,
+                                "maximum": 255
                             }
                         }
                     }
@@ -1036,6 +1255,184 @@
                             "mvr-group-range-end",
                             "mvr-group-assoc-domain"
                         ]
+                    }
+                },
+                "lldp-global-config": {
+                    "type": "object",
+                    "properties": {
+                        "lldp-enable": {
+                            "type": "boolean",
+                            "default": true
+                        },
+                        "lldp-holdtime-multiplier": {
+                            "type": "integer",
+                            "default": 4
+                        },
+                        "lldp-med-fast-start-count": {
+                            "type": "integer",
+                            "default": 4
+                        },
+                        "lldp-refresh-interval": {
+                            "type": "integer",
+                            "default": 30
+                        },
+                        "lldp-reinit-delay": {
+                            "type": "integer",
+                            "default": 2
+                        },
+                        "lldp-tx-delay": {
+                            "type": "integer",
+                            "maximum": 8192,
+                            "minimum": 1
+                        },
+                        "lldp-notification-interval": {
+                            "type": "integer",
+                            "default": 5
+                        }
+                    }
+                },
+                "mc-lag": {
+                    "type": "boolean",
+                    "default": false
+                },
+                "mclag-config": {
+                    "type": "object",
+                    "properties": {
+                        "mclag-domains": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "mclag-domain": {
+                                        "type": "integer",
+                                        "minimum": 1,
+                                        "maximum": 1024,
+                                        "default": 1
+                                    },
+                                    "peer-link": {
+                                        "type": "object",
+                                        "properties": {
+                                            "type": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "port",
+                                                    "trunk-group"
+                                                ],
+                                                "default": "trunk-group"
+                                            },
+                                            "value": {
+                                                "type": "integer",
+                                                "minimum": 1,
+                                                "maximum": 64
+                                            }
+                                        }
+                                    },
+                                    "mclag-group": {
+                                        "type": "object",
+                                        "properties": {
+                                            "group-id": {
+                                                "type": "integer",
+                                                "minimum": 1,
+                                                "maximum": 128
+                                            },
+                                            "members": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "string",
+                                                    "examples": [
+                                                        "eth0",
+                                                        "eth1"
+                                                    ]
+                                                }
+                                            },
+                                            "lacp-config": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "lacp-enable": {
+                                                        "type": "boolean",
+                                                        "default": true
+                                                    },
+                                                    "lacp-role": {
+                                                        "type": "string",
+                                                        "enum": [
+                                                            "actor",
+                                                            "partner"
+                                                        ],
+                                                        "default": "actor"
+                                                    },
+                                                    "lacp-timeout": {
+                                                        "type": "string",
+                                                        "enum": [
+                                                            "short",
+                                                            "long"
+                                                        ],
+                                                        "default": "long"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "system-priority": {
+                                        "type": "integer",
+                                        "minimum": 1,
+                                        "maximum": 65535,
+                                        "default": 32768
+                                    },
+                                    "dual-active-detection": {
+                                        "type": "boolean",
+                                        "default": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "voice-vlan-config": {
+                    "type": "object",
+                    "properties": {
+                        "voice-vlan-enable": {
+                            "type": "boolean",
+                            "default": false,
+                            "enum": [
+                                true,
+                                false
+                            ]
+                        },
+                        "voice-vlan-id": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 4094
+                        },
+                        "voice-vlan-ageing-time": {
+                            "type": "integer",
+                            "minimum": 5,
+                            "maximum": 43200,
+                            "default": 1440
+                        },
+                        "voice-vlan-oui-config": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "voice-vlan-oui-mac": {
+                                        "type": "string",
+                                        "format": "uc-mac"
+                                    },
+                                    "voice-vlan-oui-mask": {
+                                        "type": "string",
+                                        "format": "uc-mac"
+                                    },
+                                    "voice-vlan-oui-description": {
+                                        "type": "string",
+                                        "maxLength": 32,
+                                        "minLength": 1,
+                                        "examples": [
+                                            "A VoIP Phone"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }

@@ -182,6 +182,224 @@
                 }
             }
         },
+        "mclag-capabilities": {
+            "description": "Capabilities of the MC-LAG (Multi-Chassis Link Aggregation) feature in the switch",
+            "type": "object",
+            "properties": {
+                "max-mclag-groups": {
+                    "description": "Defines the maximum number of MC-LAG groups that can be configured on the switch.",
+                    "type": "integer"
+                },
+                "max-ports-per-mclag-group": {
+                    "description": "Specifies the maximum number of physical ports that can be part of a single MC-LAG group.",
+                    "type": "integer"
+                },
+                "max-vlans-per-mclag-group": {
+                    "description": "Indicates the maximum number of VLANs that can be supported within a single MC-LAG group.",
+                    "type": "integer"
+                },
+                "peer-link-bandwidth": {
+                    "description": "Defines the required minimum bandwidth for the peer link that connects two MC-LAG switches.",
+                    "type": "string",
+                    "enum": [
+                        "1G",
+                        "10G",
+                        "40G",
+                        "100G"
+                    ]
+                },
+                "dual-active-detection": {
+                    "description": "Describes the dual-active detection mechanism to prevent both switches from becoming active simultaneously.",
+                    "type": "string",
+                    "enum": [
+                        "ICCP",
+                        "Backup-Link",
+                        "None"
+                    ]
+                },
+                "failover-time": {
+                    "description": "Specifies the time required for traffic to fail over to the secondary switch when there is a failure in the primary switch.",
+                    "type": "integer",
+                    "unit": "milliseconds"
+                },
+                "vlan-synchronization": {
+                    "description": "Indicates whether VLAN synchronization across MC-LAG peers is supported and the number of VLANs that can be synchronized.",
+                    "type": "boolean"
+                },
+                "max-mac-entries-per-mclag": {
+                    "description": "Maximum number of MAC address entries that can be synchronized across MC-LAG peers.",
+                    "type": "integer"
+                }
+            }
+        },
+        "lldp-capabilities": {
+            "type": "object",
+            "description": "Description of LLDP capabilities across different switch models/vendors.",
+            "properties": {
+                "supported-tlvs": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "enum": [
+                            "management-ip-address",
+                            "port-description",
+                            "system-capabilities",
+                            "system-description",
+                            "system-name",
+                            "proto-ident",
+                            "proto-vid",
+                            "pvid",
+                            "vlan-name",
+                            "link-agg",
+                            "mac-phy",
+                            "max-frame",
+                            "poe",
+                            "med-location",
+                            "med-inventory",
+                            "med-capabilities",
+                            "med-network-policy"
+                        ]
+                    }
+                },
+                "lldp-med-support": {
+                    "type": "boolean",
+                    "description": "Specifies whether LLDP-MED support is available on the switch.",
+                    "examples": [
+                        true,
+                        false
+                    ]
+                },
+                "max-neighbors": {
+                    "type": "integer",
+                    "description": "Maximum number of LLDP neighbors a switch can discover and maintain.",
+                    "examples": [
+                        64,
+                        128,
+                        256
+                    ]
+                },
+                "refresh-interval": {
+                    "type": "object",
+                    "description": "Time interval (in seconds) for sending LLDP advertisements.",
+                    "properties": {
+                        "min": {
+                            "type": "integer",
+                            "examples": [
+                                2,
+                                5
+                            ]
+                        },
+                        "max": {
+                            "type": "integer",
+                            "examples": [
+                                60,
+                                120
+                            ]
+                        }
+                    }
+                },
+                "holdtime-multiplier-range": {
+                    "type": "object",
+                    "description": "Range of holdtime multiplier values for LLDP TTL calculation.",
+                    "properties": {
+                        "min": {
+                            "type": "integer",
+                            "examples": [
+                                2,
+                                4
+                            ]
+                        },
+                        "max": {
+                            "type": "integer",
+                            "examples": [
+                                10,
+                                20
+                            ]
+                        }
+                    }
+                },
+                "reinit-delay": {
+                    "type": "object",
+                    "description": "Time delay (in seconds) before reinitializing LLDP after a port/link down event.",
+                    "properties": {
+                        "min": {
+                            "type": "integer",
+                            "examples": [
+                                1,
+                                2
+                            ]
+                        },
+                        "max": {
+                            "type": "integer",
+                            "examples": [
+                                5,
+                                10
+                            ]
+                        }
+                    }
+                },
+                "notification-interval": {
+                    "type": "object",
+                    "description": "Interval for sending SNMP notifications upon LLDP changes (in seconds).",
+                    "properties": {
+                        "min": {
+                            "type": "integer",
+                            "examples": [
+                                10,
+                                30
+                            ]
+                        },
+                        "max": {
+                            "type": "integer",
+                            "examples": [
+                                300,
+                                600
+                            ]
+                        }
+                    }
+                },
+                "mac-phy-support": {
+                    "type": "boolean",
+                    "description": "Specifies whether LLDP advertisements include MAC and physical layer specifications.",
+                    "examples": [
+                        true,
+                        false
+                    ]
+                },
+                "max-frame-size": {
+                    "type": "integer",
+                    "description": "Maximum frame size that the switch supports for LLDP advertisements.",
+                    "examples": [
+                        1500,
+                        9000
+                    ]
+                },
+                "link-aggregation-support": {
+                    "type": "boolean",
+                    "description": "Indicates if LLDP supports link aggregation reporting on the switch.",
+                    "examples": [
+                        true,
+                        false
+                    ]
+                },
+                "vlan-tlv-support": {
+                    "type": "boolean",
+                    "description": "Indicates if the switch supports advertising VLAN-related TLVs (e.g., PVID, VLAN name).",
+                    "examples": [
+                        true,
+                        false
+                    ]
+                },
+                "power-over-ethernet-support": {
+                    "type": "boolean",
+                    "description": "Specifies if the switch can advertise PoE capabilities through LLDP.",
+                    "examples": [
+                        true,
+                        false
+                    ]
+                }
+            }
+        },
         "supported-features": {
             "type": "array",
             "description": "List of all features supported by the device",
@@ -189,9 +407,11 @@
                 "type": "string",
                 "enum": [
                     "VLAN",
+                    "VLAN-Voice",
                     "Jumbo-Frames",
                     "Link-Aggregation-LACP",
                     "Link-Aggregation-Static",
+                    "Link-Aggregation-MCLAG",
                     "Port-Isolation",
                     "Spanning-Tree",
                     "Spanning-Tree-Rapid",
@@ -222,11 +442,13 @@
                     "PoE-Reset",
                     "Port-Access-Control",
                     "PAC-Dynamic-Auth",
+                    "mac-address-bypass",
                     "System-PasswordChange",
                     "System-SwUpdate",
                     "System-SwUpdate-Partial",
                     "Port-Mirroring",
                     "MAC-ACL",
+                    "IP-ACL",
                     "Guest-VLAN",
                     "Service-SSH",
                     "Service-RSSH",

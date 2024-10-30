@@ -28,3 +28,105 @@ items:
       type: string
       description:
         The physical network port that we see this neighbour on.
+    lldp-remote-port-info:
+      type: object
+      description: Provides information about the remote port, such as the interface name and its operational status on the neighboring device.
+      properties:
+        lldp-remote-port-id:
+          type: string
+          description: The identifier for the remote port connected to the local port, often displayed as a string or number representing the remote interface.
+        lldp-remote-port-id-type:
+          type: string
+          description: Specifies the type of identifier used for the remote port, such as MAC address, interface name, or ifIndex.
+          enum:
+            - MAC Address
+            - Interface Name
+            - ifIndex
+        lldp-remote-ttl:
+          type: integer
+          description: Shows the time-to-live (TTL) value for LLDP advertisements from the remote device. This is the duration (in seconds) the LLDP information remains valid before expiring."
+        lldp-remote-port-descr:
+          type: string
+          description: Provides a textual description of the remote port, typically describing the interface or its purpose.
+          example: "Ethernet Port on unit 1, port 2"
+        lldp-remote-port-max-mtu:
+          type: string
+          description: Displays the maximum transmission unit (MTU) size that the remote port supports, indicating the largest packet size the port can handle.
+        lldp-remote-sys-descr:
+          type: string
+          description: A textual description of the remote system, including the device model, software version, or any user-configured description.
+          example: "ECS4150-28P"
+        lldp-remote-sys-capab:
+          type: array
+          description: Indicates the system capabilities advertised by the remote device, such as whether it supports routing, switching, bridging, etc.
+          items:
+            type: string
+          example: ["Switch", "Bridge", "Routing"]
+        lldp-remote-enabled-capab:
+          type: array
+          description: Displays the capabilities that are actually enabled on the remote device, such as routing, switching, or bridging functionality.
+          items:
+            type: string
+          example: ["Switch", "Bridge", "Routing"]
+        lldp-remote-port-mgmt-address:
+          type: string
+          description: The management IP address of the remote device, used to access the device for administrative purposes.
+          example: "192.168.0.4"
+        lldp-remote-port-vlan-id:
+          type: integer
+          description: Shows the VLAN ID associated with the remote port, which could indicate the native VLAN or the port's trunk configuration.
+        lldp-remote-port-protocol-id:
+          type: string
+          description: Identifies any protocol-specific information (in HEX) advertised by the remote device, such as VLAN, Spanning Tree, or Link Aggregation protocol.
+        lldp-remote-port-mac-phy-status:
+          type: object
+          description: Displays the physical layer status of the remote port.
+          properties:
+            lldp-remote-port-aneg-suport:
+              type: boolean
+              description: Indicates whether the remote port supports auto-negotiation of link parameters like speed and duplex settings.
+            lldp-remote-port-aneg-enabled:
+              type: boolean
+              description: Shows whether auto-negotiation is enabled on the remote port.
+            lldp-remote-port-aneg-advertised-cap:
+              type: string
+              description: Lists the capabilities (in HEX) the remote port is advertising during auto-negotiation, such as supported speeds and duplex modes.
+            lldp-remote-port-mau-type:
+              type: integer
+              description: Displays the Media Access Unit (MAU) type, describing the port's physical characteristics (e.g., copper or fiber, 10/100/1000Base-T, etc.).
+        lldp-remote-port-power-info:
+          type: object
+          description: Provides detailed PoE information.
+          properties:
+            lldp-remote-port-power-class:
+              type: string
+              description: Indicates if the device is a PSE or a PD.
+              enum:
+                - pse
+                - pd
+            lldp-remote-port-power-mdi-support:
+              type: boolean
+              description: Indicates whether the remote device supports Media Dependent Interface (MDI) power supply, allowing power to be supplied through the Ethernet cable.
+            lldp-remote-port-power-mdi-enabled:
+              type: boolean
+              description: Shows whether MDI power is currently enabled on the remote port.
+            lldp-remote-port-power-pair-control:
+              type: boolean
+              description: Displays whether the remote device has control over which wire pairs in the Ethernet cable provide power (important for PoE).
+            lldp-remote-port-power-classification:
+              type: string
+              description: Displays the PoE class of the remote device, indicating its power consumption classification.
+              enum: ["Class-1", "Class-2", "Class-3", "Class-4","Class-5", "Class-6", "Class-7", "Class-8"]
+        lldp-remote-port-lag-info:
+          type: object
+          description: Provides information about the remote port’s involvement in Link Aggregation Groups (LAG), if applicable.
+          properties:
+            lldp-remote-port-lag-support:
+              type: boolean
+              description: Indicates whether the remote port supports Link Aggregation (static or LACP).
+            lldp-remote-port-lag-enabled:
+              type: boolean
+              description: Shows whether Link Aggregation is enabled on the remote port.
+            lldp-remote-port-lag-port-id:
+              type: integer
+              description: Displays the identifier of the Link Aggregation Group (LAG) that the remote port belongs to.

@@ -542,6 +542,16 @@
                             "type": "integer",
                             "minimum": 1,
                             "maximum": 4094
+                        },
+                        "mac-address-bypass": {
+                            "description": "Trigger mac-auth when a new ARP is learned.",
+                            "type": "boolean"
+                        },
+                        "mac-address-bypass-timout": {
+                            "description": "Trigger mac-auth when a new ARP is learned.",
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 30
                         }
                     }
                 },
@@ -613,6 +623,204 @@
                                 "long"
                             ],
                             "default": "long"
+                        }
+                    }
+                },
+                "voice-vlan-intf-config": {
+                    "description": "Configure the Voice VLAN feature at the interface level, allowing for VoIP traffic to be prioritized on this specific port.",
+                    "type": "object",
+                    "properties": {
+                        "voice-vlan-intf-mode": {
+                            "description": "Specify the mode of placing this port on the voice VLAN.",
+                            "type": "string",
+                            "default": "auto",
+                            "enum": [
+                                "none",
+                                "manual",
+                                "auto"
+                            ]
+                        },
+                        "voice-vlan-intf-priority": {
+                            "description": "Define the Class of Service (CoS) priority for VoIP traffic passing through this port, ensuring higher priority over other traffic types.",
+                            "type": "integer",
+                            "default": 6,
+                            "minimum": 0,
+                            "maximum": 6
+                        },
+                        "voice-vlan-intf-detect-voice": {
+                            "description": "Select the detection method for identifying VoIP traffic on this port, such as OUI-based detection or traffic pattern recognition.",
+                            "type": "string",
+                            "default": "oui",
+                            "enum": [
+                                "oui",
+                                "lldp"
+                            ]
+                        },
+                        "voice-vlan-intf-security": {
+                            "description": "Enable or configure security filtering for VoIP traffic on the interface to protect against unauthorized devices.",
+                            "type": "boolean",
+                            "default": false
+                        }
+                    }
+                },
+                "lldp-interface-config": {
+                    "type": "object",
+                    "description": "Configurations of LLDP on a specified interface.",
+                    "properties": {
+                        "lldp-admin-status": {
+                            "type": "string",
+                            "description": "Enables LLDP transmit, receive, or transmit and receive mode on the specified port.",
+                            "enum": [
+                                "receive",
+                                "transmit",
+                                "tx-rx",
+                                "disabled"
+                            ]
+                        },
+                        "lldp-basic-tlv-mgmt-ip-v4": {
+                            "type": "boolean",
+                            "description": "Configures an LLDP-enabled port to advertise the management address for this device.",
+                            "default": true
+                        },
+                        "lldp-basic-tlv-mgmt-ip-v6": {
+                            "type": "boolean",
+                            "description": "Configures an LLDP-enabled port to advertise the management IPv6 address for this device, if available.",
+                            "default": false
+                        },
+                        "lldp-basic-tlv-port-descr": {
+                            "type": "boolean",
+                            "description": "Configures an LLDP-enabled port to advertise its port description.",
+                            "default": true
+                        },
+                        "lldp-basic-tlv-sys-capab": {
+                            "type": "boolean",
+                            "description": "Configures an LLDP-enabled port to advertise its system capabilities.",
+                            "default": true
+                        },
+                        "lldp-basic-tlv-sys-descr": {
+                            "type": "boolean",
+                            "description": "Configures an LLDP-enabled port to advertise the system description.",
+                            "default": true
+                        },
+                        "lldp-basic-tlv-sys-name": {
+                            "type": "boolean",
+                            "description": "Configures an LLDP-enabled port to advertise its system name.",
+                            "default": true
+                        },
+                        "lldp-dot1-tlv-proto-ident": {
+                            "type": "boolean",
+                            "description": "Configures an LLDP-enabled port to advertise the supported protocols.",
+                            "default": true
+                        },
+                        "lldp-dot1-tlv-proto-vid": {
+                            "type": "boolean",
+                            "description": "Configures an LLDP-enabled port to advertise port-based protocol-related VLAN information.",
+                            "default": true
+                        },
+                        "lldp-dot1-tlv-pvid": {
+                            "type": "boolean",
+                            "description": "Configures an LLDP-enabled port to advertise its default Native VLAN ID (PVID).",
+                            "default": true
+                        },
+                        "lldp-dot1-tlv-vlan-name": {
+                            "type": "boolean",
+                            "description": "Configures an LLDP-enabled port to advertise its VLAN name.",
+                            "default": true
+                        },
+                        "lldp-dot3-tlv-link-agg": {
+                            "type": "boolean",
+                            "description": "Configures an LLDP-enabled port to advertise its link aggregation capabilities.",
+                            "default": true
+                        },
+                        "lldp-dot3-tlv-mac-phy": {
+                            "type": "boolean",
+                            "description": "Configures an LLDP-enabled port to advertise its MAC and physical layer specifications.",
+                            "default": true
+                        },
+                        "lldp-dot3-tlv-max-frame": {
+                            "type": "boolean",
+                            "description": "Configures an LLDP-enabled port to advertise its maximum frame size.",
+                            "default": true
+                        },
+                        "lldp-dot3-tlv-poe": {
+                            "type": "boolean",
+                            "description": "Configures an LLDP-enabled port to advertise its Power-over-Ethernet capabilities.",
+                            "default": true
+                        },
+                        "lldp-med-location-civic-addr": {
+                            "type": "object",
+                            "description": "Configures an LLDP-MED-enabled port to advertise its location identification details.",
+                            "properties": {
+                                "lldp-med-location-civic-addr-admin-status": {
+                                    "type": "boolean",
+                                    "description": "Enables or disables the advertisement of this TLV.",
+                                    "default": false
+                                },
+                                "lldp-med-location-civic-country-code": {
+                                    "type": "string",
+                                    "description": "Configure the two-letter ISO 3166 country code in capital ASCII letters."
+                                },
+                                "lldp-med-location-civic-device-type": {
+                                    "type": "integer",
+                                    "description": "The type of device to which the location applies."
+                                },
+                                "lldp-med-location-civic-ca": {
+                                    "description": "The list of LLDP MED Location CA Types to advertise the physical location of the device, that is the city, street number, building and room information.",
+                                    "type": "arrray",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "lldp-med-location-civic-ca-type": {
+                                                "type": "integer",
+                                                "description": "A one-octet descriptor of the data civic address value.",
+                                                "maximum": 255,
+                                                "minimum": 0
+                                            },
+                                            "lldp-med-location-civic-ca-value": {
+                                                "type": "string",
+                                                "description": "Description of a location.",
+                                                "maxLength": 32,
+                                                "minLength": 1
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "lldp-med-notification": {
+                            "type": "boolean",
+                            "description": "Enables the transmission of SNMP trap notifications about LLDP-MED changes.",
+                            "default": false
+                        },
+                        "lldp-med-tlv-ext-poe": {
+                            "type": "boolean",
+                            "description": "Configures an LLDP-MED-enabled port to advertise its extended Power over Ethernet configuration and usage information.",
+                            "default": true
+                        },
+                        "lldp-med-tlv-inventory": {
+                            "type": "boolean",
+                            "description": "Configures an LLDP-MED-enabled port to advertise its inventory identification details.",
+                            "default": true
+                        },
+                        "lldp-med-tlv-location": {
+                            "type": "boolean",
+                            "description": "Configures an LLDP-MED-enabled port to advertise its location identification details.",
+                            "default": true
+                        },
+                        "lldp-med-tlv-med-cap": {
+                            "type": "boolean",
+                            "description": "Configures an LLDP-MED-enabled port to advertise its Media Endpoint Device capabilities.",
+                            "default": true
+                        },
+                        "lldp-med-tlv-network-policy": {
+                            "type": "boolean",
+                            "description": "Configures an LLDP-MED-enabled port to advertise its network policy configuration.",
+                            "default": true
+                        },
+                        "lldp-notification": {
+                            "type": "boolean",
+                            "description": "Enables the transmission of SNMP trap notifications about LLDP changes.",
+                            "default": false
                         }
                     }
                 }
@@ -1021,7 +1229,7 @@
                                 "maximum": 7
                             },
                             "acl-ip-type": {
-                                "description": "Filters traffic based on the IP protocol type (none, IPv4, or IPv6)",
+                                "description": "Filters traffic based on the IP protocol type (IPv4, IPv6)",
                                 "type": "string",
                                 "enum": [
                                     "none",
@@ -1049,16 +1257,50 @@
                                 "type": "string",
                                 "format": "ipv4"
                             },
+                            "acl-ipv6-source-address": {
+                                "description": "The IPv6 address of the source to filter on",
+                                "type": "string",
+                                "format": "ipv6"
+                            },
+                            "acl-ipv6-source-prefix-length": {
+                                "description": "Defines the length of the prefix used in filtering IPv6 source addresses",
+                                "type": "integer",
+                                "minimum": 0,
+                                "maximum": 128
+                            },
+                            "acl-ipv6-dest-address": {
+                                "description": "The IPv6 address of the destination to filter on",
+                                "type": "string",
+                                "format": "ipv6"
+                            },
+                            "acl-ipv6-dest-prefix-length": {
+                                "description": "Defines the length of the prefix used in filtering IPv6 destination addresses",
+                                "type": "integer",
+                                "minimum": 0,
+                                "maximum": 128
+                            },
                             "acl-ip-proto": {
                                 "description": "Filters based on the IP protocol number",
                                 "type": "integer",
                                 "minimum": 0,
                                 "maximum": 255
                             },
+                            "acl-ipv6-next-header": {
+                                "description": "Specifies the next header type in IPv6 traffic, such as TCP, UDP, or ICMPv6",
+                                "type": "integer",
+                                "minimum": 0,
+                                "maximum": 255
+                            },
+                            "acl-ipv6-flow-label": {
+                                "description": "Filters packets based on the IPv6 Flow Label field",
+                                "type": "integer",
+                                "minimum": 0,
+                                "maximum": 1048575
+                            },
                             "acl-ip-source-port": {
                                 "description": "Specifies the source port number for filtering",
                                 "type": "integer",
-                                "minimum": 1,
+                                "minimum": 0,
                                 "maximum": 65535
                             },
                             "acl-ip-source-port-bitmask": {
@@ -1070,7 +1312,7 @@
                             "acl-ip-dest-port": {
                                 "description": "Specifies the destination port number for filtering",
                                 "type": "integer",
-                                "minimum": 1,
+                                "minimum": 0,
                                 "maximum": 65535
                             },
                             "acl-ip-dest-port-bitmask": {
@@ -1078,6 +1320,30 @@
                                 "type": "integer",
                                 "minimum": 0,
                                 "maximum": 65535
+                            },
+                            "acl-ipv4-fragment-offset": {
+                                "description": "Filters based on IPv4 fragment offset for fragmented packets",
+                                "type": "integer",
+                                "minimum": 0,
+                                "maximum": 8191
+                            },
+                            "acl-ipv6-fragment-offset": {
+                                "description": "Filters based on IPv6 fragment offset for fragmented packets",
+                                "type": "integer",
+                                "minimum": 0,
+                                "maximum": 8191
+                            },
+                            "acl-ip-ttl": {
+                                "description": "Filters IPv4 traffic based on the TTL (Time to Live) value",
+                                "type": "integer",
+                                "minimum": 0,
+                                "maximum": 255
+                            },
+                            "acl-ipv6-hop-limit": {
+                                "description": "Filters IPv6 traffic based on the hop limit value, equivalent to IPv4 TTL",
+                                "type": "integer",
+                                "minimum": 0,
+                                "maximum": 255
                             }
                         }
                     }
@@ -1195,6 +1461,217 @@
                             "mvr-group-range-end",
                             "mvr-group-assoc-domain"
                         ]
+                    }
+                },
+                "lldp-global-config": {
+                    "type": "object",
+                    "description": "Configuration options for LLDP on a global level in a OLS switch.",
+                    "properties": {
+                        "lldp-enable": {
+                            "type": "boolean",
+                            "default": true,
+                            "description": "Enables or disables LLDP globally at a switch level."
+                        },
+                        "lldp-holdtime-multiplier": {
+                            "type": "integer",
+                            "description": "Configures the time-to-live (TTL) value sent in LLDP advertisements. The TTL tells the receiving LLDP agent how long to retain all information from the sending LLDP agent if it does not transmit updates in a timely manner.",
+                            "default": 4
+                        },
+                        "lldp-med-fast-start-count": {
+                            "type": "integer",
+                            "description": "Configures how many medFastStart packets are transmitted during the activation process of the LLDP-MED Fast Start mechanism.",
+                            "default": 4
+                        },
+                        "lldp-refresh-interval": {
+                            "type": "integer",
+                            "description": "Configures the periodic transmit interval for LLDP advertisements (in seconds).",
+                            "default": 30
+                        },
+                        "lldp-reinit-delay": {
+                            "type": "integer",
+                            "description": "Configures the delay (in seconds) before reinitializing after LLDP ports are disabled or the link goes down.",
+                            "default": 2
+                        },
+                        "lldp-tx-delay": {
+                            "type": "integer",
+                            "description": "Configures a delay (in seconds) between successive transmissions of advertisements initiated by a change in local LLDP state.",
+                            "maximum": 8192,
+                            "minimum": 1
+                        },
+                        "lldp-notification-interval": {
+                            "type": "integer",
+                            "description": "Configures the interval (in seconds) for sending SNMP notifications about LLDP changes.",
+                            "default": 5
+                        }
+                    }
+                },
+                "mc-lag": {
+                    "type": "boolean",
+                    "description": "Enables MC-LAG or disables it.",
+                    "default": false
+                },
+                "mclag-config": {
+                    "description": "This section defines the MC-LAG configuration parameters for the switch.",
+                    "type": "object",
+                    "properties": {
+                        "mclag-domains": {
+                            "description": "List of MC-LAG domain configurations for the switch.",
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "mclag-domain": {
+                                        "description": "Specifies the MC-LAG domain ID to identify the grouping of peer switches.",
+                                        "type": "integer",
+                                        "minimum": 1,
+                                        "maximum": 1024,
+                                        "default": 1
+                                    },
+                                    "peer-link": {
+                                        "description": "Configures the peer-link, which could be a physical port or a trunk group that connects the two MC-LAG peer switches.",
+                                        "type": "object",
+                                        "properties": {
+                                            "type": {
+                                                "description": "Defines the type of peer-link, either 'port' or 'trunk-group'",
+                                                "type": "string",
+                                                "enum": [
+                                                    "port",
+                                                    "trunk-group"
+                                                ],
+                                                "default": "trunk-group"
+                                            },
+                                            "value": {
+                                                "description": "Specifies the port or trunk-group ID for the peer-link.",
+                                                "type": "integer",
+                                                "minimum": 1,
+                                                "maximum": 64
+                                            }
+                                        }
+                                    },
+                                    "mclag-group": {
+                                        "description": "Configures the MC-LAG group, which binds the interfaces into a multi-chassis LAG.",
+                                        "type": "object",
+                                        "properties": {
+                                            "group-id": {
+                                                "description": "Defines the unique MC-LAG group identifier.",
+                                                "type": "integer",
+                                                "minimum": 1,
+                                                "maximum": 128
+                                            },
+                                            "members": {
+                                                "description": "List of interfaces that participate in the MC-LAG group.",
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "string",
+                                                    "description": "Interface names that are part of the MC-LAG group.",
+                                                    "examples": [
+                                                        "eth0",
+                                                        "eth1"
+                                                    ]
+                                                }
+                                            },
+                                            "lacp-config": {
+                                                "description": "LACP configuration settings for the MC-LAG group.",
+                                                "type": "object",
+                                                "properties": {
+                                                    "lacp-enable": {
+                                                        "description": "Enables or disables LACP for the MC-LAG group.",
+                                                        "type": "boolean",
+                                                        "default": true
+                                                    },
+                                                    "lacp-role": {
+                                                        "description": "Configures the LACP role as 'actor' or 'partner'",
+                                                        "type": "string",
+                                                        "enum": [
+                                                            "actor",
+                                                            "partner"
+                                                        ],
+                                                        "default": "actor"
+                                                    },
+                                                    "lacp-timeout": {
+                                                        "description": "Sets the LACP timeout as either 'short' or 'long'.",
+                                                        "type": "string",
+                                                        "enum": [
+                                                            "short",
+                                                            "long"
+                                                        ],
+                                                        "default": "long"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "system-priority": {
+                                        "description": "Specifies the system priority used by the switch for LACP negotiations.",
+                                        "type": "integer",
+                                        "minimum": 1,
+                                        "maximum": 65535,
+                                        "default": 32768
+                                    },
+                                    "dual-active-detection": {
+                                        "description": "Enables dual-active detection to prevent split-brain scenarios in MC-LAG.",
+                                        "type": "boolean",
+                                        "default": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "voice-vlan-config": {
+                    "description": "This parameter enables or disables the overall configuration of the Voice VLAN feature on the switch. When enabled, it allows the system to classify and prioritize voice traffic.",
+                    "type": "object",
+                    "properties": {
+                        "voice-vlan-enable": {
+                            "description": "This option specifically enables or disables the Voice VLAN feature for the system. When enabled, the switch starts recognizing and assigning voice traffic to the designated Voice VLAN.",
+                            "type": "boolean",
+                            "default": false,
+                            "enum": [
+                                true,
+                                false
+                            ]
+                        },
+                        "voice-vlan-id": {
+                            "description": "Specifies the VLAN ID assigned to the Voice VLAN. This is the unique identifier for the VLAN that will be used for prioritizing voice traffic.",
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 4094
+                        },
+                        "voice-vlan-ageing-time": {
+                            "description": "Defines the time, in minutes, that a dynamic Voice VLAN entry remains in the VLAN after voice traffic is no longer detected. It helps manage resources by removing inactive voice devices from the VLAN after this time elapses.",
+                            "type": "integer",
+                            "minimum": 5,
+                            "maximum": 43200,
+                            "default": 1440
+                        },
+                        "voice-vlan-oui-config": {
+                            "description": "Configures the Organizationally Unique Identifier (OUI) for identifying the voice devices (like IP phones).",
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "voice-vlan-oui-mac": {
+                                        "description": "The specific MAC address pattern that corresponds to voice devices, as determined by the OUI. It is used for identifying and classifying voice traffic.",
+                                        "type": "string",
+                                        "format": "uc-mac"
+                                    },
+                                    "voice-vlan-oui-mask": {
+                                        "description": "A mask applied to the MAC address to help match the OUI more precisely. It ensures that the correct portion of the MAC address is evaluated to identify a device as a voice device.",
+                                        "type": "string",
+                                        "format": "uc-mac"
+                                    },
+                                    "voice-vlan-oui-description": {
+                                        "description": "A descriptive label or comment for the OUI configuration. This can help administrators keep track of which OUI belongs to which type of voice device or vendor.",
+                                        "type": "string",
+                                        "maxLength": 32,
+                                        "minLength": 1,
+                                        "examples": [
+                                            "A VoIP Phone"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
