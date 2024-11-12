@@ -360,13 +360,6 @@ properties:
           minimum: 0
           maximum: 7
         # IP-ACL (IPv4/IPv6) Parameters
-        acl-ip-type:
-          description: Filters traffic based on the IP protocol type (IPv4, IPv6)
-          type: string
-          enum:
-            - none
-            - ipv4
-            - ipv6
         acl-ipv4-source-address:
           description: The IPv4 address of the source to filter on
           type: string

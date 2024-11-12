@@ -553,38 +553,6 @@
                         }
                     }
                 },
-                "voice-vlan-intf-config": {
-                    "type": "object",
-                    "properties": {
-                        "voice-vlan-intf-mode": {
-                            "type": "string",
-                            "default": "auto",
-                            "enum": [
-                                "none",
-                                "manual",
-                                "auto"
-                            ]
-                        },
-                        "voice-vlan-intf-priority": {
-                            "type": "integer",
-                            "default": 6,
-                            "minimum": 0,
-                            "maximum": 6
-                        },
-                        "voice-vlan-intf-detect-voice": {
-                            "type": "string",
-                            "default": "oui",
-                            "enum": [
-                                "oui",
-                                "lldp"
-                            ]
-                        },
-                        "voice-vlan-intf-security": {
-                            "type": "boolean",
-                            "default": false
-                        }
-                    }
-                },
                 "lldp-interface-config": {
                     "type": "object",
                     "properties": {
@@ -667,7 +635,7 @@
                                     "type": "integer"
                                 },
                                 "lldp-med-location-civic-ca": {
-                                    "type": "arrray",
+                                    "type": "array",
                                     "items": {
                                         "type": "object",
                                         "properties": {
@@ -1056,14 +1024,6 @@
                                 "type": "integer",
                                 "minimum": 0,
                                 "maximum": 7
-                            },
-                            "acl-ip-type": {
-                                "type": "string",
-                                "enum": [
-                                    "none",
-                                    "ipv4",
-                                    "ipv6"
-                                ]
                             },
                             "acl-ipv4-source-address": {
                                 "type": "string",
@@ -2037,6 +1997,38 @@
                 "dhcp-snoop-vlan-enable": {
                     "type": "boolean",
                     "default": false
+                },
+                "voice-vlan-intf-config": {
+                    "type": "object",
+                    "properties": {
+                        "voice-vlan-intf-mode": {
+                            "type": "string",
+                            "default": "auto",
+                            "enum": [
+                                "none",
+                                "manual",
+                                "auto"
+                            ]
+                        },
+                        "voice-vlan-intf-priority": {
+                            "type": "integer",
+                            "default": 6,
+                            "minimum": 0,
+                            "maximum": 6
+                        },
+                        "voice-vlan-intf-detect-voice": {
+                            "type": "string",
+                            "default": "oui",
+                            "enum": [
+                                "oui",
+                                "lldp"
+                            ]
+                        },
+                        "voice-vlan-intf-security": {
+                            "type": "boolean",
+                            "default": false
+                        }
+                    }
                 },
                 "dhcp": {
                     "$ref": "#/$defs/interface.ipv4.dhcp"

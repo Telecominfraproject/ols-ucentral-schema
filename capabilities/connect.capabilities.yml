@@ -152,14 +152,6 @@ properties:
       max-vlans-per-mclag-group:
         description: Indicates the maximum number of VLANs that can be supported within a single MC-LAG group.
         type: integer
-      peer-link-bandwidth:
-        description: Defines the required minimum bandwidth for the peer link that connects two MC-LAG switches.
-        type: string
-        enum:
-          - 1G
-          - 10G
-          - 40G
-          - 100G
       dual-active-detection:
         description: Describes the dual-active detection mechanism to prevent both switches from becoming active simultaneously.
         type: string
@@ -187,29 +179,26 @@ properties:
         items:
           type: string
           enum:
-          - management-ip-address
-          - port-description
-          - system-capabilities
-          - system-description
-          - system-name
-          - proto-ident
-          - proto-vid
-          - pvid
-          - vlan-name
-          - link-agg
-          - mac-phy
-          - max-frame
-          - poe
-          - med-location
-          - med-inventory
-          - med-capabilities
-          - med-network-policy
-      lldp-med-support:
-        type: boolean
-        description: Specifies whether LLDP-MED support is available on the switch.
-        examples:
-        - true
-        - false
+          - lldp-basic-tlv-mgmt-ip-v4
+          - lldp-basic-tlv-mgmt-ip-v6
+          - lldp-basic-tlv-port-descr
+          - lldp-basic-tlv-sys-capab
+          - lldp-basic-tlv-sys-descr
+          - lldp-basic-tlv-sys-name
+          - lldp-dot1-tlv-proto-ident
+          - lldp-dot1-tlv-proto-vid
+          - lldp-dot1-tlv-pvid
+          - lldp-dot1-tlv-vlan-name
+          - lldp-dot3-tlv-link-agg
+          - lldp-dot3-tlv-mac-phy
+          - lldp-dot3-tlv-max-frame
+          - lldp-dot3-tlv-poe
+          - lldp-med-location-civic-addr
+          - lldp-med-tlv-ext-poe
+          - lldp-med-tlv-inventory
+          - lldp-med-tlv-location
+          - lldp-med-tlv-med-cap
+          - lldp-med-tlv-network-policy
       max-neighbors:
         type: integer
         description: Maximum number of LLDP neighbors a switch can discover and maintain.
@@ -217,92 +206,6 @@ properties:
         - 64
         - 128
         - 256
-      refresh-interval:
-        type: object
-        description: Time interval (in seconds) for sending LLDP advertisements.
-        properties:
-          min:
-            type: integer
-            examples:
-            - 2
-            - 5
-          max:
-            type: integer
-            examples:
-            - 60
-            - 120
-      holdtime-multiplier-range:
-        type: object
-        description: Range of holdtime multiplier values for LLDP TTL calculation.
-        properties:
-          min:
-            type: integer
-            examples:
-            - 2
-            - 4
-          max:
-            type: integer
-            examples:
-            - 10
-            - 20
-      reinit-delay:
-        type: object
-        description: Time delay (in seconds) before reinitializing LLDP after a port/link down event.
-        properties:
-          min:
-            type: integer
-            examples:
-            - 1
-            - 2
-          max:
-            type: integer
-            examples:
-            - 5
-            - 10
-      notification-interval:
-        type: object
-        description: Interval for sending SNMP notifications upon LLDP changes (in seconds).
-        properties:
-          min:
-            type: integer
-            examples:
-            - 10
-            - 30
-          max:
-            type: integer
-            examples:
-            - 300
-            - 600
-      mac-phy-support:
-        type: boolean
-        description: Specifies whether LLDP advertisements include MAC and physical layer specifications.
-        examples:
-        - true
-        - false
-      max-frame-size:
-        type: integer
-        description: Maximum frame size that the switch supports for LLDP advertisements.
-        examples:
-        - 1500
-        - 9000
-      link-aggregation-support:
-        type: boolean
-        description: Indicates if LLDP supports link aggregation reporting on the switch.
-        examples:
-        - true
-        - false
-      vlan-tlv-support:
-        type: boolean
-        description: Indicates if the switch supports advertising VLAN-related TLVs (e.g., PVID, VLAN name).
-        examples:
-        - true
-        - false
-      power-over-ethernet-support:
-        type: boolean
-        description: Specifies if the switch can advertise PoE capabilities through LLDP.
-        examples:
-        - true
-        - false
   supported-features:
     type: array
     description:
