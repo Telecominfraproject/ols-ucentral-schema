@@ -168,6 +168,12 @@ properties:
         type: integer
         minimum: 1
         maximum: 4094
+      mac-address-bypass:
+        description: Enables bypass when a device does not support 802.1X authentication (e.g., printers, IP phones)
+        type: boolean
+      mac-address-bypass-timeout-minutes:
+        description: Defines the time period (in minutes) for which a MAC address is allowed access to the network without requiring reauthentication, after being authenticated or allowed via MAC Authentication Bypass (MAB).
+        type: integer
   trunk-group:
     description: Associates this port to a trunk or a port-channel.
     type: integer
@@ -234,3 +240,128 @@ properties:
         - short
         - long
         default: long
+  lldp-interface-config:
+    type: object
+    description: Configurations of LLDP on a specified interface.
+    properties:
+      lldp-admin-status:
+        type: string
+        description: Enables LLDP transmit, receive, or transmit and receive mode on the specified port.
+        enum:
+          - rx
+          - tx
+          - rx-tx
+      lldp-basic-tlv-mgmt-ip-v4:
+        type: boolean
+        description: Configures an LLDP-enabled port to advertise the management address for this device.
+        default: true
+      lldp-basic-tlv-mgmt-ip-v6:
+        type: boolean
+        description: Configures an LLDP-enabled port to advertise the management IPv6 address for this device, if available.
+        default: false
+      lldp-basic-tlv-port-descr:
+        type: boolean
+        description: Configures an LLDP-enabled port to advertise its port description.
+        default: true
+      lldp-basic-tlv-sys-capab:
+        type: boolean
+        description: Configures an LLDP-enabled port to advertise its system capabilities.
+        default: true
+      lldp-basic-tlv-sys-descr:
+        type: boolean
+        description: Configures an LLDP-enabled port to advertise the system description.
+        default: true
+      lldp-basic-tlv-sys-name:
+        type: boolean
+        description: Configures an LLDP-enabled port to advertise its system name.
+        default: true
+      lldp-dot1-tlv-proto-ident:
+        type: boolean
+        description: Configures an LLDP-enabled port to advertise the supported protocols.
+        default: true
+      lldp-dot1-tlv-proto-vid:
+        type: boolean
+        description: Configures an LLDP-enabled port to advertise port-based protocol-related VLAN information.
+        default: true
+      lldp-dot1-tlv-pvid:
+        type: boolean
+        description: Configures an LLDP-enabled port to advertise its default Native VLAN ID (PVID).
+        default: true
+      lldp-dot1-tlv-vlan-name:
+        type: boolean
+        description: Configures an LLDP-enabled port to advertise its VLAN name.
+        default: true
+      lldp-dot3-tlv-link-agg:
+        type: boolean
+        description: Configures an LLDP-enabled port to advertise its link aggregation capabilities.
+        default: true
+      lldp-dot3-tlv-mac-phy:
+        type: boolean
+        description: Configures an LLDP-enabled port to advertise its MAC and physical layer specifications.
+        default: true
+      lldp-dot3-tlv-max-frame:
+        type: boolean
+        description: Configures an LLDP-enabled port to advertise its maximum frame size.
+        default: true
+      lldp-dot3-tlv-poe:
+        type: boolean
+        description: Configures an LLDP-enabled port to advertise its Power-over-Ethernet capabilities.
+        default: true
+      lldp-med-location-civic-addr:
+        type: object
+        description: Configures an LLDP-MED-enabled port to advertise its location identification details.
+        properties:
+          lldp-med-location-civic-addr-admin-status:
+            type: boolean
+            description: Enables or disables the advertisement of this TLV.
+            default: false
+          lldp-med-location-civic-country-code:
+            type: string
+            description: Configure the two-letter ISO 3166 country code in capital ASCII letters.
+          lldp-med-location-civic-device-type:
+            type: integer
+            description: The type of device to which the location applies.
+          lldp-med-location-civic-ca:
+            description: The list of LLDP MED Location CA Types to advertise the physical location of the device, that is the city, street number, building and room information.
+            type: array
+            items:
+                type: object
+                properties:
+                  lldp-med-location-civic-ca-type:
+                      type: integer
+                      description: A one-octet descriptor of the data civic address value.
+                      maximum: 255
+                      minimum: 0
+                  lldp-med-location-civic-ca-value:
+                      type: string
+                      description: Description of a location.
+                      maxLength: 32
+                      minLength: 1
+      lldp-med-notification:
+        type: boolean
+        description: Enables the transmission of SNMP trap notifications about LLDP-MED changes.
+        default: false
+      lldp-med-tlv-ext-poe:
+        type: boolean
+        description: Configures an LLDP-MED-enabled port to advertise its extended Power over Ethernet configuration and usage information.
+        default: true
+      lldp-med-tlv-inventory:
+        type: boolean
+        description: Configures an LLDP-MED-enabled port to advertise its inventory identification details.
+        default: true
+      lldp-med-tlv-location:
+        type: boolean
+        description: Configures an LLDP-MED-enabled port to advertise its location identification details.
+        default: true
+      lldp-med-tlv-med-cap:
+        type: boolean
+        description: Configures an LLDP-MED-enabled port to advertise its Media Endpoint Device capabilities.
+        default: true
+      lldp-med-tlv-network-policy:
+        type: boolean
+        description: Configures an LLDP-MED-enabled port to advertise its network policy configuration.
+        default: true
+      lldp-notification:
+        type: boolean
+        description: Enables the transmission of SNMP trap notifications about LLDP changes.
+        default: false

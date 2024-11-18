@@ -139,6 +139,72 @@ properties:
                 type: string
                 examples:
                 - Ethernet1
+  mclag-capabilities:
+    description: Capabilities of the MC-LAG (Multi-Chassis Link Aggregation) feature in the switch
+    type: object
+    properties:
+      max-mclag-groups:
+        description: Defines the maximum number of MC-LAG groups that can be configured on the switch.
+        type: integer
+      max-ports-per-mclag-group:
+        description: Specifies the maximum number of physical ports that can be part of a single MC-LAG group.
+        type: integer
+      max-vlans-per-mclag-group:
+        description: Indicates the maximum number of VLANs that can be supported within a single MC-LAG group.
+        type: integer
+      dual-active-detection:
+        description: Describes the dual-active detection mechanism to prevent both switches from becoming active simultaneously.
+        type: string
+        enum:
+          - ICCP
+          - Backup-Link
+          - None
+      failover-time-milliseconds:
+        description: Specifies the time (in milliseconds) required for traffic to fail over to the secondary switch when there is a failure in the primary switch.
+        type: integer
+      vlan-synchronization:
+        description: Indicates whether VLAN synchronization across MC-LAG peers is supported and the number of VLANs that can be synchronized.
+        type: boolean
+      max-mac-entries-per-mclag:
+        description: Maximum number of MAC address entries that can be synchronized across MC-LAG peers.
+        type: integer
+  lldp-capabilities:
+    type: object
+    description:
+      Description of LLDP capabilities across different switch models/vendors.
+    properties:
+      supported-tlvs:
+        type: array
+        items:
+          type: string
+          enum:
+          - lldp-basic-tlv-mgmt-ip-v4
+          - lldp-basic-tlv-mgmt-ip-v6
+          - lldp-basic-tlv-port-descr
+          - lldp-basic-tlv-sys-capab
+          - lldp-basic-tlv-sys-descr
+          - lldp-basic-tlv-sys-name
+          - lldp-dot1-tlv-proto-ident
+          - lldp-dot1-tlv-proto-vid
+          - lldp-dot1-tlv-pvid
+          - lldp-dot1-tlv-vlan-name
+          - lldp-dot3-tlv-link-agg
+          - lldp-dot3-tlv-mac-phy
+          - lldp-dot3-tlv-max-frame
+          - lldp-dot3-tlv-poe
+          - lldp-med-location-civic-addr
+          - lldp-med-tlv-ext-poe
+          - lldp-med-tlv-inventory
+          - lldp-med-tlv-location
+          - lldp-med-tlv-med-cap
+          - lldp-med-tlv-network-policy
+      max-neighbors:
+        type: integer
+        description: Maximum number of LLDP neighbors a switch can discover and maintain.
+        examples:
+        - 64
+        - 128
+        - 256
   supported-features:
     type: array
     description:
@@ -148,9 +214,11 @@ properties:
       enum:
       # L2
       - VLAN
+      - VLAN-Voice
       - Jumbo-Frames
       - Link-Aggregation-LACP
       - Link-Aggregation-Static
+      - Link-Aggregation-MCLAG
       - Port-Isolation
       - Spanning-Tree
       - Spanning-Tree-Rapid
@@ -184,6 +252,7 @@ properties:
       # .1X
       - Port-Access-Control
       - PAC-Dynamic-Auth
+      - mac-address-bypass
       # System
       - System-PasswordChange
       - System-SwUpdate
@@ -191,6 +260,7 @@ properties:
       - Port-Mirroring
       # Security
       - MAC-ACL
+      - IP-ACL
       - Guest-VLAN
       # Services
       - Service-SSH
