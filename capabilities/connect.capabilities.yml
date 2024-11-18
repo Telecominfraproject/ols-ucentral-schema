@@ -159,10 +159,9 @@ properties:
           - ICCP
           - Backup-Link
           - None
-      failover-time:
-        description: Specifies the time required for traffic to fail over to the secondary switch when there is a failure in the primary switch.
+      failover-time-milliseconds:
+        description: Specifies the time (in milliseconds) required for traffic to fail over to the secondary switch when there is a failure in the primary switch.
         type: integer
-        unit: "milliseconds"
       vlan-synchronization:
         description: Indicates whether VLAN synchronization across MC-LAG peers is supported and the number of VLANs that can be synchronized.
         type: boolean

@@ -485,10 +485,8 @@
                         "mac-address-bypass": {
                             "type": "boolean"
                         },
-                        "mac-address-bypass-timout": {
-                            "type": "integer",
-                            "minimum": 0,
-                            "maximum": 30
+                        "mac-address-bypass-timeout-minutes": {
+                            "type": "integer"
                         }
                     }
                 },
@@ -559,10 +557,9 @@
                         "lldp-admin-status": {
                             "type": "string",
                             "enum": [
-                                "receive",
-                                "transmit",
-                                "tx-rx",
-                                "disabled"
+                                "rx",
+                                "tx",
+                                "rx-tx"
                             ]
                         },
                         "lldp-basic-tlv-mgmt-ip-v4": {
@@ -1350,14 +1347,6 @@
                 "voice-vlan-config": {
                     "type": "object",
                     "properties": {
-                        "voice-vlan-enable": {
-                            "type": "boolean",
-                            "default": false,
-                            "enum": [
-                                true,
-                                false
-                            ]
-                        },
                         "voice-vlan-id": {
                             "type": "integer",
                             "minimum": 1,

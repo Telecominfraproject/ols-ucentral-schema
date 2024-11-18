@@ -169,13 +169,11 @@ properties:
         minimum: 1
         maximum: 4094
       mac-address-bypass:
-        description: Trigger mac-auth when a new ARP is learned.
+        description: Enables bypass when a device does not support 802.1X authentication (e.g., printers, IP phones)
         type: boolean
-      mac-address-bypass-timout:
-        description: Trigger mac-auth when a new ARP is learned.
+      mac-address-bypass-timeout-minutes:
+        description: Defines the time period (in minutes) for which a MAC address is allowed access to the network without requiring reauthentication, after being authenticated or allowed via MAC Authentication Bypass (MAB).
         type: integer
-        minimum: 0
-        maximum: 30
   trunk-group:
     description: Associates this port to a trunk or a port-channel.
     type: integer
@@ -250,10 +248,9 @@ properties:
         type: string
         description: Enables LLDP transmit, receive, or transmit and receive mode on the specified port.
         enum:
-          - receive
-          - transmit
-          - tx-rx
-          - disabled
+          - rx
+          - tx
+          - rx-tx
       lldp-basic-tlv-mgmt-ip-v4:
         type: boolean
         description: Configures an LLDP-enabled port to advertise the management address for this device.

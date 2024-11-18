@@ -692,14 +692,12 @@
                                 "maximum": 4094
                             },
                             "mac-address-bypass": {
-                                "description": "Trigger mac-auth when a new ARP is learned.",
+                                "description": "Enables bypass when a device does not support 802.1X authentication (e.g., printers, IP phones)",
                                 "type": "boolean"
                             },
-                            "mac-address-bypass-timout": {
-                                "description": "Trigger mac-auth when a new ARP is learned.",
-                                "type": "integer",
-                                "minimum": 0,
-                                "maximum": 30
+                            "mac-address-bypass-timeout-minutes": {
+                                "description": "Defines the time period (in minutes) for which a MAC address is allowed access to the network without requiring reauthentication, after being authenticated or allowed via MAC Authentication Bypass (MAB).",
+                                "type": "integer"
                             }
                         }
                     },
@@ -782,10 +780,9 @@
                                 "type": "string",
                                 "description": "Enables LLDP transmit, receive, or transmit and receive mode on the specified port.",
                                 "enum": [
-                                    "receive",
-                                    "transmit",
-                                    "tx-rx",
-                                    "disabled"
+                                    "rx",
+                                    "tx",
+                                    "rx-tx"
                                 ]
                             },
                             "lldp-basic-tlv-mgmt-ip-v4": {
@@ -1725,15 +1722,6 @@
                     "description": "This parameter enables or disables the overall configuration of the Voice VLAN feature on the switch. When enabled, it allows the system to classify and prioritize voice traffic.",
                     "type": "object",
                     "properties": {
-                        "voice-vlan-enable": {
-                            "description": "This option specifically enables or disables the Voice VLAN feature for the system. When enabled, the switch starts recognizing and assigning voice traffic to the designated Voice VLAN.",
-                            "type": "boolean",
-                            "default": false,
-                            "enum": [
-                                true,
-                                false
-                            ]
-                        },
                         "voice-vlan-id": {
                             "description": "Specifies the VLAN ID assigned to the Voice VLAN. This is the unique identifier for the VLAN that will be used for prioritizing voice traffic.",
                             "type": "integer",

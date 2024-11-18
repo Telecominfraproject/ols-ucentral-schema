@@ -675,13 +675,6 @@ properties:
     description: "This parameter enables or disables the overall configuration of the Voice VLAN feature on the switch. When enabled, it allows the system to classify and prioritize voice traffic."
     type: object
     properties:
-      voice-vlan-enable:
-        description: "This option specifically enables or disables the Voice VLAN feature for the system. When enabled, the switch starts recognizing and assigning voice traffic to the designated Voice VLAN."
-        type: boolean
-        default: false
-        enum:
-          - true
-          - false
       voice-vlan-id:
         description: "Specifies the VLAN ID assigned to the Voice VLAN. This is the unique identifier for the VLAN that will be used for prioritizing voice traffic."
         type: integer
