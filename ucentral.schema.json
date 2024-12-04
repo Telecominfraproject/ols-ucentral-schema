@@ -1713,6 +1713,26 @@
                     "example": [
                         "\\{Interface\\}:\\{VLAN-ID\\}}"
                     ]
+                },
+                "remote-id-format": {
+                    "type": "string"
+                },
+                "use-dns": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "format": "ipv4",
+                        "examples": [
+                            "8.8.8.8",
+                            "4.4.4.4"
+                        ]
+                    }
+                },
+                "default-router": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 }
             }
         },

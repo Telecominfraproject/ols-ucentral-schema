@@ -2469,6 +2469,29 @@
                                         "example": [
                                             "\\{Interface\\}:\\{VLAN-ID\\}}"
                                         ]
+                                    },
+                                    "remote-id-format": {
+                                        "description": "This option selects what info shall be contained within a relayed frame's remote ID.",
+                                        "type": "string"
+                                    },
+                                    "use-dns": {
+                                        "description": "Define which DNS servers shall be used. This can either be a list of static IPv4 addresse or dhcp (use the server provided by the DHCP lease)",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "format": "ipv4",
+                                            "examples": [
+                                                "8.8.8.8",
+                                                "4.4.4.4"
+                                            ]
+                                        }
+                                    },
+                                    "default-router": {
+                                        "description": "Provide a default router for the pool, so that the route to internet may be established.",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
                                     }
                                 }
                             },
