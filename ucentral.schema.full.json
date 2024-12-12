@@ -2775,7 +2775,7 @@
                             }
                         }
                     },
-                    "dhcp-snooop-port": {
+                    "dhcp-snoop-port": {
                         "description": "Configuration for DHCP Snooping on a port level on a switch",
                         "type": "object",
                         "properties": {
