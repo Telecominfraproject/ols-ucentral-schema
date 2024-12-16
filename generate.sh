@@ -14,6 +14,4 @@ which generate-schema-doc > /dev/null
 generate-schema-doc --config expand_buttons=true ucentral.schema.pretty.json docs/ucentral-schema.html
 generate-schema-doc --config expand_buttons=true ucentral.state.pretty.json docs/ucentral-state.html
 generate-schema-doc --config expand_buttons=true ucentral.capabilities.pretty.json docs/ucentral.capabilities.html
-generate-schema-doc --config expand_buttons=true ucentral.lldp-peers.pretty.json docs/ucentral.lldp-peers.html
-generate-schema-doc --config expand_buttons=true ucentral.link-state.pretty.json docs/ucentral.link-state.html
 
