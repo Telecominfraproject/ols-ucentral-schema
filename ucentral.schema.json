@@ -3547,7 +3547,7 @@
                 "acl": {
                     "$ref": "#/$defs/interface.acl"
                 },
-                "dhcp-snooop-port": {
+                "dhcp-snoop-port": {
                     "$ref": "#/$defs/interface.dhcp-snoop-port"
                 },
                 "broad-band": {
