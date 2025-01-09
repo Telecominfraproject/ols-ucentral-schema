@@ -23,9 +23,6 @@ properties:
       - client.join
       - client.leave
       - client.key-mismatch
-      - wifi
-      - wifi.start
-      - wifi.stop
       - wired
       - wired.carrier-up
       - wired.carrier-down

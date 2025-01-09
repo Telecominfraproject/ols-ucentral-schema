@@ -21,18 +21,12 @@ properties:
     $ref: "https://ucentral.io/schema/v1/unit/"
   globals:
     $ref: "https://ucentral.io/schema/v1/globals/"
-  definitions:
-    $ref: "https://ucentral.io/schema/v1/definitions/"
   ethernet:
     type: array
     items:
       $ref: "https://ucentral.io/schema/v1/ethernet/"
   switch:
     $ref: "https://ucentral.io/schema/v1/switch/"
-  radios:
-    type: array
-    items:
-      $ref: "https://ucentral.io/schema/v1/radio/"
   interfaces:
     type: array
     items:

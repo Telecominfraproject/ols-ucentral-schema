@@ -7,12 +7,8 @@ properties:
     $ref: "https://ucentral.io/schema/v1/metrics/statistics/"
   health:
     $ref: "https://ucentral.io/schema/v1/metrics/health/"
-  wifi-frames:
-    $ref: "https://ucentral.io/schema/v1/metrics/wifi-frames/"
   dhcp-snooping:
     $ref: "https://ucentral.io/schema/v1/metrics/dhcp-snooping/"
-  wifi-scan:
-    $ref: "https://ucentral.io/schema/v1/metrics/wifi-scan/"
   telemetry:
     $ref: "https://ucentral.io/schema/v1/metrics/telemetry/"
   realtime:

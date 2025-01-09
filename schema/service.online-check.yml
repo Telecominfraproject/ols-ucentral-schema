@@ -41,5 +41,4 @@ properties:
     items:
       type: string
       enum:
-      - wifi
       - leds

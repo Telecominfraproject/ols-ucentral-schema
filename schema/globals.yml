@@ -19,10 +19,6 @@ properties:
     format: uc-cidr6
     examples:
     - fdca:1234:4567::/48
-  wireless-multimedia:
-    anyOf:
-     - $ref: 'https://ucentral.io/schema/v1/globals/wireless-multimedia/table/'
-     - $ref: 'https://ucentral.io/schema/v1/globals/wireless-multimedia/profile/'
   ipv4-blackhole:
     description:
       Define a list of non-interface specific BLACKHOLE (to-nowhere) routes.

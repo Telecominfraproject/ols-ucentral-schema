@@ -14,10 +14,8 @@ properties:
     items:
       type: string
       enum:
-        - ssids
         - lldp
         - clients
-        - tid-stats
   wired-clients-max-num:
     description:
       Configure maximum number of FDB entries device's allowed to report.
