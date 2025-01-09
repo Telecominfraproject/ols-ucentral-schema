@@ -74,9 +74,5 @@ properties:
     $ref: "https://ucentral.io/schema/v1/interface/dhcp-snoop-port/"
   broad-band:
     $ref: "https://ucentral.io/schema/v1/interface/broad-band/"
-  ssids:
-    type: array
-    items:
-      $ref: "https://ucentral.io/schema/v1/interface/ssid/"
   tunnel:
     $ref: "https://ucentral.io/schema/v1/interface/tunnel/"

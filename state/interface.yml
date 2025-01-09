@@ -42,8 +42,6 @@ items:
       $ref: "https://ucentral.io/state/v1/interface/counter/"
     mesh-path:
       $ref: "https://ucentral.io/state/v1/interface/mesh-path/"
-    ssids:
-      $ref: "https://ucentral.io/state/v1/interface/ssid/"
     multicast:
       type: object
       description:

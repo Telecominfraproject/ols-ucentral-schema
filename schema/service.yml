@@ -1,6 +1,6 @@
 description:
   This section describes all of the services that may be present on the AP.
-  Each service is then referenced via its name inside an interface, ssid, ...
+  Each service is then referenced via its name inside an interface, ...
 type: object
 properties:
   lldp:
@@ -19,34 +19,18 @@ properties:
     $ref: "https://ucentral.io/schema/v1/service/http/"
   igmp:
     $ref: "https://ucentral.io/schema/v1/service/igmp/"
-  ieee8021x:
-    $ref: "https://ucentral.io/schema/v1/service/ieee8021x/"
   radius-proxy:
     $ref: "https://ucentral.io/schema/v1/service/radius-proxy/"
   online-check:
     $ref: "https://ucentral.io/schema/v1/service/online-check/"
   data-plane:
     $ref: "https://ucentral.io/schema/v1/service/data-plane/"
-  wifi-steering:
-    $ref: "https://ucentral.io/schema/v1/service/wifi-steering/"
   quality-of-service:
     $ref: "https://ucentral.io/schema/v1/service/quality-of-service/"
-  facebook-wifi:
-    $ref: "https://ucentral.io/schema/v1/service/facebook-wifi/"
-  airtime-fairness:
-    $ref: "https://ucentral.io/schema/v1/service/airtime-fairness/"
   wireguard-overlay:
     $ref: 'https://ucentral.io/schema/v1/service/wireguard-overlay/'
-  captive:
-    $ref: 'https://ucentral.io/schema/v1/service/captive/'
   gps:
     $ref: 'https://ucentral.io/schema/v1/service/gps/'
-  dhcp-relay:
-    $ref: 'https://ucentral.io/schema/v1/service/dhcp-relay/'
-  admin-ui:
-    $ref: 'https://ucentral.io/schema/v1/service/admin-ui/'
-  rrm:
-    $ref: 'https://ucentral.io/schema/v1/service/rrm/'
   telnet:
     $ref: "https://ucentral.io/schema/v1/service/telnet/"
   https:

@@ -345,99 +345,6 @@ function instantiateUnit(location, value, errors) {
 	return value;
 }
 
-function instantiateGlobalsWirelessMultimediaClassSelector(location, value, errors) {
-	if (type(value) == "array") {
-		function parseItem(location, value, errors) {
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			if (!(value in [ "CS0", "CS1", "CS2", "CS3", "CS4", "CS5", "CS6", "CS7", "AF11", "AF12", "AF13", "AF21", "AF22", "AF23", "AF31", "AF32", "AF33", "AF41", "AF42", "AF43", "DF", "EF", "VA", "LE" ]))
-				push(errors, [ location, "must be one of \"CS0\", \"CS1\", \"CS2\", \"CS3\", \"CS4\", \"CS5\", \"CS6\", \"CS7\", \"AF11\", \"AF12\", \"AF13\", \"AF21\", \"AF22\", \"AF23\", \"AF31\", \"AF32\", \"AF33\", \"AF41\", \"AF42\", \"AF43\", \"DF\", \"EF\", \"VA\" or \"LE\"" ]);
-
-			return value;
-		}
-
-		return map(value, (item, i) => parseItem(location + "/" + i, item, errors));
-	}
-
-	if (type(value) != "array")
-		push(errors, [ location, "must be of type array" ]);
-
-	return value;
-}
-
-function instantiateGlobalsWirelessMultimediaTable(location, value, errors) {
-	if (type(value) == "object") {
-		let obj = {};
-
-		if (exists(value, "UP0")) {
-			obj.UP0 = instantiateGlobalsWirelessMultimediaClassSelector(location + "/UP0", value["UP0"], errors);
-		}
-
-		if (exists(value, "UP1")) {
-			obj.UP1 = instantiateGlobalsWirelessMultimediaClassSelector(location + "/UP1", value["UP1"], errors);
-		}
-
-		if (exists(value, "UP2")) {
-			obj.UP2 = instantiateGlobalsWirelessMultimediaClassSelector(location + "/UP2", value["UP2"], errors);
-		}
-
-		if (exists(value, "UP3")) {
-			obj.UP3 = instantiateGlobalsWirelessMultimediaClassSelector(location + "/UP3", value["UP3"], errors);
-		}
-
-		if (exists(value, "UP4")) {
-			obj.UP4 = instantiateGlobalsWirelessMultimediaClassSelector(location + "/UP4", value["UP4"], errors);
-		}
-
-		if (exists(value, "UP5")) {
-			obj.UP5 = instantiateGlobalsWirelessMultimediaClassSelector(location + "/UP5", value["UP5"], errors);
-		}
-
-		if (exists(value, "UP6")) {
-			obj.UP6 = instantiateGlobalsWirelessMultimediaClassSelector(location + "/UP6", value["UP6"], errors);
-		}
-
-		if (exists(value, "UP7")) {
-			obj.UP7 = instantiateGlobalsWirelessMultimediaClassSelector(location + "/UP7", value["UP7"], errors);
-		}
-
-		return obj;
-	}
-
-	if (type(value) != "object")
-		push(errors, [ location, "must be of type object" ]);
-
-	return value;
-}
-
-function instantiateGlobalsWirelessMultimediaProfile(location, value, errors) {
-	if (type(value) == "object") {
-		let obj = {};
-
-		function parseProfile(location, value, errors) {
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			if (!(value in [ "enterprise", "rfc8325", "3gpp" ]))
-				push(errors, [ location, "must be one of \"enterprise\", \"rfc8325\" or \"3gpp\"" ]);
-
-			return value;
-		}
-
-		if (exists(value, "profile")) {
-			obj.profile = parseProfile(location + "/profile", value["profile"], errors);
-		}
-
-		return obj;
-	}
-
-	if (type(value) != "object")
-		push(errors, [ location, "must be of type object" ]);
-
-	return value;
-}
-
 function instantiateGlobals(location, value, errors) {
 	if (type(value) == "object") {
 		let obj = {};
@@ -474,66 +381,6 @@ function instantiateGlobals(location, value, errors) {
 
 		if (exists(value, "ipv6-network")) {
 			obj.ipv6_network = parseIpv6Network(location + "/ipv6-network", value["ipv6-network"], errors);
-		}
-
-		function parseWirelessMultimedia(location, value, errors) {
-			function parseVariant0(location, value, errors) {
-				value = instantiateGlobalsWirelessMultimediaTable(location, value, errors);
-
-				return value;
-			}
-
-			function parseVariant1(location, value, errors) {
-				value = instantiateGlobalsWirelessMultimediaProfile(location, value, errors);
-
-				return value;
-			}
-
-			let success = 0, tryval, tryerr, vvalue = null, verrors = [];
-
-			tryerr = [];
-			tryval = parseVariant0(location, value, tryerr);
-			if (!length(tryerr)) {
-				if (type(vvalue) == "object" && type(tryval) == "object")
-					vvalue = { ...vvalue, ...tryval };
-				else
-					vvalue = tryval;
-
-				success++;
-			}
-			else {
-				push(verrors, join(" and\n", map(tryerr, err => "\t - " + err[1])));
-			}
-
-			tryerr = [];
-			tryval = parseVariant1(location, value, tryerr);
-			if (!length(tryerr)) {
-				if (type(vvalue) == "object" && type(tryval) == "object")
-					vvalue = { ...vvalue, ...tryval };
-				else
-					vvalue = tryval;
-
-				success++;
-			}
-			else {
-				push(verrors, join(" and\n", map(tryerr, err => "\t - " + err[1])));
-			}
-
-			if (success == 0) {
-				if (length(verrors))
-					push(errors, [ location, "must match at least one of the following constraints:\n" + join("\n- or -\n", verrors) ]);
-				else
-					push(errors, [ location, "must match only one variant" ]);
-				return null;
-			}
-
-			value = vvalue;
-
-			return value;
-		}
-
-		if (exists(value, "wireless-multimedia")) {
-			obj.wireless_multimedia = parseWirelessMultimedia(location + "/wireless-multimedia", value["wireless-multimedia"], errors);
 		}
 
 		function parseIpv4Blackhole(location, value, errors) {
@@ -657,108 +504,6 @@ function instantiateGlobals(location, value, errors) {
 	return value;
 }
 
-function instantiateInterfaceSsidEncryption(location, value, errors) {
-	if (type(value) == "object") {
-		let obj = {};
-
-		function parseProto(location, value, errors) {
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			if (!(value in [ "none", "owe", "owe-transition", "psk", "psk2", "psk-mixed", "psk2-radius", "wpa", "wpa2", "wpa-mixed", "sae", "sae-mixed", "wpa3", "wpa3-192", "wpa3-mixed" ]))
-				push(errors, [ location, "must be one of \"none\", \"owe\", \"owe-transition\", \"psk\", \"psk2\", \"psk-mixed\", \"psk2-radius\", \"wpa\", \"wpa2\", \"wpa-mixed\", \"sae\", \"sae-mixed\", \"wpa3\", \"wpa3-192\" or \"wpa3-mixed\"" ]);
-
-			return value;
-		}
-
-		if (exists(value, "proto")) {
-			obj.proto = parseProto(location + "/proto", value["proto"], errors);
-		}
-
-		function parseKey(location, value, errors) {
-			if (type(value) == "string") {
-				if (length(value) > 63)
-					push(errors, [ location, "must be at most 63 characters long" ]);
-
-				if (length(value) < 8)
-					push(errors, [ location, "must be at least 8 characters long" ]);
-
-			}
-
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			return value;
-		}
-
-		if (exists(value, "key")) {
-			obj.key = parseKey(location + "/key", value["key"], errors);
-		}
-
-		function parseIeee80211w(location, value, errors) {
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			if (!(value in [ "disabled", "optional", "required" ]))
-				push(errors, [ location, "must be one of \"disabled\", \"optional\" or \"required\"" ]);
-
-			return value;
-		}
-
-		if (exists(value, "ieee80211w")) {
-			obj.ieee80211w = parseIeee80211w(location + "/ieee80211w", value["ieee80211w"], errors);
-		}
-		else {
-			obj.ieee80211w = "disabled";
-		}
-
-		function parseKeyCaching(location, value, errors) {
-			if (type(value) != "bool")
-				push(errors, [ location, "must be of type boolean" ]);
-
-			return value;
-		}
-
-		if (exists(value, "key-caching")) {
-			obj.key_caching = parseKeyCaching(location + "/key-caching", value["key-caching"], errors);
-		}
-		else {
-			obj.key_caching = true;
-		}
-
-		return obj;
-	}
-
-	if (type(value) != "object")
-		push(errors, [ location, "must be of type object" ]);
-
-	return value;
-}
-
-function instantiateDefinitions(location, value, errors) {
-	if (type(value) == "object") {
-		let obj = {};
-
-		function parseWirelessEncryption(location, value, errors) {
-			if (type(value) != "object")
-				push(errors, [ location, "must be of type object" ]);
-
-			return value;
-		}
-
-		if (exists(value, "wireless-encryption")) {
-			obj.wireless_encryption = parseWirelessEncryption(location + "/wireless-encryption", value["wireless-encryption"], errors);
-		}
-
-		return obj;
-	}
-
-	if (type(value) != "object")
-		push(errors, [ location, "must be of type object" ]);
-
-	return value;
-}
-
 function instantiateEthernet(location, value, errors) {
 	if (type(value) == "object") {
 		let obj = {};
@@ -785,12 +530,23 @@ function instantiateEthernet(location, value, errors) {
 			obj.select_ports = parseSelectPorts(location + "/select-ports", value["select-ports"], errors);
 		}
 
+		function parseName(location, value, errors) {
+			if (type(value) != "string")
+				push(errors, [ location, "must be of type string" ]);
+
+			return value;
+		}
+
+		if (exists(value, "name")) {
+			obj.name = parseName(location + "/name", value["name"], errors);
+		}
+
 		function parseSpeed(location, value, errors) {
 			if (type(value) != "int")
 				push(errors, [ location, "must be of type integer" ]);
 
-			if (!(value in [ 10, 100, 1000, 2500, 5000, 10000, 25000, 100000 ]))
-				push(errors, [ location, "must be one of 10, 100, 1000, 2500, 5000, 10000, 25000 or 100000" ]);
+			if (!(value in [ 10, 100, 1000, 2500, 5000, 10000, 25000, 40000, 50000, 100000, 200000 ]))
+				push(errors, [ location, "must be one of 10, 100, 1000, 2500, 5000, 10000, 25000, 40000, 50000, 100000 or 200000" ]);
 
 			return value;
 		}
@@ -1031,6 +787,28 @@ function instantiateEthernet(location, value, errors) {
 					obj.unauthenticated_vlan = parseUnauthenticatedVlan(location + "/unauthenticated-vlan", value["unauthenticated-vlan"], errors);
 				}
 
+				function parseMacAddressBypass(location, value, errors) {
+					if (type(value) != "bool")
+						push(errors, [ location, "must be of type boolean" ]);
+
+					return value;
+				}
+
+				if (exists(value, "mac-address-bypass")) {
+					obj.mac_address_bypass = parseMacAddressBypass(location + "/mac-address-bypass", value["mac-address-bypass"], errors);
+				}
+
+				function parseMacAddressBypassTimeoutMinutes(location, value, errors) {
+					if (type(value) != "int")
+						push(errors, [ location, "must be of type integer" ]);
+
+					return value;
+				}
+
+				if (exists(value, "mac-address-bypass-timeout-minutes")) {
+					obj.mac_address_bypass_timeout_minutes = parseMacAddressBypassTimeoutMinutes(location + "/mac-address-bypass-timeout-minutes", value["mac-address-bypass-timeout-minutes"], errors);
+				}
+
 				return obj;
 			}
 
@@ -1042,6 +820,26 @@ function instantiateEthernet(location, value, errors) {
 
 		if (exists(value, "ieee8021x")) {
 			obj.ieee8021x = parseIeee8021x(location + "/ieee8021x", value["ieee8021x"], errors);
+		}
+
+		function parseTrunkGroup(location, value, errors) {
+			if (type(value) in [ "int", "double" ]) {
+				if (value > 64)
+					push(errors, [ location, "must be lower than or equal to 64" ]);
+
+				if (value < 1)
+					push(errors, [ location, "must be bigger than or equal to 1" ]);
+
+			}
+
+			if (type(value) != "int")
+				push(errors, [ location, "must be of type integer" ]);
+
+			return value;
+		}
+
+		if (exists(value, "trunk-group")) {
+			obj.trunk_group = parseTrunkGroup(location + "/trunk-group", value["trunk-group"], errors);
 		}
 
 		function parseLacpConfig(location, value, errors) {
@@ -1215,24 +1013,450 @@ function instantiateEthernet(location, value, errors) {
 			obj.lacp_config = parseLacpConfig(location + "/lacp-config", value["lacp-config"], errors);
 		}
 
-		function parseTrunkGroup(location, value, errors) {
-			if (type(value) in [ "int", "double" ]) {
-				if (value > 64)
-					push(errors, [ location, "must be lower than or equal to 64" ]);
+		function parseLldpInterfaceConfig(location, value, errors) {
+			if (type(value) == "object") {
+				let obj = {};
 
-				if (value < 1)
-					push(errors, [ location, "must be bigger than or equal to 1" ]);
+				function parseLldpAdminStatus(location, value, errors) {
+					if (type(value) != "string")
+						push(errors, [ location, "must be of type string" ]);
 
+					if (!(value in [ "rx", "tx", "rx-tx" ]))
+						push(errors, [ location, "must be one of \"rx\", \"tx\" or \"rx-tx\"" ]);
+
+					return value;
+				}
+
+				if (exists(value, "lldp-admin-status")) {
+					obj.lldp_admin_status = parseLldpAdminStatus(location + "/lldp-admin-status", value["lldp-admin-status"], errors);
+				}
+
+				function parseLldpBasicTlvMgmtIpV4(location, value, errors) {
+					if (type(value) != "bool")
+						push(errors, [ location, "must be of type boolean" ]);
+
+					return value;
+				}
+
+				if (exists(value, "lldp-basic-tlv-mgmt-ip-v4")) {
+					obj.lldp_basic_tlv_mgmt_ip_v4 = parseLldpBasicTlvMgmtIpV4(location + "/lldp-basic-tlv-mgmt-ip-v4", value["lldp-basic-tlv-mgmt-ip-v4"], errors);
+				}
+				else {
+					obj.lldp_basic_tlv_mgmt_ip_v4 = true;
+				}
+
+				function parseLldpBasicTlvMgmtIpV6(location, value, errors) {
+					if (type(value) != "bool")
+						push(errors, [ location, "must be of type boolean" ]);
+
+					return value;
+				}
+
+				if (exists(value, "lldp-basic-tlv-mgmt-ip-v6")) {
+					obj.lldp_basic_tlv_mgmt_ip_v6 = parseLldpBasicTlvMgmtIpV6(location + "/lldp-basic-tlv-mgmt-ip-v6", value["lldp-basic-tlv-mgmt-ip-v6"], errors);
+				}
+				else {
+					obj.lldp_basic_tlv_mgmt_ip_v6 = false;
+				}
+
+				function parseLldpBasicTlvPortDescr(location, value, errors) {
+					if (type(value) != "bool")
+						push(errors, [ location, "must be of type boolean" ]);
+
+					return value;
+				}
+
+				if (exists(value, "lldp-basic-tlv-port-descr")) {
+					obj.lldp_basic_tlv_port_descr = parseLldpBasicTlvPortDescr(location + "/lldp-basic-tlv-port-descr", value["lldp-basic-tlv-port-descr"], errors);
+				}
+				else {
+					obj.lldp_basic_tlv_port_descr = true;
+				}
+
+				function parseLldpBasicTlvSysCapab(location, value, errors) {
+					if (type(value) != "bool")
+						push(errors, [ location, "must be of type boolean" ]);
+
+					return value;
+				}
+
+				if (exists(value, "lldp-basic-tlv-sys-capab")) {
+					obj.lldp_basic_tlv_sys_capab = parseLldpBasicTlvSysCapab(location + "/lldp-basic-tlv-sys-capab", value["lldp-basic-tlv-sys-capab"], errors);
+				}
+				else {
+					obj.lldp_basic_tlv_sys_capab = true;
+				}
+
+				function parseLldpBasicTlvSysDescr(location, value, errors) {
+					if (type(value) != "bool")
+						push(errors, [ location, "must be of type boolean" ]);
+
+					return value;
+				}
+
+				if (exists(value, "lldp-basic-tlv-sys-descr")) {
+					obj.lldp_basic_tlv_sys_descr = parseLldpBasicTlvSysDescr(location + "/lldp-basic-tlv-sys-descr", value["lldp-basic-tlv-sys-descr"], errors);
+				}
+				else {
+					obj.lldp_basic_tlv_sys_descr = true;
+				}
+
+				function parseLldpBasicTlvSysName(location, value, errors) {
+					if (type(value) != "bool")
+						push(errors, [ location, "must be of type boolean" ]);
+
+					return value;
+				}
+
+				if (exists(value, "lldp-basic-tlv-sys-name")) {
+					obj.lldp_basic_tlv_sys_name = parseLldpBasicTlvSysName(location + "/lldp-basic-tlv-sys-name", value["lldp-basic-tlv-sys-name"], errors);
+				}
+				else {
+					obj.lldp_basic_tlv_sys_name = true;
+				}
+
+				function parseLldpDot1TlvProtoIdent(location, value, errors) {
+					if (type(value) != "bool")
+						push(errors, [ location, "must be of type boolean" ]);
+
+					return value;
+				}
+
+				if (exists(value, "lldp-dot1-tlv-proto-ident")) {
+					obj.lldp_dot1_tlv_proto_ident = parseLldpDot1TlvProtoIdent(location + "/lldp-dot1-tlv-proto-ident", value["lldp-dot1-tlv-proto-ident"], errors);
+				}
+				else {
+					obj.lldp_dot1_tlv_proto_ident = true;
+				}
+
+				function parseLldpDot1TlvProtoVid(location, value, errors) {
+					if (type(value) != "bool")
+						push(errors, [ location, "must be of type boolean" ]);
+
+					return value;
+				}
+
+				if (exists(value, "lldp-dot1-tlv-proto-vid")) {
+					obj.lldp_dot1_tlv_proto_vid = parseLldpDot1TlvProtoVid(location + "/lldp-dot1-tlv-proto-vid", value["lldp-dot1-tlv-proto-vid"], errors);
+				}
+				else {
+					obj.lldp_dot1_tlv_proto_vid = true;
+				}
+
+				function parseLldpDot1TlvPvid(location, value, errors) {
+					if (type(value) != "bool")
+						push(errors, [ location, "must be of type boolean" ]);
+
+					return value;
+				}
+
+				if (exists(value, "lldp-dot1-tlv-pvid")) {
+					obj.lldp_dot1_tlv_pvid = parseLldpDot1TlvPvid(location + "/lldp-dot1-tlv-pvid", value["lldp-dot1-tlv-pvid"], errors);
+				}
+				else {
+					obj.lldp_dot1_tlv_pvid = true;
+				}
+
+				function parseLldpDot1TlvVlanName(location, value, errors) {
+					if (type(value) != "bool")
+						push(errors, [ location, "must be of type boolean" ]);
+
+					return value;
+				}
+
+				if (exists(value, "lldp-dot1-tlv-vlan-name")) {
+					obj.lldp_dot1_tlv_vlan_name = parseLldpDot1TlvVlanName(location + "/lldp-dot1-tlv-vlan-name", value["lldp-dot1-tlv-vlan-name"], errors);
+				}
+				else {
+					obj.lldp_dot1_tlv_vlan_name = true;
+				}
+
+				function parseLldpDot3TlvLinkAgg(location, value, errors) {
+					if (type(value) != "bool")
+						push(errors, [ location, "must be of type boolean" ]);
+
+					return value;
+				}
+
+				if (exists(value, "lldp-dot3-tlv-link-agg")) {
+					obj.lldp_dot3_tlv_link_agg = parseLldpDot3TlvLinkAgg(location + "/lldp-dot3-tlv-link-agg", value["lldp-dot3-tlv-link-agg"], errors);
+				}
+				else {
+					obj.lldp_dot3_tlv_link_agg = true;
+				}
+
+				function parseLldpDot3TlvMacPhy(location, value, errors) {
+					if (type(value) != "bool")
+						push(errors, [ location, "must be of type boolean" ]);
+
+					return value;
+				}
+
+				if (exists(value, "lldp-dot3-tlv-mac-phy")) {
+					obj.lldp_dot3_tlv_mac_phy = parseLldpDot3TlvMacPhy(location + "/lldp-dot3-tlv-mac-phy", value["lldp-dot3-tlv-mac-phy"], errors);
+				}
+				else {
+					obj.lldp_dot3_tlv_mac_phy = true;
+				}
+
+				function parseLldpDot3TlvMaxFrame(location, value, errors) {
+					if (type(value) != "bool")
+						push(errors, [ location, "must be of type boolean" ]);
+
+					return value;
+				}
+
+				if (exists(value, "lldp-dot3-tlv-max-frame")) {
+					obj.lldp_dot3_tlv_max_frame = parseLldpDot3TlvMaxFrame(location + "/lldp-dot3-tlv-max-frame", value["lldp-dot3-tlv-max-frame"], errors);
+				}
+				else {
+					obj.lldp_dot3_tlv_max_frame = true;
+				}
+
+				function parseLldpDot3TlvPoe(location, value, errors) {
+					if (type(value) != "bool")
+						push(errors, [ location, "must be of type boolean" ]);
+
+					return value;
+				}
+
+				if (exists(value, "lldp-dot3-tlv-poe")) {
+					obj.lldp_dot3_tlv_poe = parseLldpDot3TlvPoe(location + "/lldp-dot3-tlv-poe", value["lldp-dot3-tlv-poe"], errors);
+				}
+				else {
+					obj.lldp_dot3_tlv_poe = true;
+				}
+
+				function parseLldpMedLocationCivicAddr(location, value, errors) {
+					if (type(value) == "object") {
+						let obj = {};
+
+						function parseLldpMedLocationCivicAddrAdminStatus(location, value, errors) {
+							if (type(value) != "bool")
+								push(errors, [ location, "must be of type boolean" ]);
+
+							return value;
+						}
+
+						if (exists(value, "lldp-med-location-civic-addr-admin-status")) {
+							obj.lldp_med_location_civic_addr_admin_status = parseLldpMedLocationCivicAddrAdminStatus(location + "/lldp-med-location-civic-addr-admin-status", value["lldp-med-location-civic-addr-admin-status"], errors);
+						}
+						else {
+							obj.lldp_med_location_civic_addr_admin_status = false;
+						}
+
+						function parseLldpMedLocationCivicCountryCode(location, value, errors) {
+							if (type(value) != "string")
+								push(errors, [ location, "must be of type string" ]);
+
+							return value;
+						}
+
+						if (exists(value, "lldp-med-location-civic-country-code")) {
+							obj.lldp_med_location_civic_country_code = parseLldpMedLocationCivicCountryCode(location + "/lldp-med-location-civic-country-code", value["lldp-med-location-civic-country-code"], errors);
+						}
+
+						function parseLldpMedLocationCivicDeviceType(location, value, errors) {
+							if (type(value) != "int")
+								push(errors, [ location, "must be of type integer" ]);
+
+							return value;
+						}
+
+						if (exists(value, "lldp-med-location-civic-device-type")) {
+							obj.lldp_med_location_civic_device_type = parseLldpMedLocationCivicDeviceType(location + "/lldp-med-location-civic-device-type", value["lldp-med-location-civic-device-type"], errors);
+						}
+
+						function parseLldpMedLocationCivicCa(location, value, errors) {
+							if (type(value) == "array") {
+								function parseItem(location, value, errors) {
+									if (type(value) == "object") {
+										let obj = {};
+
+										function parseLldpMedLocationCivicCaType(location, value, errors) {
+											if (type(value) in [ "int", "double" ]) {
+												if (value > 255)
+													push(errors, [ location, "must be lower than or equal to 255" ]);
+
+												if (value < 0)
+													push(errors, [ location, "must be bigger than or equal to 0" ]);
+
+											}
+
+											if (type(value) != "int")
+												push(errors, [ location, "must be of type integer" ]);
+
+											return value;
+										}
+
+										if (exists(value, "lldp-med-location-civic-ca-type")) {
+											obj.lldp_med_location_civic_ca_type = parseLldpMedLocationCivicCaType(location + "/lldp-med-location-civic-ca-type", value["lldp-med-location-civic-ca-type"], errors);
+										}
+
+										function parseLldpMedLocationCivicCaValue(location, value, errors) {
+											if (type(value) == "string") {
+												if (length(value) > 32)
+													push(errors, [ location, "must be at most 32 characters long" ]);
+
+												if (length(value) < 1)
+													push(errors, [ location, "must be at least 1 characters long" ]);
+
+											}
+
+											if (type(value) != "string")
+												push(errors, [ location, "must be of type string" ]);
+
+											return value;
+										}
+
+										if (exists(value, "lldp-med-location-civic-ca-value")) {
+											obj.lldp_med_location_civic_ca_value = parseLldpMedLocationCivicCaValue(location + "/lldp-med-location-civic-ca-value", value["lldp-med-location-civic-ca-value"], errors);
+										}
+
+										return obj;
+									}
+
+									if (type(value) != "object")
+										push(errors, [ location, "must be of type object" ]);
+
+									return value;
+								}
+
+								return map(value, (item, i) => parseItem(location + "/" + i, item, errors));
+							}
+
+							if (type(value) != "array")
+								push(errors, [ location, "must be of type array" ]);
+
+							return value;
+						}
+
+						if (exists(value, "lldp-med-location-civic-ca")) {
+							obj.lldp_med_location_civic_ca = parseLldpMedLocationCivicCa(location + "/lldp-med-location-civic-ca", value["lldp-med-location-civic-ca"], errors);
+						}
+
+						return obj;
+					}
+
+					if (type(value) != "object")
+						push(errors, [ location, "must be of type object" ]);
+
+					return value;
+				}
+
+				if (exists(value, "lldp-med-location-civic-addr")) {
+					obj.lldp_med_location_civic_addr = parseLldpMedLocationCivicAddr(location + "/lldp-med-location-civic-addr", value["lldp-med-location-civic-addr"], errors);
+				}
+
+				function parseLldpMedNotification(location, value, errors) {
+					if (type(value) != "bool")
+						push(errors, [ location, "must be of type boolean" ]);
+
+					return value;
+				}
+
+				if (exists(value, "lldp-med-notification")) {
+					obj.lldp_med_notification = parseLldpMedNotification(location + "/lldp-med-notification", value["lldp-med-notification"], errors);
+				}
+				else {
+					obj.lldp_med_notification = false;
+				}
+
+				function parseLldpMedTlvExtPoe(location, value, errors) {
+					if (type(value) != "bool")
+						push(errors, [ location, "must be of type boolean" ]);
+
+					return value;
+				}
+
+				if (exists(value, "lldp-med-tlv-ext-poe")) {
+					obj.lldp_med_tlv_ext_poe = parseLldpMedTlvExtPoe(location + "/lldp-med-tlv-ext-poe", value["lldp-med-tlv-ext-poe"], errors);
+				}
+				else {
+					obj.lldp_med_tlv_ext_poe = true;
+				}
+
+				function parseLldpMedTlvInventory(location, value, errors) {
+					if (type(value) != "bool")
+						push(errors, [ location, "must be of type boolean" ]);
+
+					return value;
+				}
+
+				if (exists(value, "lldp-med-tlv-inventory")) {
+					obj.lldp_med_tlv_inventory = parseLldpMedTlvInventory(location + "/lldp-med-tlv-inventory", value["lldp-med-tlv-inventory"], errors);
+				}
+				else {
+					obj.lldp_med_tlv_inventory = true;
+				}
+
+				function parseLldpMedTlvLocation(location, value, errors) {
+					if (type(value) != "bool")
+						push(errors, [ location, "must be of type boolean" ]);
+
+					return value;
+				}
+
+				if (exists(value, "lldp-med-tlv-location")) {
+					obj.lldp_med_tlv_location = parseLldpMedTlvLocation(location + "/lldp-med-tlv-location", value["lldp-med-tlv-location"], errors);
+				}
+				else {
+					obj.lldp_med_tlv_location = true;
+				}
+
+				function parseLldpMedTlvMedCap(location, value, errors) {
+					if (type(value) != "bool")
+						push(errors, [ location, "must be of type boolean" ]);
+
+					return value;
+				}
+
+				if (exists(value, "lldp-med-tlv-med-cap")) {
+					obj.lldp_med_tlv_med_cap = parseLldpMedTlvMedCap(location + "/lldp-med-tlv-med-cap", value["lldp-med-tlv-med-cap"], errors);
+				}
+				else {
+					obj.lldp_med_tlv_med_cap = true;
+				}
+
+				function parseLldpMedTlvNetworkPolicy(location, value, errors) {
+					if (type(value) != "bool")
+						push(errors, [ location, "must be of type boolean" ]);
+
+					return value;
+				}
+
+				if (exists(value, "lldp-med-tlv-network-policy")) {
+					obj.lldp_med_tlv_network_policy = parseLldpMedTlvNetworkPolicy(location + "/lldp-med-tlv-network-policy", value["lldp-med-tlv-network-policy"], errors);
+				}
+				else {
+					obj.lldp_med_tlv_network_policy = true;
+				}
+
+				function parseLldpNotification(location, value, errors) {
+					if (type(value) != "bool")
+						push(errors, [ location, "must be of type boolean" ]);
+
+					return value;
+				}
+
+				if (exists(value, "lldp-notification")) {
+					obj.lldp_notification = parseLldpNotification(location + "/lldp-notification", value["lldp-notification"], errors);
+				}
+				else {
+					obj.lldp_notification = false;
+				}
+
+				return obj;
 			}
 
-			if (type(value) != "int")
-				push(errors, [ location, "must be of type integer" ]);
+			if (type(value) != "object")
+				push(errors, [ location, "must be of type object" ]);
 
 			return value;
 		}
 
-		if (exists(value, "trunk-group")) {
-			obj.trunk_group = parseTrunkGroup(location + "/trunk-group", value["trunk-group"], errors);
+		if (exists(value, "lldp-interface-config")) {
+			obj.lldp_interface_config = parseLldpInterfaceConfig(location + "/lldp-interface-config", value["lldp-interface-config"], errors);
 		}
 
 		return obj;
@@ -1249,47 +1473,58 @@ function instantiateSwitch(location, value, errors) {
 		let obj = {};
 
 		function parsePortMirror(location, value, errors) {
-			if (type(value) == "object") {
-				let obj = {};
+			if (type(value) == "array") {
+				function parseItem(location, value, errors) {
+					if (type(value) == "object") {
+						let obj = {};
 
-				function parseMonitorPorts(location, value, errors) {
-					if (type(value) == "array") {
-						function parseItem(location, value, errors) {
+						function parseMonitorPorts(location, value, errors) {
+							if (type(value) == "array") {
+								function parseItem(location, value, errors) {
+									if (type(value) != "string")
+										push(errors, [ location, "must be of type string" ]);
+
+									return value;
+								}
+
+								return map(value, (item, i) => parseItem(location + "/" + i, item, errors));
+							}
+
+							if (type(value) != "array")
+								push(errors, [ location, "must be of type array" ]);
+
+							return value;
+						}
+
+						if (exists(value, "monitor-ports")) {
+							obj.monitor_ports = parseMonitorPorts(location + "/monitor-ports", value["monitor-ports"], errors);
+						}
+
+						function parseAnalysisPort(location, value, errors) {
 							if (type(value) != "string")
 								push(errors, [ location, "must be of type string" ]);
 
 							return value;
 						}
 
-						return map(value, (item, i) => parseItem(location + "/" + i, item, errors));
+						if (exists(value, "analysis-port")) {
+							obj.analysis_port = parseAnalysisPort(location + "/analysis-port", value["analysis-port"], errors);
+						}
+
+						return obj;
 					}
 
-					if (type(value) != "array")
-						push(errors, [ location, "must be of type array" ]);
+					if (type(value) != "object")
+						push(errors, [ location, "must be of type object" ]);
 
 					return value;
 				}
 
-				if (exists(value, "monitor-ports")) {
-					obj.monitor_ports = parseMonitorPorts(location + "/monitor-ports", value["monitor-ports"], errors);
-				}
-
-				function parseAnalysisPort(location, value, errors) {
-					if (type(value) != "string")
-						push(errors, [ location, "must be of type string" ]);
-
-					return value;
-				}
-
-				if (exists(value, "analysis-port")) {
-					obj.analysis_port = parseAnalysisPort(location + "/analysis-port", value["analysis-port"], errors);
-				}
-
-				return obj;
+				return map(value, (item, i) => parseItem(location + "/" + i, item, errors));
 			}
 
-			if (type(value) != "object")
-				push(errors, [ location, "must be of type object" ]);
+			if (type(value) != "array")
+				push(errors, [ location, "must be of type array" ]);
 
 			return value;
 		}
@@ -1869,20 +2104,6 @@ function instantiateSwitch(location, value, errors) {
 			obj.port_isolation = parsePortIsolation(location + "/port-isolation", value["port-isolation"], errors);
 		}
 
-		function parseJumboFrames(location, value, errors) {
-			if (type(value) != "bool")
-				push(errors, [ location, "must be of type boolean" ]);
-
-			return value;
-		}
-
-		if (exists(value, "jumbo-frames")) {
-			obj.jumbo_frames = parseJumboFrames(location + "/jumbo-frames", value["jumbo-frames"], errors);
-		}
-		else {
-			obj.jumbo_frames = false;
-		}
-
 		function parseTrunkBalanceMethod(location, value, errors) {
 			if (type(value) != "string")
 				push(errors, [ location, "must be of type string" ]);
@@ -1900,229 +2121,42 @@ function instantiateSwitch(location, value, errors) {
 			obj.trunk_balance_method = "src-dst-mac";
 		}
 
-		return obj;
-	}
-
-	if (type(value) != "object")
-		push(errors, [ location, "must be of type object" ]);
-
-	return value;
-}
-
-function instantiateRadioRates(location, value, errors) {
-	if (type(value) == "object") {
-		let obj = {};
-
-		function parseBeacon(location, value, errors) {
-			if (type(value) != "int")
-				push(errors, [ location, "must be of type integer" ]);
-
-			if (!(value in [ 0, 1000, 2000, 5500, 6000, 9000, 11000, 12000, 18000, 24000, 36000, 48000, 54000 ]))
-				push(errors, [ location, "must be one of 0, 1000, 2000, 5500, 6000, 9000, 11000, 12000, 18000, 24000, 36000, 48000 or 54000" ]);
-
-			return value;
-		}
-
-		if (exists(value, "beacon")) {
-			obj.beacon = parseBeacon(location + "/beacon", value["beacon"], errors);
-		}
-		else {
-			obj.beacon = 6000;
-		}
-
-		function parseMulticast(location, value, errors) {
-			if (type(value) != "int")
-				push(errors, [ location, "must be of type integer" ]);
-
-			if (!(value in [ 0, 1000, 2000, 5500, 6000, 9000, 11000, 12000, 18000, 24000, 36000, 48000, 54000 ]))
-				push(errors, [ location, "must be one of 0, 1000, 2000, 5500, 6000, 9000, 11000, 12000, 18000, 24000, 36000, 48000 or 54000" ]);
-
-			return value;
-		}
-
-		if (exists(value, "multicast")) {
-			obj.multicast = parseMulticast(location + "/multicast", value["multicast"], errors);
-		}
-		else {
-			obj.multicast = 24000;
-		}
-
-		return obj;
-	}
-
-	if (type(value) != "object")
-		push(errors, [ location, "must be of type object" ]);
-
-	return value;
-}
-
-function instantiateRadioHe(location, value, errors) {
-	if (type(value) == "object") {
-		let obj = {};
-
-		function parseMultipleBssid(location, value, errors) {
+		function parseJumboFrames(location, value, errors) {
 			if (type(value) != "bool")
 				push(errors, [ location, "must be of type boolean" ]);
 
 			return value;
 		}
 
-		if (exists(value, "multiple-bssid")) {
-			obj.multiple_bssid = parseMultipleBssid(location + "/multiple-bssid", value["multiple-bssid"], errors);
+		if (exists(value, "jumbo-frames")) {
+			obj.jumbo_frames = parseJumboFrames(location + "/jumbo-frames", value["jumbo-frames"], errors);
 		}
 		else {
-			obj.multiple_bssid = false;
+			obj.jumbo_frames = false;
 		}
 
-		function parseEma(location, value, errors) {
-			if (type(value) != "bool")
-				push(errors, [ location, "must be of type boolean" ]);
+		function parseDhcpSnooping(location, value, errors) {
+			if (type(value) == "object") {
+				let obj = {};
 
-			return value;
-		}
+				function parseDhcpSnoopEnable(location, value, errors) {
+					if (type(value) != "bool")
+						push(errors, [ location, "must be of type boolean" ]);
 
-		if (exists(value, "ema")) {
-			obj.ema = parseEma(location + "/ema", value["ema"], errors);
-		}
-		else {
-			obj.ema = false;
-		}
-
-		function parseBssColor(location, value, errors) {
-			if (type(value) != "int")
-				push(errors, [ location, "must be of type integer" ]);
-
-			return value;
-		}
-
-		if (exists(value, "bss-color")) {
-			obj.bss_color = parseBssColor(location + "/bss-color", value["bss-color"], errors);
-		}
-		else {
-			obj.bss_color = 64;
-		}
-
-		return obj;
-	}
-
-	if (type(value) != "object")
-		push(errors, [ location, "must be of type object" ]);
-
-	return value;
-}
-
-function instantiateRadio(location, value, errors) {
-	if (type(value) == "object") {
-		let obj = {};
-
-		function parseBand(location, value, errors) {
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			if (!(value in [ "2G", "5G", "5G-lower", "5G-upper", "6G" ]))
-				push(errors, [ location, "must be one of \"2G\", \"5G\", \"5G-lower\", \"5G-upper\" or \"6G\"" ]);
-
-			return value;
-		}
-
-		if (exists(value, "band")) {
-			obj.band = parseBand(location + "/band", value["band"], errors);
-		}
-
-		function parseBandwidth(location, value, errors) {
-			if (type(value) != "int")
-				push(errors, [ location, "must be of type integer" ]);
-
-			if (!(value in [ 5, 10, 20 ]))
-				push(errors, [ location, "must be one of 5, 10 or 20" ]);
-
-			return value;
-		}
-
-		if (exists(value, "bandwidth")) {
-			obj.bandwidth = parseBandwidth(location + "/bandwidth", value["bandwidth"], errors);
-		}
-
-		function parseChannel(location, value, errors) {
-			function parseVariant0(location, value, errors) {
-				if (type(value) in [ "int", "double" ]) {
-					if (value > 196)
-						push(errors, [ location, "must be lower than or equal to 196" ]);
-
-					if (value < 1)
-						push(errors, [ location, "must be bigger than or equal to 1" ]);
-
+					return value;
 				}
 
-				if (type(value) != "int")
-					push(errors, [ location, "must be of type integer" ]);
+				if (exists(value, "dhcp-snoop-enable")) {
+					obj.dhcp_snoop_enable = parseDhcpSnoopEnable(location + "/dhcp-snoop-enable", value["dhcp-snoop-enable"], errors);
+				}
+				else {
+					obj.dhcp_snoop_enable = false;
+				}
 
-				return value;
-			}
-
-			function parseVariant1(location, value, errors) {
-				if (type(value) != "string")
-					push(errors, [ location, "must be of type string" ]);
-
-				if (value != "auto")
-					push(errors, [ location, "must have value \"auto\"" ]);
-
-				return value;
-			}
-
-			let success = 0, tryval, tryerr, vvalue = null, verrors = [];
-
-			tryerr = [];
-			tryval = parseVariant0(location, value, tryerr);
-			if (!length(tryerr)) {
-				if (type(vvalue) == "object" && type(tryval) == "object")
-					vvalue = { ...vvalue, ...tryval };
-				else
-					vvalue = tryval;
-
-				success++;
-			}
-			else {
-				push(verrors, join(" and\n", map(tryerr, err => "\t - " + err[1])));
-			}
-
-			tryerr = [];
-			tryval = parseVariant1(location, value, tryerr);
-			if (!length(tryerr)) {
-				if (type(vvalue) == "object" && type(tryval) == "object")
-					vvalue = { ...vvalue, ...tryval };
-				else
-					vvalue = tryval;
-
-				success++;
-			}
-			else {
-				push(verrors, join(" and\n", map(tryerr, err => "\t - " + err[1])));
-			}
-
-			if (success != 1) {
-				if (length(verrors))
-					push(errors, [ location, "must match exactly one of the following constraints:\n" + join("\n- or -\n", verrors) ]);
-				else
-					push(errors, [ location, "must match only one variant" ]);
-				return null;
-			}
-
-			value = vvalue;
-
-			return value;
-		}
-
-		if (exists(value, "channel")) {
-			obj.channel = parseChannel(location + "/channel", value["channel"], errors);
-		}
-
-		function parseValidChannels(location, value, errors) {
-			if (type(value) == "array") {
-				function parseItem(location, value, errors) {
+				function parseDhcpSnoopRateLimit(location, value, errors) {
 					if (type(value) in [ "int", "double" ]) {
-						if (value > 196)
-							push(errors, [ location, "must be lower than or equal to 196" ]);
+						if (value > 2048)
+							push(errors, [ location, "must be lower than or equal to 2048" ]);
 
 						if (value < 1)
 							push(errors, [ location, "must be bigger than or equal to 1" ]);
@@ -2135,207 +2169,710 @@ function instantiateRadio(location, value, errors) {
 					return value;
 				}
 
-				return map(value, (item, i) => parseItem(location + "/" + i, item, errors));
-			}
+				if (exists(value, "dhcp-snoop-rate-limit")) {
+					obj.dhcp_snoop_rate_limit = parseDhcpSnoopRateLimit(location + "/dhcp-snoop-rate-limit", value["dhcp-snoop-rate-limit"], errors);
+				}
 
-			if (type(value) != "array")
-				push(errors, [ location, "must be of type array" ]);
+				function parseDhcpSnoopMacVerify(location, value, errors) {
+					if (type(value) != "bool")
+						push(errors, [ location, "must be of type boolean" ]);
 
-			return value;
-		}
+					return value;
+				}
 
-		if (exists(value, "valid-channels")) {
-			obj.valid_channels = parseValidChannels(location + "/valid-channels", value["valid-channels"], errors);
-		}
+				if (exists(value, "dhcp-snoop-mac-verify")) {
+					obj.dhcp_snoop_mac_verify = parseDhcpSnoopMacVerify(location + "/dhcp-snoop-mac-verify", value["dhcp-snoop-mac-verify"], errors);
+				}
+				else {
+					obj.dhcp_snoop_mac_verify = false;
+				}
 
-		function parseCountry(location, value, errors) {
-			if (type(value) == "string") {
-				if (length(value) > 2)
-					push(errors, [ location, "must be at most 2 characters long" ]);
+				function parseDhcpSnoopInfOpt82(location, value, errors) {
+					if (type(value) != "bool")
+						push(errors, [ location, "must be of type boolean" ]);
 
-				if (length(value) < 2)
-					push(errors, [ location, "must be at least 2 characters long" ]);
+					return value;
+				}
 
-			}
+				if (exists(value, "dhcp-snoop-inf-opt-82")) {
+					obj.dhcp_snoop_inf_opt_82 = parseDhcpSnoopInfOpt82(location + "/dhcp-snoop-inf-opt-82", value["dhcp-snoop-inf-opt-82"], errors);
+				}
+				else {
+					obj.dhcp_snoop_inf_opt_82 = false;
+				}
 
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
+				function parseDhcpSnoopInfOptEncodeSubopt(location, value, errors) {
+					if (type(value) != "bool")
+						push(errors, [ location, "must be of type boolean" ]);
 
-			return value;
-		}
+					return value;
+				}
 
-		if (exists(value, "country")) {
-			obj.country = parseCountry(location + "/country", value["country"], errors);
-		}
+				if (exists(value, "dhcp-snoop-inf-opt-encode-subopt")) {
+					obj.dhcp_snoop_inf_opt_encode_subopt = parseDhcpSnoopInfOptEncodeSubopt(location + "/dhcp-snoop-inf-opt-encode-subopt", value["dhcp-snoop-inf-opt-encode-subopt"], errors);
+				}
+				else {
+					obj.dhcp_snoop_inf_opt_encode_subopt = false;
+				}
 
-		function parseAllowDfs(location, value, errors) {
-			if (type(value) != "bool")
-				push(errors, [ location, "must be of type boolean" ]);
+				function parseDhcpSnoopInfOptRemoteid(location, value, errors) {
+					if (type(value) == "string") {
+						if (length(value) > 32)
+							push(errors, [ location, "must be at most 32 characters long" ]);
 
-			return value;
-		}
+						if (length(value) < 1)
+							push(errors, [ location, "must be at least 1 characters long" ]);
 
-		if (exists(value, "allow-dfs")) {
-			obj.allow_dfs = parseAllowDfs(location + "/allow-dfs", value["allow-dfs"], errors);
-		}
-		else {
-			obj.allow_dfs = true;
-		}
+					}
 
-		function parseChannelMode(location, value, errors) {
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			if (!(value in [ "HT", "VHT", "HE", "EHT" ]))
-				push(errors, [ location, "must be one of \"HT\", \"VHT\", \"HE\" or \"EHT\"" ]);
-
-			return value;
-		}
-
-		if (exists(value, "channel-mode")) {
-			obj.channel_mode = parseChannelMode(location + "/channel-mode", value["channel-mode"], errors);
-		}
-		else {
-			obj.channel_mode = "HE";
-		}
-
-		function parseChannelWidth(location, value, errors) {
-			if (type(value) != "int")
-				push(errors, [ location, "must be of type integer" ]);
-
-			if (!(value in [ 20, 40, 80, 160, 320, 8080 ]))
-				push(errors, [ location, "must be one of 20, 40, 80, 160, 320 or 8080" ]);
-
-			return value;
-		}
-
-		if (exists(value, "channel-width")) {
-			obj.channel_width = parseChannelWidth(location + "/channel-width", value["channel-width"], errors);
-		}
-		else {
-			obj.channel_width = 80;
-		}
-
-		function parseRequireMode(location, value, errors) {
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			if (!(value in [ "HT", "VHT", "HE" ]))
-				push(errors, [ location, "must be one of \"HT\", \"VHT\" or \"HE\"" ]);
-
-			return value;
-		}
-
-		if (exists(value, "require-mode")) {
-			obj.require_mode = parseRequireMode(location + "/require-mode", value["require-mode"], errors);
-		}
-
-		function parseMimo(location, value, errors) {
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			if (!(value in [ "1x1", "2x2", "3x3", "4x4", "5x5", "6x6", "7x7", "8x8" ]))
-				push(errors, [ location, "must be one of \"1x1\", \"2x2\", \"3x3\", \"4x4\", \"5x5\", \"6x6\", \"7x7\" or \"8x8\"" ]);
-
-			return value;
-		}
-
-		if (exists(value, "mimo")) {
-			obj.mimo = parseMimo(location + "/mimo", value["mimo"], errors);
-		}
-
-		function parseTxPower(location, value, errors) {
-			if (type(value) in [ "int", "double" ]) {
-				if (value > 30)
-					push(errors, [ location, "must be lower than or equal to 30" ]);
-
-				if (value < 0)
-					push(errors, [ location, "must be bigger than or equal to 0" ]);
-
-			}
-
-			if (type(value) != "int")
-				push(errors, [ location, "must be of type integer" ]);
-
-			return value;
-		}
-
-		if (exists(value, "tx-power")) {
-			obj.tx_power = parseTxPower(location + "/tx-power", value["tx-power"], errors);
-		}
-
-		function parseLegacyRates(location, value, errors) {
-			if (type(value) != "bool")
-				push(errors, [ location, "must be of type boolean" ]);
-
-			return value;
-		}
-
-		if (exists(value, "legacy-rates")) {
-			obj.legacy_rates = parseLegacyRates(location + "/legacy-rates", value["legacy-rates"], errors);
-		}
-		else {
-			obj.legacy_rates = false;
-		}
-
-		function parseBeaconInterval(location, value, errors) {
-			if (type(value) in [ "int", "double" ]) {
-				if (value > 65535)
-					push(errors, [ location, "must be lower than or equal to 65535" ]);
-
-				if (value < 15)
-					push(errors, [ location, "must be bigger than or equal to 15" ]);
-
-			}
-
-			if (type(value) != "int")
-				push(errors, [ location, "must be of type integer" ]);
-
-			return value;
-		}
-
-		if (exists(value, "beacon-interval")) {
-			obj.beacon_interval = parseBeaconInterval(location + "/beacon-interval", value["beacon-interval"], errors);
-		}
-		else {
-			obj.beacon_interval = 100;
-		}
-
-		function parseMaximumClients(location, value, errors) {
-			if (type(value) != "int")
-				push(errors, [ location, "must be of type integer" ]);
-
-			return value;
-		}
-
-		if (exists(value, "maximum-clients")) {
-			obj.maximum_clients = parseMaximumClients(location + "/maximum-clients", value["maximum-clients"], errors);
-		}
-
-		function parseMaximumClientsIgnoreProbe(location, value, errors) {
-			if (type(value) != "bool")
-				push(errors, [ location, "must be of type boolean" ]);
-
-			return value;
-		}
-
-		if (exists(value, "maximum-clients-ignore-probe")) {
-			obj.maximum_clients_ignore_probe = parseMaximumClientsIgnoreProbe(location + "/maximum-clients-ignore-probe", value["maximum-clients-ignore-probe"], errors);
-		}
-
-		if (exists(value, "rates")) {
-			obj.rates = instantiateRadioRates(location + "/rates", value["rates"], errors);
-		}
-
-		if (exists(value, "he-settings")) {
-			obj.he_settings = instantiateRadioHe(location + "/he-settings", value["he-settings"], errors);
-		}
-
-		function parseHostapdIfaceRaw(location, value, errors) {
-			if (type(value) == "array") {
-				function parseItem(location, value, errors) {
 					if (type(value) != "string")
 						push(errors, [ location, "must be of type string" ]);
+
+					return value;
+				}
+
+				if (exists(value, "dhcp-snoop-inf-opt-remoteid")) {
+					obj.dhcp_snoop_inf_opt_remoteid = parseDhcpSnoopInfOptRemoteid(location + "/dhcp-snoop-inf-opt-remoteid", value["dhcp-snoop-inf-opt-remoteid"], errors);
+				}
+
+				function parseDhcpSnoopInfOptPolicy(location, value, errors) {
+					if (type(value) != "string")
+						push(errors, [ location, "must be of type string" ]);
+
+					if (!(value in [ "drop", "keep", "replace" ]))
+						push(errors, [ location, "must be one of \"drop\", \"keep\" or \"replace\"" ]);
+
+					return value;
+				}
+
+				if (exists(value, "dhcp-snoop-inf-opt-policy")) {
+					obj.dhcp_snoop_inf_opt_policy = parseDhcpSnoopInfOptPolicy(location + "/dhcp-snoop-inf-opt-policy", value["dhcp-snoop-inf-opt-policy"], errors);
+				}
+
+				return obj;
+			}
+
+			if (type(value) != "object")
+				push(errors, [ location, "must be of type object" ]);
+
+			return value;
+		}
+
+		if (exists(value, "dhcp-snooping")) {
+			obj.dhcp_snooping = parseDhcpSnooping(location + "/dhcp-snooping", value["dhcp-snooping"], errors);
+		}
+
+		function parseAcl(location, value, errors) {
+			if (type(value) == "array") {
+				function parseItem(location, value, errors) {
+					if (type(value) == "object") {
+						let obj = {};
+
+						function parseAclType(location, value, errors) {
+							if (type(value) != "string")
+								push(errors, [ location, "must be of type string" ]);
+
+							if (!(value in [ "ipv4", "ipv6", "ipv4Ext", "ipv6Ext", "mac", "arp" ]))
+								push(errors, [ location, "must be one of \"ipv4\", \"ipv6\", \"ipv4Ext\", \"ipv6Ext\", \"mac\" or \"arp\"" ]);
+
+							return value;
+						}
+
+						if (exists(value, "acl-type")) {
+							obj.acl_type = parseAclType(location + "/acl-type", value["acl-type"], errors);
+						}
+
+						function parseAclName(location, value, errors) {
+							if (type(value) == "string") {
+								if (length(value) > 32)
+									push(errors, [ location, "must be at most 32 characters long" ]);
+
+								if (length(value) < 1)
+									push(errors, [ location, "must be at least 1 characters long" ]);
+
+							}
+
+							if (type(value) != "string")
+								push(errors, [ location, "must be of type string" ]);
+
+							return value;
+						}
+
+						if (exists(value, "acl-name")) {
+							obj.acl_name = parseAclName(location + "/acl-name", value["acl-name"], errors);
+						}
+
+						function parseAclRuleAction(location, value, errors) {
+							if (type(value) != "string")
+								push(errors, [ location, "must be of type string" ]);
+
+							if (!(value in [ "permit", "deny" ]))
+								push(errors, [ location, "must be one of \"permit\" or \"deny\"" ]);
+
+							return value;
+						}
+
+						if (exists(value, "acl-rule-action")) {
+							obj.acl_rule_action = parseAclRuleAction(location + "/acl-rule-action", value["acl-rule-action"], errors);
+						}
+
+						function parseAclSourceMacaddress(location, value, errors) {
+							if (type(value) == "string") {
+								if (!matchUcMac(value))
+									push(errors, [ location, "must be a valid MAC address" ]);
+
+							}
+
+							if (type(value) != "string")
+								push(errors, [ location, "must be of type string" ]);
+
+							return value;
+						}
+
+						if (exists(value, "acl-source-macaddress")) {
+							obj.acl_source_macaddress = parseAclSourceMacaddress(location + "/acl-source-macaddress", value["acl-source-macaddress"], errors);
+						}
+
+						function parseAclSourceMacbitmask(location, value, errors) {
+							if (type(value) == "string") {
+								if (!matchUcMac(value))
+									push(errors, [ location, "must be a valid MAC address" ]);
+
+							}
+
+							if (type(value) != "string")
+								push(errors, [ location, "must be of type string" ]);
+
+							return value;
+						}
+
+						if (exists(value, "acl-source-macbitmask")) {
+							obj.acl_source_macbitmask = parseAclSourceMacbitmask(location + "/acl-source-macbitmask", value["acl-source-macbitmask"], errors);
+						}
+
+						function parseAclDestMacaddress(location, value, errors) {
+							if (type(value) == "string") {
+								if (!matchUcMac(value))
+									push(errors, [ location, "must be a valid MAC address" ]);
+
+							}
+
+							if (type(value) != "string")
+								push(errors, [ location, "must be of type string" ]);
+
+							return value;
+						}
+
+						if (exists(value, "acl-dest-macaddress")) {
+							obj.acl_dest_macaddress = parseAclDestMacaddress(location + "/acl-dest-macaddress", value["acl-dest-macaddress"], errors);
+						}
+
+						function parseAclDestMacbitmask(location, value, errors) {
+							if (type(value) == "string") {
+								if (!matchUcMac(value))
+									push(errors, [ location, "must be a valid MAC address" ]);
+
+							}
+
+							if (type(value) != "string")
+								push(errors, [ location, "must be of type string" ]);
+
+							return value;
+						}
+
+						if (exists(value, "acl-dest-macbitmask")) {
+							obj.acl_dest_macbitmask = parseAclDestMacbitmask(location + "/acl-dest-macbitmask", value["acl-dest-macbitmask"], errors);
+						}
+
+						function parseAclPacketFormat(location, value, errors) {
+							if (type(value) != "string")
+								push(errors, [ location, "must be of type string" ]);
+
+							if (!(value in [ "any", "untagged-eth2", "untagged-802.3", "tagged-eth2", "tagged-802.3" ]))
+								push(errors, [ location, "must be one of \"any\", \"untagged-eth2\", \"untagged-802.3\", \"tagged-eth2\" or \"tagged-802.3\"" ]);
+
+							return value;
+						}
+
+						if (exists(value, "acl-packet-format")) {
+							obj.acl_packet_format = parseAclPacketFormat(location + "/acl-packet-format", value["acl-packet-format"], errors);
+						}
+
+						function parseAclVlanid(location, value, errors) {
+							if (type(value) in [ "int", "double" ]) {
+								if (value > 4094)
+									push(errors, [ location, "must be lower than or equal to 4094" ]);
+
+								if (value < 1)
+									push(errors, [ location, "must be bigger than or equal to 1" ]);
+
+							}
+
+							if (type(value) != "int")
+								push(errors, [ location, "must be of type integer" ]);
+
+							return value;
+						}
+
+						if (exists(value, "acl-vlanid")) {
+							obj.acl_vlanid = parseAclVlanid(location + "/acl-vlanid", value["acl-vlanid"], errors);
+						}
+
+						function parseAclVidBitmask(location, value, errors) {
+							if (type(value) in [ "int", "double" ]) {
+								if (value > 4095)
+									push(errors, [ location, "must be lower than or equal to 4095" ]);
+
+								if (value < 1)
+									push(errors, [ location, "must be bigger than or equal to 1" ]);
+
+							}
+
+							if (type(value) != "int")
+								push(errors, [ location, "must be of type integer" ]);
+
+							return value;
+						}
+
+						if (exists(value, "acl-vid-bitmask")) {
+							obj.acl_vid_bitmask = parseAclVidBitmask(location + "/acl-vid-bitmask", value["acl-vid-bitmask"], errors);
+						}
+
+						function parseAclEthertype(location, value, errors) {
+							if (type(value) != "string")
+								push(errors, [ location, "must be of type string" ]);
+
+							return value;
+						}
+
+						if (exists(value, "acl-ethertype")) {
+							obj.acl_ethertype = parseAclEthertype(location + "/acl-ethertype", value["acl-ethertype"], errors);
+						}
+						else {
+							obj.acl_ethertype = "800";
+						}
+
+						function parseAclEthertypeBitmask(location, value, errors) {
+							if (type(value) != "string")
+								push(errors, [ location, "must be of type string" ]);
+
+							return value;
+						}
+
+						if (exists(value, "acl-ethertype-bitmask")) {
+							obj.acl_ethertype_bitmask = parseAclEthertypeBitmask(location + "/acl-ethertype-bitmask", value["acl-ethertype-bitmask"], errors);
+						}
+						else {
+							obj.acl_ethertype_bitmask = "FFFF";
+						}
+
+						function parseAclCos(location, value, errors) {
+							if (type(value) in [ "int", "double" ]) {
+								if (value > 7)
+									push(errors, [ location, "must be lower than or equal to 7" ]);
+
+								if (value < 0)
+									push(errors, [ location, "must be bigger than or equal to 0" ]);
+
+							}
+
+							if (type(value) != "int")
+								push(errors, [ location, "must be of type integer" ]);
+
+							return value;
+						}
+
+						if (exists(value, "acl-cos")) {
+							obj.acl_cos = parseAclCos(location + "/acl-cos", value["acl-cos"], errors);
+						}
+
+						function parseAclCosBitmask(location, value, errors) {
+							if (type(value) in [ "int", "double" ]) {
+								if (value > 7)
+									push(errors, [ location, "must be lower than or equal to 7" ]);
+
+								if (value < 0)
+									push(errors, [ location, "must be bigger than or equal to 0" ]);
+
+							}
+
+							if (type(value) != "int")
+								push(errors, [ location, "must be of type integer" ]);
+
+							return value;
+						}
+
+						if (exists(value, "acl-cos-bitmask")) {
+							obj.acl_cos_bitmask = parseAclCosBitmask(location + "/acl-cos-bitmask", value["acl-cos-bitmask"], errors);
+						}
+
+						function parseAclIpv4SourceAddress(location, value, errors) {
+							if (type(value) == "string") {
+								if (!matchIpv4(value))
+									push(errors, [ location, "must be a valid IPv4 address" ]);
+
+							}
+
+							if (type(value) != "string")
+								push(errors, [ location, "must be of type string" ]);
+
+							return value;
+						}
+
+						if (exists(value, "acl-ipv4-source-address")) {
+							obj.acl_ipv4_source_address = parseAclIpv4SourceAddress(location + "/acl-ipv4-source-address", value["acl-ipv4-source-address"], errors);
+						}
+
+						function parseAclIpv4SourceSubnetmask(location, value, errors) {
+							if (type(value) == "string") {
+								if (!matchIpv4(value))
+									push(errors, [ location, "must be a valid IPv4 address" ]);
+
+							}
+
+							if (type(value) != "string")
+								push(errors, [ location, "must be of type string" ]);
+
+							return value;
+						}
+
+						if (exists(value, "acl-ipv4-source-subnetmask")) {
+							obj.acl_ipv4_source_subnetmask = parseAclIpv4SourceSubnetmask(location + "/acl-ipv4-source-subnetmask", value["acl-ipv4-source-subnetmask"], errors);
+						}
+
+						function parseAclIpv4DestAddress(location, value, errors) {
+							if (type(value) == "string") {
+								if (!matchIpv4(value))
+									push(errors, [ location, "must be a valid IPv4 address" ]);
+
+							}
+
+							if (type(value) != "string")
+								push(errors, [ location, "must be of type string" ]);
+
+							return value;
+						}
+
+						if (exists(value, "acl-ipv4-dest-address")) {
+							obj.acl_ipv4_dest_address = parseAclIpv4DestAddress(location + "/acl-ipv4-dest-address", value["acl-ipv4-dest-address"], errors);
+						}
+
+						function parseAclIpv4DestSubnetmask(location, value, errors) {
+							if (type(value) == "string") {
+								if (!matchIpv4(value))
+									push(errors, [ location, "must be a valid IPv4 address" ]);
+
+							}
+
+							if (type(value) != "string")
+								push(errors, [ location, "must be of type string" ]);
+
+							return value;
+						}
+
+						if (exists(value, "acl-ipv4-dest-subnetmask")) {
+							obj.acl_ipv4_dest_subnetmask = parseAclIpv4DestSubnetmask(location + "/acl-ipv4-dest-subnetmask", value["acl-ipv4-dest-subnetmask"], errors);
+						}
+
+						function parseAclIpv6SourceAddress(location, value, errors) {
+							if (type(value) == "string") {
+								if (!matchIpv6(value))
+									push(errors, [ location, "must be a valid IPv6 address" ]);
+
+							}
+
+							if (type(value) != "string")
+								push(errors, [ location, "must be of type string" ]);
+
+							return value;
+						}
+
+						if (exists(value, "acl-ipv6-source-address")) {
+							obj.acl_ipv6_source_address = parseAclIpv6SourceAddress(location + "/acl-ipv6-source-address", value["acl-ipv6-source-address"], errors);
+						}
+
+						function parseAclIpv6SourcePrefixLength(location, value, errors) {
+							if (type(value) in [ "int", "double" ]) {
+								if (value > 128)
+									push(errors, [ location, "must be lower than or equal to 128" ]);
+
+								if (value < 0)
+									push(errors, [ location, "must be bigger than or equal to 0" ]);
+
+							}
+
+							if (type(value) != "int")
+								push(errors, [ location, "must be of type integer" ]);
+
+							return value;
+						}
+
+						if (exists(value, "acl-ipv6-source-prefix-length")) {
+							obj.acl_ipv6_source_prefix_length = parseAclIpv6SourcePrefixLength(location + "/acl-ipv6-source-prefix-length", value["acl-ipv6-source-prefix-length"], errors);
+						}
+
+						function parseAclIpv6DestAddress(location, value, errors) {
+							if (type(value) == "string") {
+								if (!matchIpv6(value))
+									push(errors, [ location, "must be a valid IPv6 address" ]);
+
+							}
+
+							if (type(value) != "string")
+								push(errors, [ location, "must be of type string" ]);
+
+							return value;
+						}
+
+						if (exists(value, "acl-ipv6-dest-address")) {
+							obj.acl_ipv6_dest_address = parseAclIpv6DestAddress(location + "/acl-ipv6-dest-address", value["acl-ipv6-dest-address"], errors);
+						}
+
+						function parseAclIpv6DestPrefixLength(location, value, errors) {
+							if (type(value) in [ "int", "double" ]) {
+								if (value > 128)
+									push(errors, [ location, "must be lower than or equal to 128" ]);
+
+								if (value < 0)
+									push(errors, [ location, "must be bigger than or equal to 0" ]);
+
+							}
+
+							if (type(value) != "int")
+								push(errors, [ location, "must be of type integer" ]);
+
+							return value;
+						}
+
+						if (exists(value, "acl-ipv6-dest-prefix-length")) {
+							obj.acl_ipv6_dest_prefix_length = parseAclIpv6DestPrefixLength(location + "/acl-ipv6-dest-prefix-length", value["acl-ipv6-dest-prefix-length"], errors);
+						}
+
+						function parseAclIpProto(location, value, errors) {
+							if (type(value) in [ "int", "double" ]) {
+								if (value > 255)
+									push(errors, [ location, "must be lower than or equal to 255" ]);
+
+								if (value < 0)
+									push(errors, [ location, "must be bigger than or equal to 0" ]);
+
+							}
+
+							if (type(value) != "int")
+								push(errors, [ location, "must be of type integer" ]);
+
+							return value;
+						}
+
+						if (exists(value, "acl-ip-proto")) {
+							obj.acl_ip_proto = parseAclIpProto(location + "/acl-ip-proto", value["acl-ip-proto"], errors);
+						}
+
+						function parseAclIpv6NextHeader(location, value, errors) {
+							if (type(value) in [ "int", "double" ]) {
+								if (value > 255)
+									push(errors, [ location, "must be lower than or equal to 255" ]);
+
+								if (value < 0)
+									push(errors, [ location, "must be bigger than or equal to 0" ]);
+
+							}
+
+							if (type(value) != "int")
+								push(errors, [ location, "must be of type integer" ]);
+
+							return value;
+						}
+
+						if (exists(value, "acl-ipv6-next-header")) {
+							obj.acl_ipv6_next_header = parseAclIpv6NextHeader(location + "/acl-ipv6-next-header", value["acl-ipv6-next-header"], errors);
+						}
+
+						function parseAclIpv6FlowLabel(location, value, errors) {
+							if (type(value) in [ "int", "double" ]) {
+								if (value > 1048575)
+									push(errors, [ location, "must be lower than or equal to 1048575" ]);
+
+								if (value < 0)
+									push(errors, [ location, "must be bigger than or equal to 0" ]);
+
+							}
+
+							if (type(value) != "int")
+								push(errors, [ location, "must be of type integer" ]);
+
+							return value;
+						}
+
+						if (exists(value, "acl-ipv6-flow-label")) {
+							obj.acl_ipv6_flow_label = parseAclIpv6FlowLabel(location + "/acl-ipv6-flow-label", value["acl-ipv6-flow-label"], errors);
+						}
+
+						function parseAclIpSourcePort(location, value, errors) {
+							if (type(value) in [ "int", "double" ]) {
+								if (value > 65535)
+									push(errors, [ location, "must be lower than or equal to 65535" ]);
+
+								if (value < 0)
+									push(errors, [ location, "must be bigger than or equal to 0" ]);
+
+							}
+
+							if (type(value) != "int")
+								push(errors, [ location, "must be of type integer" ]);
+
+							return value;
+						}
+
+						if (exists(value, "acl-ip-source-port")) {
+							obj.acl_ip_source_port = parseAclIpSourcePort(location + "/acl-ip-source-port", value["acl-ip-source-port"], errors);
+						}
+
+						function parseAclIpSourcePortBitmask(location, value, errors) {
+							if (type(value) in [ "int", "double" ]) {
+								if (value > 65535)
+									push(errors, [ location, "must be lower than or equal to 65535" ]);
+
+								if (value < 0)
+									push(errors, [ location, "must be bigger than or equal to 0" ]);
+
+							}
+
+							if (type(value) != "int")
+								push(errors, [ location, "must be of type integer" ]);
+
+							return value;
+						}
+
+						if (exists(value, "acl-ip-source-port-bitmask")) {
+							obj.acl_ip_source_port_bitmask = parseAclIpSourcePortBitmask(location + "/acl-ip-source-port-bitmask", value["acl-ip-source-port-bitmask"], errors);
+						}
+
+						function parseAclIpDestPort(location, value, errors) {
+							if (type(value) in [ "int", "double" ]) {
+								if (value > 65535)
+									push(errors, [ location, "must be lower than or equal to 65535" ]);
+
+								if (value < 0)
+									push(errors, [ location, "must be bigger than or equal to 0" ]);
+
+							}
+
+							if (type(value) != "int")
+								push(errors, [ location, "must be of type integer" ]);
+
+							return value;
+						}
+
+						if (exists(value, "acl-ip-dest-port")) {
+							obj.acl_ip_dest_port = parseAclIpDestPort(location + "/acl-ip-dest-port", value["acl-ip-dest-port"], errors);
+						}
+
+						function parseAclIpDestPortBitmask(location, value, errors) {
+							if (type(value) in [ "int", "double" ]) {
+								if (value > 65535)
+									push(errors, [ location, "must be lower than or equal to 65535" ]);
+
+								if (value < 0)
+									push(errors, [ location, "must be bigger than or equal to 0" ]);
+
+							}
+
+							if (type(value) != "int")
+								push(errors, [ location, "must be of type integer" ]);
+
+							return value;
+						}
+
+						if (exists(value, "acl-ip-dest-port-bitmask")) {
+							obj.acl_ip_dest_port_bitmask = parseAclIpDestPortBitmask(location + "/acl-ip-dest-port-bitmask", value["acl-ip-dest-port-bitmask"], errors);
+						}
+
+						function parseAclIpv4FragmentOffset(location, value, errors) {
+							if (type(value) in [ "int", "double" ]) {
+								if (value > 8191)
+									push(errors, [ location, "must be lower than or equal to 8191" ]);
+
+								if (value < 0)
+									push(errors, [ location, "must be bigger than or equal to 0" ]);
+
+							}
+
+							if (type(value) != "int")
+								push(errors, [ location, "must be of type integer" ]);
+
+							return value;
+						}
+
+						if (exists(value, "acl-ipv4-fragment-offset")) {
+							obj.acl_ipv4_fragment_offset = parseAclIpv4FragmentOffset(location + "/acl-ipv4-fragment-offset", value["acl-ipv4-fragment-offset"], errors);
+						}
+
+						function parseAclIpv6FragmentOffset(location, value, errors) {
+							if (type(value) in [ "int", "double" ]) {
+								if (value > 8191)
+									push(errors, [ location, "must be lower than or equal to 8191" ]);
+
+								if (value < 0)
+									push(errors, [ location, "must be bigger than or equal to 0" ]);
+
+							}
+
+							if (type(value) != "int")
+								push(errors, [ location, "must be of type integer" ]);
+
+							return value;
+						}
+
+						if (exists(value, "acl-ipv6-fragment-offset")) {
+							obj.acl_ipv6_fragment_offset = parseAclIpv6FragmentOffset(location + "/acl-ipv6-fragment-offset", value["acl-ipv6-fragment-offset"], errors);
+						}
+
+						function parseAclIpTtl(location, value, errors) {
+							if (type(value) in [ "int", "double" ]) {
+								if (value > 255)
+									push(errors, [ location, "must be lower than or equal to 255" ]);
+
+								if (value < 0)
+									push(errors, [ location, "must be bigger than or equal to 0" ]);
+
+							}
+
+							if (type(value) != "int")
+								push(errors, [ location, "must be of type integer" ]);
+
+							return value;
+						}
+
+						if (exists(value, "acl-ip-ttl")) {
+							obj.acl_ip_ttl = parseAclIpTtl(location + "/acl-ip-ttl", value["acl-ip-ttl"], errors);
+						}
+
+						function parseAclIpv6HopLimit(location, value, errors) {
+							if (type(value) in [ "int", "double" ]) {
+								if (value > 255)
+									push(errors, [ location, "must be lower than or equal to 255" ]);
+
+								if (value < 0)
+									push(errors, [ location, "must be bigger than or equal to 0" ]);
+
+							}
+
+							if (type(value) != "int")
+								push(errors, [ location, "must be of type integer" ]);
+
+							return value;
+						}
+
+						if (exists(value, "acl-ipv6-hop-limit")) {
+							obj.acl_ipv6_hop_limit = parseAclIpv6HopLimit(location + "/acl-ipv6-hop-limit", value["acl-ipv6-hop-limit"], errors);
+						}
+
+						return obj;
+					}
+
+					if (type(value) != "object")
+						push(errors, [ location, "must be of type object" ]);
 
 					return value;
 				}
@@ -2349,8 +2886,906 @@ function instantiateRadio(location, value, errors) {
 			return value;
 		}
 
-		if (exists(value, "hostapd-iface-raw")) {
-			obj.hostapd_iface_raw = parseHostapdIfaceRaw(location + "/hostapd-iface-raw", value["hostapd-iface-raw"], errors);
+		if (exists(value, "acl")) {
+			obj.acl = parseAcl(location + "/acl", value["acl"], errors);
+		}
+
+		function parseMvrConfig(location, value, errors) {
+			if (type(value) == "object") {
+				let obj = {};
+
+				function parseMvrEnable(location, value, errors) {
+					if (type(value) != "bool")
+						push(errors, [ location, "must be of type boolean" ]);
+
+					return value;
+				}
+
+				if (exists(value, "mvr-enable")) {
+					obj.mvr_enable = parseMvrEnable(location + "/mvr-enable", value["mvr-enable"], errors);
+				}
+				else {
+					obj.mvr_enable = false;
+				}
+
+				function parseMvrProxyQueryIntvl(location, value, errors) {
+					if (type(value) in [ "int", "double" ]) {
+						if (value > 43200)
+							push(errors, [ location, "must be lower than or equal to 43200" ]);
+
+						if (value < 1)
+							push(errors, [ location, "must be bigger than or equal to 1" ]);
+
+					}
+
+					if (type(value) != "int")
+						push(errors, [ location, "must be of type integer" ]);
+
+					return value;
+				}
+
+				if (exists(value, "mvr-proxy-query-intvl")) {
+					obj.mvr_proxy_query_intvl = parseMvrProxyQueryIntvl(location + "/mvr-proxy-query-intvl", value["mvr-proxy-query-intvl"], errors);
+				}
+				else {
+					obj.mvr_proxy_query_intvl = 125;
+				}
+
+				function parseMvrProxySwitching(location, value, errors) {
+					if (type(value) != "bool")
+						push(errors, [ location, "must be of type boolean" ]);
+
+					return value;
+				}
+
+				if (exists(value, "mvr-proxy-switching")) {
+					obj.mvr_proxy_switching = parseMvrProxySwitching(location + "/mvr-proxy-switching", value["mvr-proxy-switching"], errors);
+				}
+				else {
+					obj.mvr_proxy_switching = false;
+				}
+
+				function parseMvrRobustnessVal(location, value, errors) {
+					if (type(value) in [ "int", "double" ]) {
+						if (value > 255)
+							push(errors, [ location, "must be lower than or equal to 255" ]);
+
+						if (value < 1)
+							push(errors, [ location, "must be bigger than or equal to 1" ]);
+
+					}
+
+					if (type(value) != "int")
+						push(errors, [ location, "must be of type integer" ]);
+
+					return value;
+				}
+
+				if (exists(value, "mvr-robustness-val")) {
+					obj.mvr_robustness_val = parseMvrRobustnessVal(location + "/mvr-robustness-val", value["mvr-robustness-val"], errors);
+				}
+				else {
+					obj.mvr_robustness_val = 2;
+				}
+
+				function parseMvrSourcePortMode(location, value, errors) {
+					if (type(value) != "string")
+						push(errors, [ location, "must be of type string" ]);
+
+					if (!(value in [ "dynamic", "forward" ]))
+						push(errors, [ location, "must be one of \"dynamic\" or \"forward\"" ]);
+
+					return value;
+				}
+
+				if (exists(value, "mvr-source-port-mode")) {
+					obj.mvr_source_port_mode = parseMvrSourcePortMode(location + "/mvr-source-port-mode", value["mvr-source-port-mode"], errors);
+				}
+				else {
+					obj.mvr_source_port_mode = "forward";
+				}
+
+				return obj;
+			}
+
+			if (type(value) != "object")
+				push(errors, [ location, "must be of type object" ]);
+
+			return value;
+		}
+
+		if (exists(value, "mvr-config")) {
+			obj.mvr_config = parseMvrConfig(location + "/mvr-config", value["mvr-config"], errors);
+		}
+
+		function parseMvrDomainConfig(location, value, errors) {
+			if (type(value) == "array") {
+				function parseItem(location, value, errors) {
+					if (type(value) == "object") {
+						let obj = {};
+
+						function parseMvrDomainId(location, value, errors) {
+							if (type(value) in [ "int", "double" ]) {
+								if (value > 10)
+									push(errors, [ location, "must be lower than or equal to 10" ]);
+
+								if (value < 1)
+									push(errors, [ location, "must be bigger than or equal to 1" ]);
+
+							}
+
+							if (type(value) != "int")
+								push(errors, [ location, "must be of type integer" ]);
+
+							return value;
+						}
+
+						if (exists(value, "mvr-domain-id")) {
+							obj.mvr_domain_id = parseMvrDomainId(location + "/mvr-domain-id", value["mvr-domain-id"], errors);
+						}
+						else {
+							obj.mvr_domain_id = 1;
+						}
+
+						function parseMvrDomainEnable(location, value, errors) {
+							if (type(value) != "bool")
+								push(errors, [ location, "must be of type boolean" ]);
+
+							return value;
+						}
+
+						if (exists(value, "mvr-domain-enable")) {
+							obj.mvr_domain_enable = parseMvrDomainEnable(location + "/mvr-domain-enable", value["mvr-domain-enable"], errors);
+						}
+						else {
+							obj.mvr_domain_enable = false;
+						}
+
+						function parseMvrDomainVlanId(location, value, errors) {
+							if (type(value) in [ "int", "double" ]) {
+								if (value > 4094)
+									push(errors, [ location, "must be lower than or equal to 4094" ]);
+
+								if (value < 1)
+									push(errors, [ location, "must be bigger than or equal to 1" ]);
+
+							}
+
+							if (type(value) != "int")
+								push(errors, [ location, "must be of type integer" ]);
+
+							return value;
+						}
+
+						if (exists(value, "mvr-domain-vlan-id")) {
+							obj.mvr_domain_vlan_id = parseMvrDomainVlanId(location + "/mvr-domain-vlan-id", value["mvr-domain-vlan-id"], errors);
+						}
+						else {
+							obj.mvr_domain_vlan_id = 1;
+						}
+
+						function parseMvrDomainUpstreamSip(location, value, errors) {
+							if (type(value) == "string") {
+								if (!matchIpv4(value))
+									push(errors, [ location, "must be a valid IPv4 address" ]);
+
+							}
+
+							if (type(value) != "string")
+								push(errors, [ location, "must be of type string" ]);
+
+							return value;
+						}
+
+						if (exists(value, "mvr-domain-upstream-sip")) {
+							obj.mvr_domain_upstream_sip = parseMvrDomainUpstreamSip(location + "/mvr-domain-upstream-sip", value["mvr-domain-upstream-sip"], errors);
+						}
+
+						return obj;
+					}
+
+					if (type(value) != "object")
+						push(errors, [ location, "must be of type object" ]);
+
+					return value;
+				}
+
+				return map(value, (item, i) => parseItem(location + "/" + i, item, errors));
+			}
+
+			if (type(value) != "array")
+				push(errors, [ location, "must be of type array" ]);
+
+			return value;
+		}
+
+		if (exists(value, "mvr-domain-config")) {
+			obj.mvr_domain_config = parseMvrDomainConfig(location + "/mvr-domain-config", value["mvr-domain-config"], errors);
+		}
+
+		function parseMvrGroupConfig(location, value, errors) {
+			if (type(value) == "array") {
+				function parseItem(location, value, errors) {
+					if (type(value) == "object") {
+						let obj = {};
+
+						function parseMvrGroupName(location, value, errors) {
+							if (type(value) == "string") {
+								if (length(value) > 16)
+									push(errors, [ location, "must be at most 16 characters long" ]);
+
+								if (length(value) < 1)
+									push(errors, [ location, "must be at least 1 characters long" ]);
+
+							}
+
+							if (type(value) != "string")
+								push(errors, [ location, "must be of type string" ]);
+
+							return value;
+						}
+
+						if (exists(value, "mvr-group-name")) {
+							obj.mvr_group_name = parseMvrGroupName(location + "/mvr-group-name", value["mvr-group-name"], errors);
+						}
+						else {
+							push(errors, [ location, "is required" ]);
+						}
+
+						function parseMvrGroupRangeStart(location, value, errors) {
+							if (type(value) == "string") {
+								if (!matchIpv4(value))
+									push(errors, [ location, "must be a valid IPv4 address" ]);
+
+							}
+
+							if (type(value) != "string")
+								push(errors, [ location, "must be of type string" ]);
+
+							return value;
+						}
+
+						if (exists(value, "mvr-group-range-start")) {
+							obj.mvr_group_range_start = parseMvrGroupRangeStart(location + "/mvr-group-range-start", value["mvr-group-range-start"], errors);
+						}
+						else {
+							push(errors, [ location, "is required" ]);
+						}
+
+						function parseMvrGroupRangeEnd(location, value, errors) {
+							if (type(value) == "string") {
+								if (!matchIpv4(value))
+									push(errors, [ location, "must be a valid IPv4 address" ]);
+
+							}
+
+							if (type(value) != "string")
+								push(errors, [ location, "must be of type string" ]);
+
+							return value;
+						}
+
+						if (exists(value, "mvr-group-range-end")) {
+							obj.mvr_group_range_end = parseMvrGroupRangeEnd(location + "/mvr-group-range-end", value["mvr-group-range-end"], errors);
+						}
+						else {
+							push(errors, [ location, "is required" ]);
+						}
+
+						function parseMvrGroupAssocDomain(location, value, errors) {
+							if (type(value) == "array") {
+								function parseItem(location, value, errors) {
+									if (type(value) in [ "int", "double" ]) {
+										if (value > 10)
+											push(errors, [ location, "must be lower than or equal to 10" ]);
+
+										if (value < 1)
+											push(errors, [ location, "must be bigger than or equal to 1" ]);
+
+									}
+
+									if (type(value) != "int")
+										push(errors, [ location, "must be of type integer" ]);
+
+									return value;
+								}
+
+								return map(value, (item, i) => parseItem(location + "/" + i, item, errors));
+							}
+
+							if (type(value) != "array")
+								push(errors, [ location, "must be of type array" ]);
+
+							return value;
+						}
+
+						if (exists(value, "mvr-group-assoc-domain")) {
+							obj.mvr_group_assoc_domain = parseMvrGroupAssocDomain(location + "/mvr-group-assoc-domain", value["mvr-group-assoc-domain"], errors);
+						}
+						else {
+							push(errors, [ location, "is required" ]);
+						}
+
+						return obj;
+					}
+
+					if (type(value) != "object")
+						push(errors, [ location, "must be of type object" ]);
+
+					return value;
+				}
+
+				return map(value, (item, i) => parseItem(location + "/" + i, item, errors));
+			}
+
+			if (type(value) != "array")
+				push(errors, [ location, "must be of type array" ]);
+
+			return value;
+		}
+
+		if (exists(value, "mvr-group-config")) {
+			obj.mvr_group_config = parseMvrGroupConfig(location + "/mvr-group-config", value["mvr-group-config"], errors);
+		}
+
+		function parseLldpGlobalConfig(location, value, errors) {
+			if (type(value) == "object") {
+				let obj = {};
+
+				function parseLldpEnable(location, value, errors) {
+					if (type(value) != "bool")
+						push(errors, [ location, "must be of type boolean" ]);
+
+					return value;
+				}
+
+				if (exists(value, "lldp-enable")) {
+					obj.lldp_enable = parseLldpEnable(location + "/lldp-enable", value["lldp-enable"], errors);
+				}
+				else {
+					obj.lldp_enable = true;
+				}
+
+				function parseLldpHoldtimeMultiplier(location, value, errors) {
+					if (type(value) != "int")
+						push(errors, [ location, "must be of type integer" ]);
+
+					return value;
+				}
+
+				if (exists(value, "lldp-holdtime-multiplier")) {
+					obj.lldp_holdtime_multiplier = parseLldpHoldtimeMultiplier(location + "/lldp-holdtime-multiplier", value["lldp-holdtime-multiplier"], errors);
+				}
+				else {
+					obj.lldp_holdtime_multiplier = 4;
+				}
+
+				function parseLldpMedFastStartCount(location, value, errors) {
+					if (type(value) != "int")
+						push(errors, [ location, "must be of type integer" ]);
+
+					return value;
+				}
+
+				if (exists(value, "lldp-med-fast-start-count")) {
+					obj.lldp_med_fast_start_count = parseLldpMedFastStartCount(location + "/lldp-med-fast-start-count", value["lldp-med-fast-start-count"], errors);
+				}
+				else {
+					obj.lldp_med_fast_start_count = 4;
+				}
+
+				function parseLldpRefreshInterval(location, value, errors) {
+					if (type(value) != "int")
+						push(errors, [ location, "must be of type integer" ]);
+
+					return value;
+				}
+
+				if (exists(value, "lldp-refresh-interval")) {
+					obj.lldp_refresh_interval = parseLldpRefreshInterval(location + "/lldp-refresh-interval", value["lldp-refresh-interval"], errors);
+				}
+				else {
+					obj.lldp_refresh_interval = 30;
+				}
+
+				function parseLldpReinitDelay(location, value, errors) {
+					if (type(value) != "int")
+						push(errors, [ location, "must be of type integer" ]);
+
+					return value;
+				}
+
+				if (exists(value, "lldp-reinit-delay")) {
+					obj.lldp_reinit_delay = parseLldpReinitDelay(location + "/lldp-reinit-delay", value["lldp-reinit-delay"], errors);
+				}
+				else {
+					obj.lldp_reinit_delay = 2;
+				}
+
+				function parseLldpTxDelay(location, value, errors) {
+					if (type(value) in [ "int", "double" ]) {
+						if (value > 8192)
+							push(errors, [ location, "must be lower than or equal to 8192" ]);
+
+						if (value < 1)
+							push(errors, [ location, "must be bigger than or equal to 1" ]);
+
+					}
+
+					if (type(value) != "int")
+						push(errors, [ location, "must be of type integer" ]);
+
+					return value;
+				}
+
+				if (exists(value, "lldp-tx-delay")) {
+					obj.lldp_tx_delay = parseLldpTxDelay(location + "/lldp-tx-delay", value["lldp-tx-delay"], errors);
+				}
+
+				function parseLldpNotificationInterval(location, value, errors) {
+					if (type(value) != "int")
+						push(errors, [ location, "must be of type integer" ]);
+
+					return value;
+				}
+
+				if (exists(value, "lldp-notification-interval")) {
+					obj.lldp_notification_interval = parseLldpNotificationInterval(location + "/lldp-notification-interval", value["lldp-notification-interval"], errors);
+				}
+				else {
+					obj.lldp_notification_interval = 5;
+				}
+
+				return obj;
+			}
+
+			if (type(value) != "object")
+				push(errors, [ location, "must be of type object" ]);
+
+			return value;
+		}
+
+		if (exists(value, "lldp-global-config")) {
+			obj.lldp_global_config = parseLldpGlobalConfig(location + "/lldp-global-config", value["lldp-global-config"], errors);
+		}
+
+		function parseMcLag(location, value, errors) {
+			if (type(value) != "bool")
+				push(errors, [ location, "must be of type boolean" ]);
+
+			return value;
+		}
+
+		if (exists(value, "mc-lag")) {
+			obj.mc_lag = parseMcLag(location + "/mc-lag", value["mc-lag"], errors);
+		}
+		else {
+			obj.mc_lag = false;
+		}
+
+		function parseMclagConfig(location, value, errors) {
+			if (type(value) == "object") {
+				let obj = {};
+
+				function parseMclagDomains(location, value, errors) {
+					if (type(value) == "array") {
+						function parseItem(location, value, errors) {
+							if (type(value) == "object") {
+								let obj = {};
+
+								function parseMclagDomain(location, value, errors) {
+									if (type(value) in [ "int", "double" ]) {
+										if (value > 1024)
+											push(errors, [ location, "must be lower than or equal to 1024" ]);
+
+										if (value < 1)
+											push(errors, [ location, "must be bigger than or equal to 1" ]);
+
+									}
+
+									if (type(value) != "int")
+										push(errors, [ location, "must be of type integer" ]);
+
+									return value;
+								}
+
+								if (exists(value, "mclag-domain")) {
+									obj.mclag_domain = parseMclagDomain(location + "/mclag-domain", value["mclag-domain"], errors);
+								}
+								else {
+									obj.mclag_domain = 1;
+								}
+
+								function parsePeerLink(location, value, errors) {
+									if (type(value) == "object") {
+										let obj = {};
+
+										function parseType(location, value, errors) {
+											if (type(value) != "string")
+												push(errors, [ location, "must be of type string" ]);
+
+											if (!(value in [ "port", "trunk-group" ]))
+												push(errors, [ location, "must be one of \"port\" or \"trunk-group\"" ]);
+
+											return value;
+										}
+
+										if (exists(value, "type")) {
+											obj.type = parseType(location + "/type", value["type"], errors);
+										}
+										else {
+											obj.type = "trunk-group";
+										}
+
+										function parseValue(location, value, errors) {
+											if (type(value) in [ "int", "double" ]) {
+												if (value > 64)
+													push(errors, [ location, "must be lower than or equal to 64" ]);
+
+												if (value < 1)
+													push(errors, [ location, "must be bigger than or equal to 1" ]);
+
+											}
+
+											if (type(value) != "int")
+												push(errors, [ location, "must be of type integer" ]);
+
+											return value;
+										}
+
+										if (exists(value, "value")) {
+											obj.value = parseValue(location + "/value", value["value"], errors);
+										}
+
+										return obj;
+									}
+
+									if (type(value) != "object")
+										push(errors, [ location, "must be of type object" ]);
+
+									return value;
+								}
+
+								if (exists(value, "peer-link")) {
+									obj.peer_link = parsePeerLink(location + "/peer-link", value["peer-link"], errors);
+								}
+
+								function parseMclagGroup(location, value, errors) {
+									if (type(value) == "object") {
+										let obj = {};
+
+										function parseGroupId(location, value, errors) {
+											if (type(value) in [ "int", "double" ]) {
+												if (value > 128)
+													push(errors, [ location, "must be lower than or equal to 128" ]);
+
+												if (value < 1)
+													push(errors, [ location, "must be bigger than or equal to 1" ]);
+
+											}
+
+											if (type(value) != "int")
+												push(errors, [ location, "must be of type integer" ]);
+
+											return value;
+										}
+
+										if (exists(value, "group-id")) {
+											obj.group_id = parseGroupId(location + "/group-id", value["group-id"], errors);
+										}
+
+										function parseMembers(location, value, errors) {
+											if (type(value) == "array") {
+												function parseItem(location, value, errors) {
+													if (type(value) != "string")
+														push(errors, [ location, "must be of type string" ]);
+
+													return value;
+												}
+
+												return map(value, (item, i) => parseItem(location + "/" + i, item, errors));
+											}
+
+											if (type(value) != "array")
+												push(errors, [ location, "must be of type array" ]);
+
+											return value;
+										}
+
+										if (exists(value, "members")) {
+											obj.members = parseMembers(location + "/members", value["members"], errors);
+										}
+
+										function parseLacpConfig(location, value, errors) {
+											if (type(value) == "object") {
+												let obj = {};
+
+												function parseLacpEnable(location, value, errors) {
+													if (type(value) != "bool")
+														push(errors, [ location, "must be of type boolean" ]);
+
+													return value;
+												}
+
+												if (exists(value, "lacp-enable")) {
+													obj.lacp_enable = parseLacpEnable(location + "/lacp-enable", value["lacp-enable"], errors);
+												}
+												else {
+													obj.lacp_enable = true;
+												}
+
+												function parseLacpRole(location, value, errors) {
+													if (type(value) != "string")
+														push(errors, [ location, "must be of type string" ]);
+
+													if (!(value in [ "actor", "partner" ]))
+														push(errors, [ location, "must be one of \"actor\" or \"partner\"" ]);
+
+													return value;
+												}
+
+												if (exists(value, "lacp-role")) {
+													obj.lacp_role = parseLacpRole(location + "/lacp-role", value["lacp-role"], errors);
+												}
+												else {
+													obj.lacp_role = "actor";
+												}
+
+												function parseLacpTimeout(location, value, errors) {
+													if (type(value) != "string")
+														push(errors, [ location, "must be of type string" ]);
+
+													if (!(value in [ "short", "long" ]))
+														push(errors, [ location, "must be one of \"short\" or \"long\"" ]);
+
+													return value;
+												}
+
+												if (exists(value, "lacp-timeout")) {
+													obj.lacp_timeout = parseLacpTimeout(location + "/lacp-timeout", value["lacp-timeout"], errors);
+												}
+												else {
+													obj.lacp_timeout = "long";
+												}
+
+												return obj;
+											}
+
+											if (type(value) != "object")
+												push(errors, [ location, "must be of type object" ]);
+
+											return value;
+										}
+
+										if (exists(value, "lacp-config")) {
+											obj.lacp_config = parseLacpConfig(location + "/lacp-config", value["lacp-config"], errors);
+										}
+
+										return obj;
+									}
+
+									if (type(value) != "object")
+										push(errors, [ location, "must be of type object" ]);
+
+									return value;
+								}
+
+								if (exists(value, "mclag-group")) {
+									obj.mclag_group = parseMclagGroup(location + "/mclag-group", value["mclag-group"], errors);
+								}
+
+								function parseSystemPriority(location, value, errors) {
+									if (type(value) in [ "int", "double" ]) {
+										if (value > 65535)
+											push(errors, [ location, "must be lower than or equal to 65535" ]);
+
+										if (value < 1)
+											push(errors, [ location, "must be bigger than or equal to 1" ]);
+
+									}
+
+									if (type(value) != "int")
+										push(errors, [ location, "must be of type integer" ]);
+
+									return value;
+								}
+
+								if (exists(value, "system-priority")) {
+									obj.system_priority = parseSystemPriority(location + "/system-priority", value["system-priority"], errors);
+								}
+								else {
+									obj.system_priority = 32768;
+								}
+
+								function parseDualActiveDetection(location, value, errors) {
+									if (type(value) != "bool")
+										push(errors, [ location, "must be of type boolean" ]);
+
+									return value;
+								}
+
+								if (exists(value, "dual-active-detection")) {
+									obj.dual_active_detection = parseDualActiveDetection(location + "/dual-active-detection", value["dual-active-detection"], errors);
+								}
+								else {
+									obj.dual_active_detection = true;
+								}
+
+								return obj;
+							}
+
+							if (type(value) != "object")
+								push(errors, [ location, "must be of type object" ]);
+
+							return value;
+						}
+
+						return map(value, (item, i) => parseItem(location + "/" + i, item, errors));
+					}
+
+					if (type(value) != "array")
+						push(errors, [ location, "must be of type array" ]);
+
+					return value;
+				}
+
+				if (exists(value, "mclag-domains")) {
+					obj.mclag_domains = parseMclagDomains(location + "/mclag-domains", value["mclag-domains"], errors);
+				}
+
+				return obj;
+			}
+
+			if (type(value) != "object")
+				push(errors, [ location, "must be of type object" ]);
+
+			return value;
+		}
+
+		if (exists(value, "mclag-config")) {
+			obj.mclag_config = parseMclagConfig(location + "/mclag-config", value["mclag-config"], errors);
+		}
+
+		function parseVoiceVlanConfig(location, value, errors) {
+			if (type(value) == "object") {
+				let obj = {};
+
+				function parseVoiceVlanId(location, value, errors) {
+					if (type(value) in [ "int", "double" ]) {
+						if (value > 4094)
+							push(errors, [ location, "must be lower than or equal to 4094" ]);
+
+						if (value < 1)
+							push(errors, [ location, "must be bigger than or equal to 1" ]);
+
+					}
+
+					if (type(value) != "int")
+						push(errors, [ location, "must be of type integer" ]);
+
+					return value;
+				}
+
+				if (exists(value, "voice-vlan-id")) {
+					obj.voice_vlan_id = parseVoiceVlanId(location + "/voice-vlan-id", value["voice-vlan-id"], errors);
+				}
+
+				function parseVoiceVlanAgeingTime(location, value, errors) {
+					if (type(value) in [ "int", "double" ]) {
+						if (value > 43200)
+							push(errors, [ location, "must be lower than or equal to 43200" ]);
+
+						if (value < 5)
+							push(errors, [ location, "must be bigger than or equal to 5" ]);
+
+					}
+
+					if (type(value) != "int")
+						push(errors, [ location, "must be of type integer" ]);
+
+					return value;
+				}
+
+				if (exists(value, "voice-vlan-ageing-time")) {
+					obj.voice_vlan_ageing_time = parseVoiceVlanAgeingTime(location + "/voice-vlan-ageing-time", value["voice-vlan-ageing-time"], errors);
+				}
+				else {
+					obj.voice_vlan_ageing_time = 1440;
+				}
+
+				function parseVoiceVlanOuiConfig(location, value, errors) {
+					if (type(value) == "array") {
+						function parseItem(location, value, errors) {
+							if (type(value) == "object") {
+								let obj = {};
+
+								function parseVoiceVlanOuiMac(location, value, errors) {
+									if (type(value) == "string") {
+										if (!matchUcMac(value))
+											push(errors, [ location, "must be a valid MAC address" ]);
+
+									}
+
+									if (type(value) != "string")
+										push(errors, [ location, "must be of type string" ]);
+
+									return value;
+								}
+
+								if (exists(value, "voice-vlan-oui-mac")) {
+									obj.voice_vlan_oui_mac = parseVoiceVlanOuiMac(location + "/voice-vlan-oui-mac", value["voice-vlan-oui-mac"], errors);
+								}
+
+								function parseVoiceVlanOuiMask(location, value, errors) {
+									if (type(value) == "string") {
+										if (!matchUcMac(value))
+											push(errors, [ location, "must be a valid MAC address" ]);
+
+									}
+
+									if (type(value) != "string")
+										push(errors, [ location, "must be of type string" ]);
+
+									return value;
+								}
+
+								if (exists(value, "voice-vlan-oui-mask")) {
+									obj.voice_vlan_oui_mask = parseVoiceVlanOuiMask(location + "/voice-vlan-oui-mask", value["voice-vlan-oui-mask"], errors);
+								}
+
+								function parseVoiceVlanOuiDescription(location, value, errors) {
+									if (type(value) == "string") {
+										if (length(value) > 32)
+											push(errors, [ location, "must be at most 32 characters long" ]);
+
+										if (length(value) < 1)
+											push(errors, [ location, "must be at least 1 characters long" ]);
+
+									}
+
+									if (type(value) != "string")
+										push(errors, [ location, "must be of type string" ]);
+
+									return value;
+								}
+
+								if (exists(value, "voice-vlan-oui-description")) {
+									obj.voice_vlan_oui_description = parseVoiceVlanOuiDescription(location + "/voice-vlan-oui-description", value["voice-vlan-oui-description"], errors);
+								}
+
+								return obj;
+							}
+
+							if (type(value) != "object")
+								push(errors, [ location, "must be of type object" ]);
+
+							return value;
+						}
+
+						return map(value, (item, i) => parseItem(location + "/" + i, item, errors));
+					}
+
+					if (type(value) != "array")
+						push(errors, [ location, "must be of type array" ]);
+
+					return value;
+				}
+
+				if (exists(value, "voice-vlan-oui-config")) {
+					obj.voice_vlan_oui_config = parseVoiceVlanOuiConfig(location + "/voice-vlan-oui-config", value["voice-vlan-oui-config"], errors);
+				}
+
+				return obj;
+			}
+
+			if (type(value) != "object")
+				push(errors, [ location, "must be of type object" ]);
+
+			return value;
+		}
+
+		if (exists(value, "voice-vlan-config")) {
+			obj.voice_vlan_config = parseVoiceVlanConfig(location + "/voice-vlan-config", value["voice-vlan-config"], errors);
 		}
 
 		return obj;
@@ -3283,6 +4718,80 @@ function instantiateInterfaceIpv4(location, value, errors) {
 					obj.igmp = parseIgmp(location + "/igmp", value["igmp"], errors);
 				}
 
+				function parseMvr(location, value, errors) {
+					if (type(value) == "object") {
+						let obj = {};
+
+						function parseMvrIntfMvrRole(location, value, errors) {
+							if (type(value) != "string")
+								push(errors, [ location, "must be of type string" ]);
+
+							if (!(value in [ "none", "source", "receiver" ]))
+								push(errors, [ location, "must be one of \"none\", \"source\" or \"receiver\"" ]);
+
+							return value;
+						}
+
+						if (exists(value, "mvr-intf-mvr-role")) {
+							obj.mvr_intf_mvr_role = parseMvrIntfMvrRole(location + "/mvr-intf-mvr-role", value["mvr-intf-mvr-role"], errors);
+						}
+						else {
+							push(errors, [ location, "is required" ]);
+						}
+
+						function parseMvrIntfImmedLeave(location, value, errors) {
+							if (type(value) != "string")
+								push(errors, [ location, "must be of type string" ]);
+
+							if (!(value in [ "none", "by-host-ip", "by-group" ]))
+								push(errors, [ location, "must be one of \"none\", \"by-host-ip\" or \"by-group\"" ]);
+
+							return value;
+						}
+
+						if (exists(value, "mvr-intf-immed-leave")) {
+							obj.mvr_intf_immed_leave = parseMvrIntfImmedLeave(location + "/mvr-intf-immed-leave", value["mvr-intf-immed-leave"], errors);
+						}
+						else {
+							obj.mvr_intf_immed_leave = "by-group";
+						}
+
+						function parseMvrIntfAssocDomain(location, value, errors) {
+							if (type(value) in [ "int", "double" ]) {
+								if (value > 10)
+									push(errors, [ location, "must be lower than or equal to 10" ]);
+
+								if (value < 1)
+									push(errors, [ location, "must be bigger than or equal to 1" ]);
+
+							}
+
+							if (type(value) != "int")
+								push(errors, [ location, "must be of type integer" ]);
+
+							return value;
+						}
+
+						if (exists(value, "mvr-intf-assoc-domain")) {
+							obj.mvr_intf_assoc_domain = parseMvrIntfAssocDomain(location + "/mvr-intf-assoc-domain", value["mvr-intf-assoc-domain"], errors);
+						}
+						else {
+							push(errors, [ location, "is required" ]);
+						}
+
+						return obj;
+					}
+
+					if (type(value) != "object")
+						push(errors, [ location, "must be of type object" ]);
+
+					return value;
+				}
+
+				if (exists(value, "mvr")) {
+					obj.mvr = parseMvr(location + "/mvr", value["mvr"], errors);
+				}
+
 				return obj;
 			}
 
@@ -3336,6 +4845,108 @@ function instantiateInterfaceIpv4(location, value, errors) {
 
 		if (exists(value, "use-dns")) {
 			obj.use_dns = parseUseDns(location + "/use-dns", value["use-dns"], errors);
+		}
+
+		function parseDhcpSnoopVlanEnable(location, value, errors) {
+			if (type(value) != "bool")
+				push(errors, [ location, "must be of type boolean" ]);
+
+			return value;
+		}
+
+		if (exists(value, "dhcp-snoop-vlan-enable")) {
+			obj.dhcp_snoop_vlan_enable = parseDhcpSnoopVlanEnable(location + "/dhcp-snoop-vlan-enable", value["dhcp-snoop-vlan-enable"], errors);
+		}
+		else {
+			obj.dhcp_snoop_vlan_enable = false;
+		}
+
+		function parseVoiceVlanIntfConfig(location, value, errors) {
+			if (type(value) == "object") {
+				let obj = {};
+
+				function parseVoiceVlanIntfMode(location, value, errors) {
+					if (type(value) != "string")
+						push(errors, [ location, "must be of type string" ]);
+
+					if (!(value in [ "none", "manual", "auto" ]))
+						push(errors, [ location, "must be one of \"none\", \"manual\" or \"auto\"" ]);
+
+					return value;
+				}
+
+				if (exists(value, "voice-vlan-intf-mode")) {
+					obj.voice_vlan_intf_mode = parseVoiceVlanIntfMode(location + "/voice-vlan-intf-mode", value["voice-vlan-intf-mode"], errors);
+				}
+				else {
+					obj.voice_vlan_intf_mode = "auto";
+				}
+
+				function parseVoiceVlanIntfPriority(location, value, errors) {
+					if (type(value) in [ "int", "double" ]) {
+						if (value > 6)
+							push(errors, [ location, "must be lower than or equal to 6" ]);
+
+						if (value < 0)
+							push(errors, [ location, "must be bigger than or equal to 0" ]);
+
+					}
+
+					if (type(value) != "int")
+						push(errors, [ location, "must be of type integer" ]);
+
+					return value;
+				}
+
+				if (exists(value, "voice-vlan-intf-priority")) {
+					obj.voice_vlan_intf_priority = parseVoiceVlanIntfPriority(location + "/voice-vlan-intf-priority", value["voice-vlan-intf-priority"], errors);
+				}
+				else {
+					obj.voice_vlan_intf_priority = 6;
+				}
+
+				function parseVoiceVlanIntfDetectVoice(location, value, errors) {
+					if (type(value) != "string")
+						push(errors, [ location, "must be of type string" ]);
+
+					if (!(value in [ "oui", "lldp" ]))
+						push(errors, [ location, "must be one of \"oui\" or \"lldp\"" ]);
+
+					return value;
+				}
+
+				if (exists(value, "voice-vlan-intf-detect-voice")) {
+					obj.voice_vlan_intf_detect_voice = parseVoiceVlanIntfDetectVoice(location + "/voice-vlan-intf-detect-voice", value["voice-vlan-intf-detect-voice"], errors);
+				}
+				else {
+					obj.voice_vlan_intf_detect_voice = "oui";
+				}
+
+				function parseVoiceVlanIntfSecurity(location, value, errors) {
+					if (type(value) != "bool")
+						push(errors, [ location, "must be of type boolean" ]);
+
+					return value;
+				}
+
+				if (exists(value, "voice-vlan-intf-security")) {
+					obj.voice_vlan_intf_security = parseVoiceVlanIntfSecurity(location + "/voice-vlan-intf-security", value["voice-vlan-intf-security"], errors);
+				}
+				else {
+					obj.voice_vlan_intf_security = false;
+				}
+
+				return obj;
+			}
+
+			if (type(value) != "object")
+				push(errors, [ location, "must be of type object" ]);
+
+			return value;
+		}
+
+		if (exists(value, "voice-vlan-intf-config")) {
+			obj.voice_vlan_intf_config = parseVoiceVlanIntfConfig(location + "/voice-vlan-intf-config", value["voice-vlan-intf-config"], errors);
 		}
 
 		if (exists(value, "dhcp")) {
@@ -3823,6 +5434,185 @@ function instantiateInterfaceIpv6(location, value, errors) {
 	return value;
 }
 
+function instantiateInterfaceAcl(location, value, errors) {
+	if (type(value) == "array") {
+		function parseItem(location, value, errors) {
+			if (type(value) == "object") {
+				let obj = {};
+
+				function parseAclInfPolicyPreference(location, value, errors) {
+					if (type(value) in [ "int", "double" ]) {
+						if (value > 64)
+							push(errors, [ location, "must be lower than or equal to 64" ]);
+
+						if (value < 1)
+							push(errors, [ location, "must be bigger than or equal to 1" ]);
+
+					}
+
+					if (type(value) != "int")
+						push(errors, [ location, "must be of type integer" ]);
+
+					return value;
+				}
+
+				if (exists(value, "acl-inf-policy-preference")) {
+					obj.acl_inf_policy_preference = parseAclInfPolicyPreference(location + "/acl-inf-policy-preference", value["acl-inf-policy-preference"], errors);
+				}
+				else {
+					obj.acl_inf_policy_preference = 1;
+				}
+
+				function parseAclInfPolicyIngress(location, value, errors) {
+					if (type(value) == "string") {
+						if (length(value) > 32)
+							push(errors, [ location, "must be at most 32 characters long" ]);
+
+						if (length(value) < 1)
+							push(errors, [ location, "must be at least 1 characters long" ]);
+
+					}
+
+					if (type(value) != "string")
+						push(errors, [ location, "must be of type string" ]);
+
+					return value;
+				}
+
+				if (exists(value, "acl-inf-policy-ingress")) {
+					obj.acl_inf_policy_ingress = parseAclInfPolicyIngress(location + "/acl-inf-policy-ingress", value["acl-inf-policy-ingress"], errors);
+				}
+
+				function parseAclInfCountersIngress(location, value, errors) {
+					if (type(value) != "bool")
+						push(errors, [ location, "must be of type boolean" ]);
+
+					return value;
+				}
+
+				if (exists(value, "acl-inf-counters-ingress")) {
+					obj.acl_inf_counters_ingress = parseAclInfCountersIngress(location + "/acl-inf-counters-ingress", value["acl-inf-counters-ingress"], errors);
+				}
+				else {
+					obj.acl_inf_counters_ingress = false;
+				}
+
+				function parseAclInfPolicyEgress(location, value, errors) {
+					if (type(value) == "string") {
+						if (length(value) > 32)
+							push(errors, [ location, "must be at most 32 characters long" ]);
+
+						if (length(value) < 1)
+							push(errors, [ location, "must be at least 1 characters long" ]);
+
+					}
+
+					if (type(value) != "string")
+						push(errors, [ location, "must be of type string" ]);
+
+					return value;
+				}
+
+				if (exists(value, "acl-inf-policy-egress")) {
+					obj.acl_inf_policy_egress = parseAclInfPolicyEgress(location + "/acl-inf-policy-egress", value["acl-inf-policy-egress"], errors);
+				}
+
+				function parseAclInfCountersEgress(location, value, errors) {
+					if (type(value) != "bool")
+						push(errors, [ location, "must be of type boolean" ]);
+
+					return value;
+				}
+
+				if (exists(value, "acl-inf-counters-egress")) {
+					obj.acl_inf_counters_egress = parseAclInfCountersEgress(location + "/acl-inf-counters-egress", value["acl-inf-counters-egress"], errors);
+				}
+				else {
+					obj.acl_inf_counters_egress = false;
+				}
+
+				return obj;
+			}
+
+			if (type(value) != "object")
+				push(errors, [ location, "must be of type object" ]);
+
+			return value;
+		}
+
+		return map(value, (item, i) => parseItem(location + "/" + i, item, errors));
+	}
+
+	if (type(value) != "array")
+		push(errors, [ location, "must be of type array" ]);
+
+	return value;
+}
+
+function instantiateInterfaceDhcpSnoopPort(location, value, errors) {
+	if (type(value) == "object") {
+		let obj = {};
+
+		function parseDhcpSnoopPortTrust(location, value, errors) {
+			if (type(value) != "bool")
+				push(errors, [ location, "must be of type boolean" ]);
+
+			return value;
+		}
+
+		if (exists(value, "dhcp-snoop-port-trust")) {
+			obj.dhcp_snoop_port_trust = parseDhcpSnoopPortTrust(location + "/dhcp-snoop-port-trust", value["dhcp-snoop-port-trust"], errors);
+		}
+		else {
+			obj.dhcp_snoop_port_trust = false;
+		}
+
+		function parseDhcpSnoopPortClientLimit(location, value, errors) {
+			if (type(value) in [ "int", "double" ]) {
+				if (value < 1)
+					push(errors, [ location, "must be bigger than or equal to 1" ]);
+
+			}
+
+			if (type(value) != "int")
+				push(errors, [ location, "must be of type integer" ]);
+
+			return value;
+		}
+
+		if (exists(value, "dhcp-snoop-port-client-limit")) {
+			obj.dhcp_snoop_port_client_limit = parseDhcpSnoopPortClientLimit(location + "/dhcp-snoop-port-client-limit", value["dhcp-snoop-port-client-limit"], errors);
+		}
+
+		function parseDhcpSnoopPortCircuitId(location, value, errors) {
+			if (type(value) == "string") {
+				if (length(value) > 32)
+					push(errors, [ location, "must be at most 32 characters long" ]);
+
+				if (length(value) < 1)
+					push(errors, [ location, "must be at least 1 characters long" ]);
+
+			}
+
+			if (type(value) != "string")
+				push(errors, [ location, "must be of type string" ]);
+
+			return value;
+		}
+
+		if (exists(value, "dhcp-snoop-port-circuit-id")) {
+			obj.dhcp_snoop_port_circuit_id = parseDhcpSnoopPortCircuitId(location + "/dhcp-snoop-port-circuit-id", value["dhcp-snoop-port-circuit-id"], errors);
+		}
+
+		return obj;
+	}
+
+	if (type(value) != "object")
+		push(errors, [ location, "must be of type object" ]);
+
+	return value;
+}
+
 function instantiateInterfaceBroadBandWwan(location, value, errors) {
 	if (type(value) == "object") {
 		let obj = {};
@@ -4043,3188 +5833,6 @@ function instantiateInterfaceBroadBand(location, value, errors) {
 	}
 
 	value = vvalue;
-
-	return value;
-}
-
-function instantiateInterfaceSsidMultiPsk(location, value, errors) {
-	if (type(value) == "object") {
-		let obj = {};
-
-		function parseMac(location, value, errors) {
-			if (type(value) == "string") {
-				if (!matchUcMac(value))
-					push(errors, [ location, "must be a valid MAC address" ]);
-
-			}
-
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			return value;
-		}
-
-		if (exists(value, "mac")) {
-			obj.mac = parseMac(location + "/mac", value["mac"], errors);
-		}
-
-		function parseKey(location, value, errors) {
-			if (type(value) == "string") {
-				if (length(value) > 63)
-					push(errors, [ location, "must be at most 63 characters long" ]);
-
-				if (length(value) < 8)
-					push(errors, [ location, "must be at least 8 characters long" ]);
-
-			}
-
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			return value;
-		}
-
-		if (exists(value, "key")) {
-			obj.key = parseKey(location + "/key", value["key"], errors);
-		}
-
-		function parseVlanId(location, value, errors) {
-			if (type(value) in [ "int", "double" ]) {
-				if (value > 4096)
-					push(errors, [ location, "must be lower than or equal to 4096" ]);
-
-			}
-
-			if (type(value) != "int")
-				push(errors, [ location, "must be of type integer" ]);
-
-			return value;
-		}
-
-		if (exists(value, "vlan-id")) {
-			obj.vlan_id = parseVlanId(location + "/vlan-id", value["vlan-id"], errors);
-		}
-
-		return obj;
-	}
-
-	if (type(value) != "object")
-		push(errors, [ location, "must be of type object" ]);
-
-	return value;
-}
-
-function instantiateInterfaceSsidRrm(location, value, errors) {
-	if (type(value) == "object") {
-		let obj = {};
-
-		function parseNeighborReporting(location, value, errors) {
-			if (type(value) != "bool")
-				push(errors, [ location, "must be of type boolean" ]);
-
-			return value;
-		}
-
-		if (exists(value, "neighbor-reporting")) {
-			obj.neighbor_reporting = parseNeighborReporting(location + "/neighbor-reporting", value["neighbor-reporting"], errors);
-		}
-		else {
-			obj.neighbor_reporting = false;
-		}
-
-		function parseReducedNeighborReporting(location, value, errors) {
-			if (type(value) != "bool")
-				push(errors, [ location, "must be of type boolean" ]);
-
-			return value;
-		}
-
-		if (exists(value, "reduced-neighbor-reporting")) {
-			obj.reduced_neighbor_reporting = parseReducedNeighborReporting(location + "/reduced-neighbor-reporting", value["reduced-neighbor-reporting"], errors);
-		}
-		else {
-			obj.reduced_neighbor_reporting = false;
-		}
-
-		function parseLci(location, value, errors) {
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			return value;
-		}
-
-		if (exists(value, "lci")) {
-			obj.lci = parseLci(location + "/lci", value["lci"], errors);
-		}
-
-		function parseCivicLocation(location, value, errors) {
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			return value;
-		}
-
-		if (exists(value, "civic-location")) {
-			obj.civic_location = parseCivicLocation(location + "/civic-location", value["civic-location"], errors);
-		}
-
-		function parseFtmResponder(location, value, errors) {
-			if (type(value) != "bool")
-				push(errors, [ location, "must be of type boolean" ]);
-
-			return value;
-		}
-
-		if (exists(value, "ftm-responder")) {
-			obj.ftm_responder = parseFtmResponder(location + "/ftm-responder", value["ftm-responder"], errors);
-		}
-		else {
-			obj.ftm_responder = false;
-		}
-
-		function parseStationaryAp(location, value, errors) {
-			if (type(value) != "bool")
-				push(errors, [ location, "must be of type boolean" ]);
-
-			return value;
-		}
-
-		if (exists(value, "stationary-ap")) {
-			obj.stationary_ap = parseStationaryAp(location + "/stationary-ap", value["stationary-ap"], errors);
-		}
-		else {
-			obj.stationary_ap = false;
-		}
-
-		return obj;
-	}
-
-	if (type(value) != "object")
-		push(errors, [ location, "must be of type object" ]);
-
-	return value;
-}
-
-function instantiateInterfaceSsidRateLimit(location, value, errors) {
-	if (type(value) == "object") {
-		let obj = {};
-
-		function parseIngressRate(location, value, errors) {
-			if (type(value) != "int")
-				push(errors, [ location, "must be of type integer" ]);
-
-			return value;
-		}
-
-		if (exists(value, "ingress-rate")) {
-			obj.ingress_rate = parseIngressRate(location + "/ingress-rate", value["ingress-rate"], errors);
-		}
-		else {
-			obj.ingress_rate = 0;
-		}
-
-		function parseEgressRate(location, value, errors) {
-			if (type(value) != "int")
-				push(errors, [ location, "must be of type integer" ]);
-
-			return value;
-		}
-
-		if (exists(value, "egress-rate")) {
-			obj.egress_rate = parseEgressRate(location + "/egress-rate", value["egress-rate"], errors);
-		}
-		else {
-			obj.egress_rate = 0;
-		}
-
-		return obj;
-	}
-
-	if (type(value) != "object")
-		push(errors, [ location, "must be of type object" ]);
-
-	return value;
-}
-
-function instantiateInterfaceSsidRoaming(location, value, errors) {
-	if (type(value) == "object") {
-		let obj = {};
-
-		function parseMessageExchange(location, value, errors) {
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			if (!(value in [ "air", "ds" ]))
-				push(errors, [ location, "must be one of \"air\" or \"ds\"" ]);
-
-			return value;
-		}
-
-		if (exists(value, "message-exchange")) {
-			obj.message_exchange = parseMessageExchange(location + "/message-exchange", value["message-exchange"], errors);
-		}
-		else {
-			obj.message_exchange = "ds";
-		}
-
-		function parseGeneratePsk(location, value, errors) {
-			if (type(value) != "bool")
-				push(errors, [ location, "must be of type boolean" ]);
-
-			return value;
-		}
-
-		if (exists(value, "generate-psk")) {
-			obj.generate_psk = parseGeneratePsk(location + "/generate-psk", value["generate-psk"], errors);
-		}
-		else {
-			obj.generate_psk = false;
-		}
-
-		function parseDomainIdentifier(location, value, errors) {
-			if (type(value) == "string") {
-				if (length(value) > 4)
-					push(errors, [ location, "must be at most 4 characters long" ]);
-
-				if (length(value) < 4)
-					push(errors, [ location, "must be at least 4 characters long" ]);
-
-			}
-
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			return value;
-		}
-
-		if (exists(value, "domain-identifier")) {
-			obj.domain_identifier = parseDomainIdentifier(location + "/domain-identifier", value["domain-identifier"], errors);
-		}
-
-		function parsePmkR0KeyHolder(location, value, errors) {
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			return value;
-		}
-
-		if (exists(value, "pmk-r0-key-holder")) {
-			obj.pmk_r0_key_holder = parsePmkR0KeyHolder(location + "/pmk-r0-key-holder", value["pmk-r0-key-holder"], errors);
-		}
-
-		function parsePmkR1KeyHolder(location, value, errors) {
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			return value;
-		}
-
-		if (exists(value, "pmk-r1-key-holder")) {
-			obj.pmk_r1_key_holder = parsePmkR1KeyHolder(location + "/pmk-r1-key-holder", value["pmk-r1-key-holder"], errors);
-		}
-
-		return obj;
-	}
-
-	if (type(value) != "object")
-		push(errors, [ location, "must be of type object" ]);
-
-	return value;
-}
-
-function instantiateInterfaceSsidRadiusLocalUser(location, value, errors) {
-	if (type(value) == "object") {
-		let obj = {};
-
-		function parseMac(location, value, errors) {
-			if (type(value) == "string") {
-				if (!matchUcMac(value))
-					push(errors, [ location, "must be a valid MAC address" ]);
-
-			}
-
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			return value;
-		}
-
-		if (exists(value, "mac")) {
-			obj.mac = parseMac(location + "/mac", value["mac"], errors);
-		}
-
-		function parseUserName(location, value, errors) {
-			if (type(value) == "string") {
-				if (length(value) < 1)
-					push(errors, [ location, "must be at least 1 characters long" ]);
-
-			}
-
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			return value;
-		}
-
-		if (exists(value, "user-name")) {
-			obj.user_name = parseUserName(location + "/user-name", value["user-name"], errors);
-		}
-
-		function parsePassword(location, value, errors) {
-			if (type(value) == "string") {
-				if (length(value) > 63)
-					push(errors, [ location, "must be at most 63 characters long" ]);
-
-				if (length(value) < 8)
-					push(errors, [ location, "must be at least 8 characters long" ]);
-
-			}
-
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			return value;
-		}
-
-		if (exists(value, "password")) {
-			obj.password = parsePassword(location + "/password", value["password"], errors);
-		}
-
-		function parseVlanId(location, value, errors) {
-			if (type(value) in [ "int", "double" ]) {
-				if (value > 4096)
-					push(errors, [ location, "must be lower than or equal to 4096" ]);
-
-			}
-
-			if (type(value) != "int")
-				push(errors, [ location, "must be of type integer" ]);
-
-			return value;
-		}
-
-		if (exists(value, "vlan-id")) {
-			obj.vlan_id = parseVlanId(location + "/vlan-id", value["vlan-id"], errors);
-		}
-
-		return obj;
-	}
-
-	if (type(value) != "object")
-		push(errors, [ location, "must be of type object" ]);
-
-	return value;
-}
-
-function instantiateInterfaceSsidRadiusLocal(location, value, errors) {
-	if (type(value) == "object") {
-		let obj = {};
-
-		function parseServerIdentity(location, value, errors) {
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			return value;
-		}
-
-		if (exists(value, "server-identity")) {
-			obj.server_identity = parseServerIdentity(location + "/server-identity", value["server-identity"], errors);
-		}
-		else {
-			obj.server_identity = "uCentral";
-		}
-
-		function parseUsers(location, value, errors) {
-			if (type(value) == "array") {
-				return map(value, (item, i) => instantiateInterfaceSsidRadiusLocalUser(location + "/" + i, item, errors));
-			}
-
-			if (type(value) != "array")
-				push(errors, [ location, "must be of type array" ]);
-
-			return value;
-		}
-
-		if (exists(value, "users")) {
-			obj.users = parseUsers(location + "/users", value["users"], errors);
-		}
-
-		return obj;
-	}
-
-	if (type(value) != "object")
-		push(errors, [ location, "must be of type object" ]);
-
-	return value;
-}
-
-function instantiateInterfaceSsidRadiusServer(location, value, errors) {
-	if (type(value) == "object") {
-		let obj = {};
-
-		function parseHost(location, value, errors) {
-			if (type(value) == "string") {
-				if (!matchUcHost(value))
-					push(errors, [ location, "must be a valid hostname or IP address" ]);
-
-			}
-
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			return value;
-		}
-
-		if (exists(value, "host")) {
-			obj.host = parseHost(location + "/host", value["host"], errors);
-		}
-
-		function parsePort(location, value, errors) {
-			if (type(value) in [ "int", "double" ]) {
-				if (value > 65535)
-					push(errors, [ location, "must be lower than or equal to 65535" ]);
-
-				if (value < 1024)
-					push(errors, [ location, "must be bigger than or equal to 1024" ]);
-
-			}
-
-			if (type(value) != "int")
-				push(errors, [ location, "must be of type integer" ]);
-
-			return value;
-		}
-
-		if (exists(value, "port")) {
-			obj.port = parsePort(location + "/port", value["port"], errors);
-		}
-
-		function parseSecret(location, value, errors) {
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			return value;
-		}
-
-		if (exists(value, "secret")) {
-			obj.secret = parseSecret(location + "/secret", value["secret"], errors);
-		}
-
-		function parseSecondary(location, value, errors) {
-			if (type(value) == "object") {
-				let obj = {};
-
-				function parseHost(location, value, errors) {
-					if (type(value) == "string") {
-						if (!matchUcHost(value))
-							push(errors, [ location, "must be a valid hostname or IP address" ]);
-
-					}
-
-					if (type(value) != "string")
-						push(errors, [ location, "must be of type string" ]);
-
-					return value;
-				}
-
-				if (exists(value, "host")) {
-					obj.host = parseHost(location + "/host", value["host"], errors);
-				}
-
-				function parsePort(location, value, errors) {
-					if (type(value) in [ "int", "double" ]) {
-						if (value > 65535)
-							push(errors, [ location, "must be lower than or equal to 65535" ]);
-
-						if (value < 1024)
-							push(errors, [ location, "must be bigger than or equal to 1024" ]);
-
-					}
-
-					if (type(value) != "int")
-						push(errors, [ location, "must be of type integer" ]);
-
-					return value;
-				}
-
-				if (exists(value, "port")) {
-					obj.port = parsePort(location + "/port", value["port"], errors);
-				}
-
-				function parseSecret(location, value, errors) {
-					if (type(value) != "string")
-						push(errors, [ location, "must be of type string" ]);
-
-					return value;
-				}
-
-				if (exists(value, "secret")) {
-					obj.secret = parseSecret(location + "/secret", value["secret"], errors);
-				}
-
-				return obj;
-			}
-
-			if (type(value) != "object")
-				push(errors, [ location, "must be of type object" ]);
-
-			return value;
-		}
-
-		if (exists(value, "secondary")) {
-			obj.secondary = parseSecondary(location + "/secondary", value["secondary"], errors);
-		}
-
-		function parseRequestAttribute(location, value, errors) {
-			if (type(value) == "array") {
-				function parseItem(location, value, errors) {
-					function parseVariant0(location, value, errors) {
-						if (type(value) == "object") {
-							let obj = {};
-
-							function parseVendorId(location, value, errors) {
-								if (type(value) in [ "int", "double" ]) {
-									if (value > 65535)
-										push(errors, [ location, "must be lower than or equal to 65535" ]);
-
-									if (value < 1)
-										push(errors, [ location, "must be bigger than or equal to 1" ]);
-
-								}
-
-								if (type(value) != "int")
-									push(errors, [ location, "must be of type integer" ]);
-
-								return value;
-							}
-
-							if (exists(value, "vendor-id")) {
-								obj.vendor_id = parseVendorId(location + "/vendor-id", value["vendor-id"], errors);
-							}
-
-							function parseVendorAttributes(location, value, errors) {
-								if (type(value) == "array") {
-									function parseItem(location, value, errors) {
-										if (type(value) == "object") {
-											let obj = {};
-
-											function parseId(location, value, errors) {
-												if (type(value) in [ "int", "double" ]) {
-													if (value > 255)
-														push(errors, [ location, "must be lower than or equal to 255" ]);
-
-													if (value < 1)
-														push(errors, [ location, "must be bigger than or equal to 1" ]);
-
-												}
-
-												if (type(value) != "int")
-													push(errors, [ location, "must be of type integer" ]);
-
-												return value;
-											}
-
-											if (exists(value, "id")) {
-												obj.id = parseId(location + "/id", value["id"], errors);
-											}
-
-											function parseValue(location, value, errors) {
-												if (type(value) != "string")
-													push(errors, [ location, "must be of type string" ]);
-
-												return value;
-											}
-
-											if (exists(value, "value")) {
-												obj.value = parseValue(location + "/value", value["value"], errors);
-											}
-
-											return obj;
-										}
-
-										if (type(value) != "object")
-											push(errors, [ location, "must be of type object" ]);
-
-										return value;
-									}
-
-									return map(value, (item, i) => parseItem(location + "/" + i, item, errors));
-								}
-
-								if (type(value) != "array")
-									push(errors, [ location, "must be of type array" ]);
-
-								return value;
-							}
-
-							if (exists(value, "vendor-attributes")) {
-								obj.vendor_attributes = parseVendorAttributes(location + "/vendor-attributes", value["vendor-attributes"], errors);
-							}
-
-							return obj;
-						}
-
-						if (type(value) != "object")
-							push(errors, [ location, "must be of type object" ]);
-
-						return value;
-					}
-
-					function parseVariant1(location, value, errors) {
-						if (type(value) == "object") {
-							let obj = {};
-
-							function parseId(location, value, errors) {
-								if (type(value) in [ "int", "double" ]) {
-									if (value > 255)
-										push(errors, [ location, "must be lower than or equal to 255" ]);
-
-									if (value < 1)
-										push(errors, [ location, "must be bigger than or equal to 1" ]);
-
-								}
-
-								if (type(value) != "int")
-									push(errors, [ location, "must be of type integer" ]);
-
-								return value;
-							}
-
-							if (exists(value, "id")) {
-								obj.id = parseId(location + "/id", value["id"], errors);
-							}
-
-							function parseValue(location, value, errors) {
-								if (type(value) in [ "int", "double" ]) {
-									if (value > 4294967295)
-										push(errors, [ location, "must be lower than or equal to 4294967295" ]);
-
-									if (value < 0)
-										push(errors, [ location, "must be bigger than or equal to 0" ]);
-
-								}
-
-								if (type(value) != "int")
-									push(errors, [ location, "must be of type integer" ]);
-
-								return value;
-							}
-
-							if (exists(value, "value")) {
-								obj.value = parseValue(location + "/value", value["value"], errors);
-							}
-
-							return obj;
-						}
-
-						if (type(value) != "object")
-							push(errors, [ location, "must be of type object" ]);
-
-						return value;
-					}
-
-					function parseVariant2(location, value, errors) {
-						if (type(value) == "object") {
-							let obj = {};
-
-							function parseId(location, value, errors) {
-								if (type(value) in [ "int", "double" ]) {
-									if (value > 255)
-										push(errors, [ location, "must be lower than or equal to 255" ]);
-
-									if (value < 1)
-										push(errors, [ location, "must be bigger than or equal to 1" ]);
-
-								}
-
-								if (type(value) != "int")
-									push(errors, [ location, "must be of type integer" ]);
-
-								return value;
-							}
-
-							if (exists(value, "id")) {
-								obj.id = parseId(location + "/id", value["id"], errors);
-							}
-
-							function parseValue(location, value, errors) {
-								if (type(value) != "string")
-									push(errors, [ location, "must be of type string" ]);
-
-								return value;
-							}
-
-							if (exists(value, "value")) {
-								obj.value = parseValue(location + "/value", value["value"], errors);
-							}
-
-							return obj;
-						}
-
-						if (type(value) != "object")
-							push(errors, [ location, "must be of type object" ]);
-
-						return value;
-					}
-
-					function parseVariant3(location, value, errors) {
-						if (type(value) == "object") {
-							let obj = {};
-
-							function parseId(location, value, errors) {
-								if (type(value) in [ "int", "double" ]) {
-									if (value > 255)
-										push(errors, [ location, "must be lower than or equal to 255" ]);
-
-									if (value < 1)
-										push(errors, [ location, "must be bigger than or equal to 1" ]);
-
-								}
-
-								if (type(value) != "int")
-									push(errors, [ location, "must be of type integer" ]);
-
-								return value;
-							}
-
-							if (exists(value, "id")) {
-								obj.id = parseId(location + "/id", value["id"], errors);
-							}
-
-							function parseHexValue(location, value, errors) {
-								if (type(value) != "string")
-									push(errors, [ location, "must be of type string" ]);
-
-								return value;
-							}
-
-							if (exists(value, "hex-value")) {
-								obj.hex_value = parseHexValue(location + "/hex-value", value["hex-value"], errors);
-							}
-
-							return obj;
-						}
-
-						if (type(value) != "object")
-							push(errors, [ location, "must be of type object" ]);
-
-						return value;
-					}
-
-					let success = 0, tryval, tryerr, vvalue = null, verrors = [];
-
-					tryerr = [];
-					tryval = parseVariant0(location, value, tryerr);
-					if (!length(tryerr)) {
-						if (type(vvalue) == "object" && type(tryval) == "object")
-							vvalue = { ...vvalue, ...tryval };
-						else
-							vvalue = tryval;
-
-						success++;
-					}
-					else {
-						push(verrors, join(" and\n", map(tryerr, err => "\t - " + err[1])));
-					}
-
-					tryerr = [];
-					tryval = parseVariant1(location, value, tryerr);
-					if (!length(tryerr)) {
-						if (type(vvalue) == "object" && type(tryval) == "object")
-							vvalue = { ...vvalue, ...tryval };
-						else
-							vvalue = tryval;
-
-						success++;
-					}
-					else {
-						push(verrors, join(" and\n", map(tryerr, err => "\t - " + err[1])));
-					}
-
-					tryerr = [];
-					tryval = parseVariant2(location, value, tryerr);
-					if (!length(tryerr)) {
-						if (type(vvalue) == "object" && type(tryval) == "object")
-							vvalue = { ...vvalue, ...tryval };
-						else
-							vvalue = tryval;
-
-						success++;
-					}
-					else {
-						push(verrors, join(" and\n", map(tryerr, err => "\t - " + err[1])));
-					}
-
-					tryerr = [];
-					tryval = parseVariant3(location, value, tryerr);
-					if (!length(tryerr)) {
-						if (type(vvalue) == "object" && type(tryval) == "object")
-							vvalue = { ...vvalue, ...tryval };
-						else
-							vvalue = tryval;
-
-						success++;
-					}
-					else {
-						push(verrors, join(" and\n", map(tryerr, err => "\t - " + err[1])));
-					}
-
-					if (success == 0) {
-						if (length(verrors))
-							push(errors, [ location, "must match at least one of the following constraints:\n" + join("\n- or -\n", verrors) ]);
-						else
-							push(errors, [ location, "must match only one variant" ]);
-						return null;
-					}
-
-					value = vvalue;
-
-					return value;
-				}
-
-				return map(value, (item, i) => parseItem(location + "/" + i, item, errors));
-			}
-
-			if (type(value) != "array")
-				push(errors, [ location, "must be of type array" ]);
-
-			return value;
-		}
-
-		if (exists(value, "request-attribute")) {
-			obj.request_attribute = parseRequestAttribute(location + "/request-attribute", value["request-attribute"], errors);
-		}
-
-		return obj;
-	}
-
-	if (type(value) != "object")
-		push(errors, [ location, "must be of type object" ]);
-
-	return value;
-}
-
-function instantiateInterfaceSsidRadiusHealth(location, value, errors) {
-	if (type(value) == "object") {
-		let obj = {};
-
-		function parseUsername(location, value, errors) {
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			return value;
-		}
-
-		if (exists(value, "username")) {
-			obj.username = parseUsername(location + "/username", value["username"], errors);
-		}
-
-		function parsePassword(location, value, errors) {
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			return value;
-		}
-
-		if (exists(value, "password")) {
-			obj.password = parsePassword(location + "/password", value["password"], errors);
-		}
-
-		return obj;
-	}
-
-	if (type(value) != "object")
-		push(errors, [ location, "must be of type object" ]);
-
-	return value;
-}
-
-function instantiateInterfaceSsidRadius(location, value, errors) {
-	if (type(value) == "object") {
-		let obj = {};
-
-		function parseNasIdentifier(location, value, errors) {
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			return value;
-		}
-
-		if (exists(value, "nas-identifier")) {
-			obj.nas_identifier = parseNasIdentifier(location + "/nas-identifier", value["nas-identifier"], errors);
-		}
-
-		function parseChargeableUserId(location, value, errors) {
-			if (type(value) != "bool")
-				push(errors, [ location, "must be of type boolean" ]);
-
-			return value;
-		}
-
-		if (exists(value, "chargeable-user-id")) {
-			obj.chargeable_user_id = parseChargeableUserId(location + "/chargeable-user-id", value["chargeable-user-id"], errors);
-		}
-		else {
-			obj.chargeable_user_id = false;
-		}
-
-		if (exists(value, "local")) {
-			obj.local = instantiateInterfaceSsidRadiusLocal(location + "/local", value["local"], errors);
-		}
-
-		function parseDynamicAuthorization(location, value, errors) {
-			if (type(value) == "object") {
-				let obj = {};
-
-				function parseHost(location, value, errors) {
-					if (type(value) == "string") {
-						if (!matchUcIp(value))
-							push(errors, [ location, "must be a valid IPv4 or IPv6 address" ]);
-
-					}
-
-					if (type(value) != "string")
-						push(errors, [ location, "must be of type string" ]);
-
-					return value;
-				}
-
-				if (exists(value, "host")) {
-					obj.host = parseHost(location + "/host", value["host"], errors);
-				}
-
-				function parsePort(location, value, errors) {
-					if (type(value) in [ "int", "double" ]) {
-						if (value > 65535)
-							push(errors, [ location, "must be lower than or equal to 65535" ]);
-
-						if (value < 1024)
-							push(errors, [ location, "must be bigger than or equal to 1024" ]);
-
-					}
-
-					if (type(value) != "int")
-						push(errors, [ location, "must be of type integer" ]);
-
-					return value;
-				}
-
-				if (exists(value, "port")) {
-					obj.port = parsePort(location + "/port", value["port"], errors);
-				}
-
-				function parseSecret(location, value, errors) {
-					if (type(value) != "string")
-						push(errors, [ location, "must be of type string" ]);
-
-					return value;
-				}
-
-				if (exists(value, "secret")) {
-					obj.secret = parseSecret(location + "/secret", value["secret"], errors);
-				}
-
-				return obj;
-			}
-
-			if (type(value) != "object")
-				push(errors, [ location, "must be of type object" ]);
-
-			return value;
-		}
-
-		if (exists(value, "dynamic-authorization")) {
-			obj.dynamic_authorization = parseDynamicAuthorization(location + "/dynamic-authorization", value["dynamic-authorization"], errors);
-		}
-
-		function parseAuthentication(location, value, errors) {
-			function parseVariant0(location, value, errors) {
-				value = instantiateInterfaceSsidRadiusServer(location, value, errors);
-
-				return value;
-			}
-
-			function parseVariant1(location, value, errors) {
-				if (type(value) == "object") {
-					let obj = {};
-
-					function parseMacFilter(location, value, errors) {
-						if (type(value) != "bool")
-							push(errors, [ location, "must be of type boolean" ]);
-
-						return value;
-					}
-
-					if (exists(value, "mac-filter")) {
-						obj.mac_filter = parseMacFilter(location + "/mac-filter", value["mac-filter"], errors);
-					}
-					else {
-						obj.mac_filter = false;
-					}
-
-					return obj;
-				}
-
-				if (type(value) != "object")
-					push(errors, [ location, "must be of type object" ]);
-
-				return value;
-			}
-
-			let success = 0, tryval, tryerr, vvalue = null, verrors = [];
-
-			tryerr = [];
-			tryval = parseVariant0(location, value, tryerr);
-			if (!length(tryerr)) {
-				if (type(vvalue) == "object" && type(tryval) == "object")
-					vvalue = { ...vvalue, ...tryval };
-				else
-					vvalue = tryval;
-
-				success++;
-			}
-			else {
-				push(verrors, join(" and\n", map(tryerr, err => "\t - " + err[1])));
-			}
-
-			tryerr = [];
-			tryval = parseVariant1(location, value, tryerr);
-			if (!length(tryerr)) {
-				if (type(vvalue) == "object" && type(tryval) == "object")
-					vvalue = { ...vvalue, ...tryval };
-				else
-					vvalue = tryval;
-
-				success++;
-			}
-			else {
-				push(verrors, join(" and\n", map(tryerr, err => "\t - " + err[1])));
-			}
-
-			if (success != 2) {
-				if (length(verrors))
-					push(errors, [ location, "must match all of the following constraints:\n" + join("\n- or -\n", verrors) ]);
-				else
-					push(errors, [ location, "must match only one variant" ]);
-				return null;
-			}
-
-			value = vvalue;
-
-			return value;
-		}
-
-		if (exists(value, "authentication")) {
-			obj.authentication = parseAuthentication(location + "/authentication", value["authentication"], errors);
-		}
-
-		function parseAccounting(location, value, errors) {
-			function parseVariant0(location, value, errors) {
-				value = instantiateInterfaceSsidRadiusServer(location, value, errors);
-
-				return value;
-			}
-
-			function parseVariant1(location, value, errors) {
-				if (type(value) == "object") {
-					let obj = {};
-
-					function parseInterval(location, value, errors) {
-						if (type(value) in [ "int", "double" ]) {
-							if (value > 600)
-								push(errors, [ location, "must be lower than or equal to 600" ]);
-
-							if (value < 60)
-								push(errors, [ location, "must be bigger than or equal to 60" ]);
-
-						}
-
-						if (type(value) != "int")
-							push(errors, [ location, "must be of type integer" ]);
-
-						return value;
-					}
-
-					if (exists(value, "interval")) {
-						obj.interval = parseInterval(location + "/interval", value["interval"], errors);
-					}
-					else {
-						obj.interval = 60;
-					}
-
-					return obj;
-				}
-
-				if (type(value) != "object")
-					push(errors, [ location, "must be of type object" ]);
-
-				return value;
-			}
-
-			let success = 0, tryval, tryerr, vvalue = null, verrors = [];
-
-			tryerr = [];
-			tryval = parseVariant0(location, value, tryerr);
-			if (!length(tryerr)) {
-				if (type(vvalue) == "object" && type(tryval) == "object")
-					vvalue = { ...vvalue, ...tryval };
-				else
-					vvalue = tryval;
-
-				success++;
-			}
-			else {
-				push(verrors, join(" and\n", map(tryerr, err => "\t - " + err[1])));
-			}
-
-			tryerr = [];
-			tryval = parseVariant1(location, value, tryerr);
-			if (!length(tryerr)) {
-				if (type(vvalue) == "object" && type(tryval) == "object")
-					vvalue = { ...vvalue, ...tryval };
-				else
-					vvalue = tryval;
-
-				success++;
-			}
-			else {
-				push(verrors, join(" and\n", map(tryerr, err => "\t - " + err[1])));
-			}
-
-			if (success != 2) {
-				if (length(verrors))
-					push(errors, [ location, "must match all of the following constraints:\n" + join("\n- or -\n", verrors) ]);
-				else
-					push(errors, [ location, "must match only one variant" ]);
-				return null;
-			}
-
-			value = vvalue;
-
-			return value;
-		}
-
-		if (exists(value, "accounting")) {
-			obj.accounting = parseAccounting(location + "/accounting", value["accounting"], errors);
-		}
-
-		if (exists(value, "health")) {
-			obj.health = instantiateInterfaceSsidRadiusHealth(location + "/health", value["health"], errors);
-		}
-
-		return obj;
-	}
-
-	if (type(value) != "object")
-		push(errors, [ location, "must be of type object" ]);
-
-	return value;
-}
-
-function instantiateInterfaceSsidCertificates(location, value, errors) {
-	if (type(value) == "object") {
-		let obj = {};
-
-		function parseUseLocalCertificates(location, value, errors) {
-			if (type(value) != "bool")
-				push(errors, [ location, "must be of type boolean" ]);
-
-			return value;
-		}
-
-		if (exists(value, "use-local-certificates")) {
-			obj.use_local_certificates = parseUseLocalCertificates(location + "/use-local-certificates", value["use-local-certificates"], errors);
-		}
-		else {
-			obj.use_local_certificates = false;
-		}
-
-		function parseCaCertificate(location, value, errors) {
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			return value;
-		}
-
-		if (exists(value, "ca-certificate")) {
-			obj.ca_certificate = parseCaCertificate(location + "/ca-certificate", value["ca-certificate"], errors);
-		}
-
-		function parseCertificate(location, value, errors) {
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			return value;
-		}
-
-		if (exists(value, "certificate")) {
-			obj.certificate = parseCertificate(location + "/certificate", value["certificate"], errors);
-		}
-
-		function parsePrivateKey(location, value, errors) {
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			return value;
-		}
-
-		if (exists(value, "private-key")) {
-			obj.private_key = parsePrivateKey(location + "/private-key", value["private-key"], errors);
-		}
-
-		function parsePrivateKeyPassword(location, value, errors) {
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			return value;
-		}
-
-		if (exists(value, "private-key-password")) {
-			obj.private_key_password = parsePrivateKeyPassword(location + "/private-key-password", value["private-key-password"], errors);
-		}
-
-		return obj;
-	}
-
-	if (type(value) != "object")
-		push(errors, [ location, "must be of type object" ]);
-
-	return value;
-}
-
-function instantiateInterfaceSsidPassPoint(location, value, errors) {
-	if (type(value) == "object") {
-		let obj = {};
-
-		function parseVenueName(location, value, errors) {
-			if (type(value) == "array") {
-				function parseItem(location, value, errors) {
-					if (type(value) != "string")
-						push(errors, [ location, "must be of type string" ]);
-
-					return value;
-				}
-
-				return map(value, (item, i) => parseItem(location + "/" + i, item, errors));
-			}
-
-			if (type(value) != "array")
-				push(errors, [ location, "must be of type array" ]);
-
-			return value;
-		}
-
-		if (exists(value, "venue-name")) {
-			obj.venue_name = parseVenueName(location + "/venue-name", value["venue-name"], errors);
-		}
-
-		function parseVenueGroup(location, value, errors) {
-			if (type(value) in [ "int", "double" ]) {
-				if (value > 32)
-					push(errors, [ location, "must be lower than or equal to 32" ]);
-
-			}
-
-			if (type(value) != "int")
-				push(errors, [ location, "must be of type integer" ]);
-
-			return value;
-		}
-
-		if (exists(value, "venue-group")) {
-			obj.venue_group = parseVenueGroup(location + "/venue-group", value["venue-group"], errors);
-		}
-
-		function parseVenueType(location, value, errors) {
-			if (type(value) in [ "int", "double" ]) {
-				if (value > 32)
-					push(errors, [ location, "must be lower than or equal to 32" ]);
-
-			}
-
-			if (type(value) != "int")
-				push(errors, [ location, "must be of type integer" ]);
-
-			return value;
-		}
-
-		if (exists(value, "venue-type")) {
-			obj.venue_type = parseVenueType(location + "/venue-type", value["venue-type"], errors);
-		}
-
-		function parseVenueUrl(location, value, errors) {
-			if (type(value) == "array") {
-				function parseItem(location, value, errors) {
-					if (type(value) == "string") {
-						if (!matchUri(value))
-							push(errors, [ location, "must be a valid URI" ]);
-
-					}
-
-					if (type(value) != "string")
-						push(errors, [ location, "must be of type string" ]);
-
-					return value;
-				}
-
-				return map(value, (item, i) => parseItem(location + "/" + i, item, errors));
-			}
-
-			if (type(value) != "array")
-				push(errors, [ location, "must be of type array" ]);
-
-			return value;
-		}
-
-		if (exists(value, "venue-url")) {
-			obj.venue_url = parseVenueUrl(location + "/venue-url", value["venue-url"], errors);
-		}
-
-		function parseAuthType(location, value, errors) {
-			if (type(value) == "string") {
-				if (length(value) > 2)
-					push(errors, [ location, "must be at most 2 characters long" ]);
-
-				if (length(value) < 2)
-					push(errors, [ location, "must be at least 2 characters long" ]);
-
-			}
-
-			if (type(value) == "object") {
-				let obj = {};
-
-				function parseType(location, value, errors) {
-					if (type(value) != "string")
-						push(errors, [ location, "must be of type string" ]);
-
-					if (!(value in [ "terms-and-conditions", "online-enrollment", "http-redirection", "dns-redirection" ]))
-						push(errors, [ location, "must be one of \"terms-and-conditions\", \"online-enrollment\", \"http-redirection\" or \"dns-redirection\"" ]);
-
-					return value;
-				}
-
-				if (exists(value, "type")) {
-					obj.type = parseType(location + "/type", value["type"], errors);
-				}
-
-				function parseUri(location, value, errors) {
-					if (type(value) == "string") {
-						if (!matchUri(value))
-							push(errors, [ location, "must be a valid URI" ]);
-
-					}
-
-					if (type(value) != "string")
-						push(errors, [ location, "must be of type string" ]);
-
-					return value;
-				}
-
-				if (exists(value, "uri")) {
-					obj.uri = parseUri(location + "/uri", value["uri"], errors);
-				}
-
-				return obj;
-			}
-
-			if (type(value) != "object")
-				push(errors, [ location, "must be of type object" ]);
-
-			return value;
-		}
-
-		if (exists(value, "auth-type")) {
-			obj.auth_type = parseAuthType(location + "/auth-type", value["auth-type"], errors);
-		}
-
-		function parseDomainName(location, value, errors) {
-			if (type(value) == "array") {
-				function parseItem(location, value, errors) {
-					if (type(value) == "string") {
-						if (!matchHostname(value))
-							push(errors, [ location, "must be a valid hostname" ]);
-
-					}
-
-					if (type(value) != "string")
-						push(errors, [ location, "must be of type string" ]);
-
-					return value;
-				}
-
-				return map(value, (item, i) => parseItem(location + "/" + i, item, errors));
-			}
-
-			if (type(value) != "array")
-				push(errors, [ location, "must be of type array" ]);
-
-			return value;
-		}
-
-		if (exists(value, "domain-name")) {
-			obj.domain_name = parseDomainName(location + "/domain-name", value["domain-name"], errors);
-		}
-
-		function parseNaiRealm(location, value, errors) {
-			if (type(value) == "array") {
-				function parseItem(location, value, errors) {
-					if (type(value) != "string")
-						push(errors, [ location, "must be of type string" ]);
-
-					return value;
-				}
-
-				return map(value, (item, i) => parseItem(location + "/" + i, item, errors));
-			}
-
-			if (type(value) != "array")
-				push(errors, [ location, "must be of type array" ]);
-
-			return value;
-		}
-
-		if (exists(value, "nai-realm")) {
-			obj.nai_realm = parseNaiRealm(location + "/nai-realm", value["nai-realm"], errors);
-		}
-
-		function parseOsen(location, value, errors) {
-			if (type(value) != "bool")
-				push(errors, [ location, "must be of type boolean" ]);
-
-			return value;
-		}
-
-		if (exists(value, "osen")) {
-			obj.osen = parseOsen(location + "/osen", value["osen"], errors);
-		}
-
-		function parseAnqpDomain(location, value, errors) {
-			if (type(value) in [ "int", "double" ]) {
-				if (value > 65535)
-					push(errors, [ location, "must be lower than or equal to 65535" ]);
-
-				if (value < 0)
-					push(errors, [ location, "must be bigger than or equal to 0" ]);
-
-			}
-
-			if (type(value) != "int")
-				push(errors, [ location, "must be of type integer" ]);
-
-			return value;
-		}
-
-		if (exists(value, "anqp-domain")) {
-			obj.anqp_domain = parseAnqpDomain(location + "/anqp-domain", value["anqp-domain"], errors);
-		}
-
-		function parseAnqp3gppCellNet(location, value, errors) {
-			if (type(value) == "array") {
-				function parseItem(location, value, errors) {
-					if (type(value) != "string")
-						push(errors, [ location, "must be of type string" ]);
-
-					return value;
-				}
-
-				return map(value, (item, i) => parseItem(location + "/" + i, item, errors));
-			}
-
-			if (type(value) != "array")
-				push(errors, [ location, "must be of type array" ]);
-
-			return value;
-		}
-
-		if (exists(value, "anqp-3gpp-cell-net")) {
-			obj.anqp_3gpp_cell_net = parseAnqp3gppCellNet(location + "/anqp-3gpp-cell-net", value["anqp-3gpp-cell-net"], errors);
-		}
-
-		function parseFriendlyName(location, value, errors) {
-			if (type(value) == "array") {
-				function parseItem(location, value, errors) {
-					if (type(value) != "string")
-						push(errors, [ location, "must be of type string" ]);
-
-					return value;
-				}
-
-				return map(value, (item, i) => parseItem(location + "/" + i, item, errors));
-			}
-
-			if (type(value) != "array")
-				push(errors, [ location, "must be of type array" ]);
-
-			return value;
-		}
-
-		if (exists(value, "friendly-name")) {
-			obj.friendly_name = parseFriendlyName(location + "/friendly-name", value["friendly-name"], errors);
-		}
-
-		function parseAccessNetworkType(location, value, errors) {
-			if (type(value) in [ "int", "double" ]) {
-				if (value > 15)
-					push(errors, [ location, "must be lower than or equal to 15" ]);
-
-			}
-
-			if (type(value) != "int")
-				push(errors, [ location, "must be of type integer" ]);
-
-			return value;
-		}
-
-		if (exists(value, "access-network-type")) {
-			obj.access_network_type = parseAccessNetworkType(location + "/access-network-type", value["access-network-type"], errors);
-		}
-		else {
-			obj.access_network_type = 0;
-		}
-
-		function parseInternet(location, value, errors) {
-			if (type(value) != "bool")
-				push(errors, [ location, "must be of type boolean" ]);
-
-			return value;
-		}
-
-		if (exists(value, "internet")) {
-			obj.internet = parseInternet(location + "/internet", value["internet"], errors);
-		}
-		else {
-			obj.internet = true;
-		}
-
-		function parseAsra(location, value, errors) {
-			if (type(value) != "bool")
-				push(errors, [ location, "must be of type boolean" ]);
-
-			return value;
-		}
-
-		if (exists(value, "asra")) {
-			obj.asra = parseAsra(location + "/asra", value["asra"], errors);
-		}
-		else {
-			obj.asra = false;
-		}
-
-		function parseEsr(location, value, errors) {
-			if (type(value) != "bool")
-				push(errors, [ location, "must be of type boolean" ]);
-
-			return value;
-		}
-
-		if (exists(value, "esr")) {
-			obj.esr = parseEsr(location + "/esr", value["esr"], errors);
-		}
-		else {
-			obj.esr = false;
-		}
-
-		function parseUesa(location, value, errors) {
-			if (type(value) != "bool")
-				push(errors, [ location, "must be of type boolean" ]);
-
-			return value;
-		}
-
-		if (exists(value, "uesa")) {
-			obj.uesa = parseUesa(location + "/uesa", value["uesa"], errors);
-		}
-		else {
-			obj.uesa = false;
-		}
-
-		function parseHessid(location, value, errors) {
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			return value;
-		}
-
-		if (exists(value, "hessid")) {
-			obj.hessid = parseHessid(location + "/hessid", value["hessid"], errors);
-		}
-
-		function parseRoamingConsortium(location, value, errors) {
-			if (type(value) == "array") {
-				function parseItem(location, value, errors) {
-					if (type(value) != "string")
-						push(errors, [ location, "must be of type string" ]);
-
-					return value;
-				}
-
-				return map(value, (item, i) => parseItem(location + "/" + i, item, errors));
-			}
-
-			if (type(value) != "array")
-				push(errors, [ location, "must be of type array" ]);
-
-			return value;
-		}
-
-		if (exists(value, "roaming-consortium")) {
-			obj.roaming_consortium = parseRoamingConsortium(location + "/roaming-consortium", value["roaming-consortium"], errors);
-		}
-
-		function parseDisableDgaf(location, value, errors) {
-			if (type(value) != "bool")
-				push(errors, [ location, "must be of type boolean" ]);
-
-			return value;
-		}
-
-		if (exists(value, "disable-dgaf")) {
-			obj.disable_dgaf = parseDisableDgaf(location + "/disable-dgaf", value["disable-dgaf"], errors);
-		}
-		else {
-			obj.disable_dgaf = false;
-		}
-
-		function parseIpaddrTypeAvailable(location, value, errors) {
-			if (type(value) in [ "int", "double" ]) {
-				if (value > 255)
-					push(errors, [ location, "must be lower than or equal to 255" ]);
-
-			}
-
-			if (type(value) != "int")
-				push(errors, [ location, "must be of type integer" ]);
-
-			return value;
-		}
-
-		if (exists(value, "ipaddr-type-available")) {
-			obj.ipaddr_type_available = parseIpaddrTypeAvailable(location + "/ipaddr-type-available", value["ipaddr-type-available"], errors);
-		}
-
-		function parseConnectionCapability(location, value, errors) {
-			if (type(value) == "array") {
-				function parseItem(location, value, errors) {
-					if (type(value) != "string")
-						push(errors, [ location, "must be of type string" ]);
-
-					return value;
-				}
-
-				return map(value, (item, i) => parseItem(location + "/" + i, item, errors));
-			}
-
-			if (type(value) != "array")
-				push(errors, [ location, "must be of type array" ]);
-
-			return value;
-		}
-
-		if (exists(value, "connection-capability")) {
-			obj.connection_capability = parseConnectionCapability(location + "/connection-capability", value["connection-capability"], errors);
-		}
-
-		function parseIcons(location, value, errors) {
-			if (type(value) == "array") {
-				function parseItem(location, value, errors) {
-					if (type(value) == "object") {
-						let obj = {};
-
-						function parseWidth(location, value, errors) {
-							if (type(value) != "int")
-								push(errors, [ location, "must be of type integer" ]);
-
-							return value;
-						}
-
-						if (exists(value, "width")) {
-							obj.width = parseWidth(location + "/width", value["width"], errors);
-						}
-
-						function parseHeight(location, value, errors) {
-							if (type(value) != "int")
-								push(errors, [ location, "must be of type integer" ]);
-
-							return value;
-						}
-
-						if (exists(value, "height")) {
-							obj.height = parseHeight(location + "/height", value["height"], errors);
-						}
-
-						function parseType(location, value, errors) {
-							if (type(value) != "string")
-								push(errors, [ location, "must be of type string" ]);
-
-							return value;
-						}
-
-						if (exists(value, "type")) {
-							obj.type = parseType(location + "/type", value["type"], errors);
-						}
-
-						function parseIcon(location, value, errors) {
-							if (type(value) == "string") {
-								if (!matchUcBase64(value))
-									push(errors, [ location, "must be a valid base64 encoded data" ]);
-
-							}
-
-							if (type(value) != "string")
-								push(errors, [ location, "must be of type string" ]);
-
-							return value;
-						}
-
-						if (exists(value, "icon")) {
-							obj.icon = parseIcon(location + "/icon", value["icon"], errors);
-						}
-
-						function parseLanguage(location, value, errors) {
-							if (type(value) == "string") {
-								if (!match(value, regexp("^[a-z][a-z][a-z]$")))
-									push(errors, [ location, "must match regular expression /^[a-z][a-z][a-z]$/" ]);
-
-							}
-
-							if (type(value) != "string")
-								push(errors, [ location, "must be of type string" ]);
-
-							return value;
-						}
-
-						if (exists(value, "language")) {
-							obj.language = parseLanguage(location + "/language", value["language"], errors);
-						}
-
-						return obj;
-					}
-
-					if (type(value) != "object")
-						push(errors, [ location, "must be of type object" ]);
-
-					return value;
-				}
-
-				return map(value, (item, i) => parseItem(location + "/" + i, item, errors));
-			}
-
-			if (type(value) != "array")
-				push(errors, [ location, "must be of type array" ]);
-
-			return value;
-		}
-
-		if (exists(value, "icons")) {
-			obj.icons = parseIcons(location + "/icons", value["icons"], errors);
-		}
-
-		function parseWanMetrics(location, value, errors) {
-			if (type(value) == "object") {
-				let obj = {};
-
-				function parseInfo(location, value, errors) {
-					if (type(value) != "string")
-						push(errors, [ location, "must be of type string" ]);
-
-					if (!(value in [ "up", "down", "testing" ]))
-						push(errors, [ location, "must be one of \"up\", \"down\" or \"testing\"" ]);
-
-					return value;
-				}
-
-				if (exists(value, "info")) {
-					obj.info = parseInfo(location + "/info", value["info"], errors);
-				}
-
-				function parseDownlink(location, value, errors) {
-					if (type(value) != "int")
-						push(errors, [ location, "must be of type integer" ]);
-
-					return value;
-				}
-
-				if (exists(value, "downlink")) {
-					obj.downlink = parseDownlink(location + "/downlink", value["downlink"], errors);
-				}
-
-				function parseUplink(location, value, errors) {
-					if (type(value) != "int")
-						push(errors, [ location, "must be of type integer" ]);
-
-					return value;
-				}
-
-				if (exists(value, "uplink")) {
-					obj.uplink = parseUplink(location + "/uplink", value["uplink"], errors);
-				}
-
-				return obj;
-			}
-
-			if (type(value) != "object")
-				push(errors, [ location, "must be of type object" ]);
-
-			return value;
-		}
-
-		if (exists(value, "wan-metrics")) {
-			obj.wan_metrics = parseWanMetrics(location + "/wan-metrics", value["wan-metrics"], errors);
-		}
-
-		return obj;
-	}
-
-	if (type(value) != "object")
-		push(errors, [ location, "must be of type object" ]);
-
-	return value;
-}
-
-function instantiateInterfaceSsidQualityThresholds(location, value, errors) {
-	if (type(value) == "object") {
-		let obj = {};
-
-		function parseProbeRequestRssi(location, value, errors) {
-			if (type(value) != "int")
-				push(errors, [ location, "must be of type integer" ]);
-
-			return value;
-		}
-
-		if (exists(value, "probe-request-rssi")) {
-			obj.probe_request_rssi = parseProbeRequestRssi(location + "/probe-request-rssi", value["probe-request-rssi"], errors);
-		}
-
-		function parseAssociationRequestRssi(location, value, errors) {
-			if (type(value) != "int")
-				push(errors, [ location, "must be of type integer" ]);
-
-			return value;
-		}
-
-		if (exists(value, "association-request-rssi")) {
-			obj.association_request_rssi = parseAssociationRequestRssi(location + "/association-request-rssi", value["association-request-rssi"], errors);
-		}
-
-		function parseClientKickRssi(location, value, errors) {
-			if (type(value) != "int")
-				push(errors, [ location, "must be of type integer" ]);
-
-			return value;
-		}
-
-		if (exists(value, "client-kick-rssi")) {
-			obj.client_kick_rssi = parseClientKickRssi(location + "/client-kick-rssi", value["client-kick-rssi"], errors);
-		}
-
-		function parseClientKickBanTime(location, value, errors) {
-			if (type(value) != "int")
-				push(errors, [ location, "must be of type integer" ]);
-
-			return value;
-		}
-
-		if (exists(value, "client-kick-ban-time")) {
-			obj.client_kick_ban_time = parseClientKickBanTime(location + "/client-kick-ban-time", value["client-kick-ban-time"], errors);
-		}
-		else {
-			obj.client_kick_ban_time = 0;
-		}
-
-		return obj;
-	}
-
-	if (type(value) != "object")
-		push(errors, [ location, "must be of type object" ]);
-
-	return value;
-}
-
-function instantiateInterfaceSsidAcl(location, value, errors) {
-	if (type(value) == "object") {
-		let obj = {};
-
-		function parseMode(location, value, errors) {
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			if (!(value in [ "allow", "deny" ]))
-				push(errors, [ location, "must be one of \"allow\" or \"deny\"" ]);
-
-			return value;
-		}
-
-		if (exists(value, "mode")) {
-			obj.mode = parseMode(location + "/mode", value["mode"], errors);
-		}
-
-		function parseMacAddress(location, value, errors) {
-			if (type(value) == "array") {
-				function parseItem(location, value, errors) {
-					if (type(value) == "string") {
-						if (!matchUcMac(value))
-							push(errors, [ location, "must be a valid MAC address" ]);
-
-					}
-
-					if (type(value) != "string")
-						push(errors, [ location, "must be of type string" ]);
-
-					return value;
-				}
-
-				return map(value, (item, i) => parseItem(location + "/" + i, item, errors));
-			}
-
-			if (type(value) != "array")
-				push(errors, [ location, "must be of type array" ]);
-
-			return value;
-		}
-
-		if (exists(value, "mac-address")) {
-			obj.mac_address = parseMacAddress(location + "/mac-address", value["mac-address"], errors);
-		}
-
-		return obj;
-	}
-
-	if (type(value) != "object")
-		push(errors, [ location, "must be of type object" ]);
-
-	return value;
-}
-
-function instantiateServiceCaptiveClick(location, value, errors) {
-	if (type(value) == "object") {
-		let obj = {};
-
-		function parseAuthMode(location, value, errors) {
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			if (value != "click-to-continue")
-				push(errors, [ location, "must have value \"click-to-continue\"" ]);
-
-			return value;
-		}
-
-		if (exists(value, "auth-mode")) {
-			obj.auth_mode = parseAuthMode(location + "/auth-mode", value["auth-mode"], errors);
-		}
-
-		return obj;
-	}
-
-	if (type(value) != "object")
-		push(errors, [ location, "must be of type object" ]);
-
-	return value;
-}
-
-function instantiateServiceCaptiveRadius(location, value, errors) {
-	if (type(value) == "object") {
-		let obj = {};
-
-		function parseAuthMode(location, value, errors) {
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			if (value != "radius")
-				push(errors, [ location, "must have value \"radius\"" ]);
-
-			return value;
-		}
-
-		if (exists(value, "auth-mode")) {
-			obj.auth_mode = parseAuthMode(location + "/auth-mode", value["auth-mode"], errors);
-		}
-
-		function parseAuthServer(location, value, errors) {
-			if (type(value) == "string") {
-				if (!matchUcHost(value))
-					push(errors, [ location, "must be a valid hostname or IP address" ]);
-
-			}
-
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			return value;
-		}
-
-		if (exists(value, "auth-server")) {
-			obj.auth_server = parseAuthServer(location + "/auth-server", value["auth-server"], errors);
-		}
-
-		function parseAuthPort(location, value, errors) {
-			if (type(value) in [ "int", "double" ]) {
-				if (value > 65535)
-					push(errors, [ location, "must be lower than or equal to 65535" ]);
-
-				if (value < 1024)
-					push(errors, [ location, "must be bigger than or equal to 1024" ]);
-
-			}
-
-			if (type(value) != "int")
-				push(errors, [ location, "must be of type integer" ]);
-
-			return value;
-		}
-
-		if (exists(value, "auth-port")) {
-			obj.auth_port = parseAuthPort(location + "/auth-port", value["auth-port"], errors);
-		}
-		else {
-			obj.auth_port = 1812;
-		}
-
-		function parseAuthSecret(location, value, errors) {
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			return value;
-		}
-
-		if (exists(value, "auth-secret")) {
-			obj.auth_secret = parseAuthSecret(location + "/auth-secret", value["auth-secret"], errors);
-		}
-
-		function parseAcctServer(location, value, errors) {
-			if (type(value) == "string") {
-				if (!matchUcHost(value))
-					push(errors, [ location, "must be a valid hostname or IP address" ]);
-
-			}
-
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			return value;
-		}
-
-		if (exists(value, "acct-server")) {
-			obj.acct_server = parseAcctServer(location + "/acct-server", value["acct-server"], errors);
-		}
-
-		function parseAcctPort(location, value, errors) {
-			if (type(value) in [ "int", "double" ]) {
-				if (value > 65535)
-					push(errors, [ location, "must be lower than or equal to 65535" ]);
-
-				if (value < 1024)
-					push(errors, [ location, "must be bigger than or equal to 1024" ]);
-
-			}
-
-			if (type(value) != "int")
-				push(errors, [ location, "must be of type integer" ]);
-
-			return value;
-		}
-
-		if (exists(value, "acct-port")) {
-			obj.acct_port = parseAcctPort(location + "/acct-port", value["acct-port"], errors);
-		}
-		else {
-			obj.acct_port = 1812;
-		}
-
-		function parseAcctSecret(location, value, errors) {
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			return value;
-		}
-
-		if (exists(value, "acct-secret")) {
-			obj.acct_secret = parseAcctSecret(location + "/acct-secret", value["acct-secret"], errors);
-		}
-
-		function parseAcctInterval(location, value, errors) {
-			if (type(value) != "int")
-				push(errors, [ location, "must be of type integer" ]);
-
-			return value;
-		}
-
-		if (exists(value, "acct-interval")) {
-			obj.acct_interval = parseAcctInterval(location + "/acct-interval", value["acct-interval"], errors);
-		}
-		else {
-			obj.acct_interval = 600;
-		}
-
-		return obj;
-	}
-
-	if (type(value) != "object")
-		push(errors, [ location, "must be of type object" ]);
-
-	return value;
-}
-
-function instantiateServiceCaptiveCredentials(location, value, errors) {
-	if (type(value) == "object") {
-		let obj = {};
-
-		function parseAuthMode(location, value, errors) {
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			if (value != "credentials")
-				push(errors, [ location, "must have value \"credentials\"" ]);
-
-			return value;
-		}
-
-		if (exists(value, "auth-mode")) {
-			obj.auth_mode = parseAuthMode(location + "/auth-mode", value["auth-mode"], errors);
-		}
-
-		function parseCredentials(location, value, errors) {
-			if (type(value) == "array") {
-				function parseItem(location, value, errors) {
-					if (type(value) == "object") {
-						let obj = {};
-
-						function parseUsername(location, value, errors) {
-							if (type(value) != "string")
-								push(errors, [ location, "must be of type string" ]);
-
-							return value;
-						}
-
-						if (exists(value, "username")) {
-							obj.username = parseUsername(location + "/username", value["username"], errors);
-						}
-
-						function parsePassword(location, value, errors) {
-							if (type(value) != "string")
-								push(errors, [ location, "must be of type string" ]);
-
-							return value;
-						}
-
-						if (exists(value, "password")) {
-							obj.password = parsePassword(location + "/password", value["password"], errors);
-						}
-
-						return obj;
-					}
-
-					if (type(value) != "object")
-						push(errors, [ location, "must be of type object" ]);
-
-					return value;
-				}
-
-				return map(value, (item, i) => parseItem(location + "/" + i, item, errors));
-			}
-
-			if (type(value) != "array")
-				push(errors, [ location, "must be of type array" ]);
-
-			return value;
-		}
-
-		if (exists(value, "credentials")) {
-			obj.credentials = parseCredentials(location + "/credentials", value["credentials"], errors);
-		}
-
-		return obj;
-	}
-
-	if (type(value) != "object")
-		push(errors, [ location, "must be of type object" ]);
-
-	return value;
-}
-
-function instantiateServiceCaptiveUam(location, value, errors) {
-	if (type(value) == "object") {
-		let obj = {};
-
-		function parseAuthMode(location, value, errors) {
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			if (value != "uam")
-				push(errors, [ location, "must have value \"uam\"" ]);
-
-			return value;
-		}
-
-		if (exists(value, "auth-mode")) {
-			obj.auth_mode = parseAuthMode(location + "/auth-mode", value["auth-mode"], errors);
-		}
-
-		function parseUamPort(location, value, errors) {
-			if (type(value) in [ "int", "double" ]) {
-				if (value > 65535)
-					push(errors, [ location, "must be lower than or equal to 65535" ]);
-
-				if (value < 1024)
-					push(errors, [ location, "must be bigger than or equal to 1024" ]);
-
-			}
-
-			if (type(value) != "int")
-				push(errors, [ location, "must be of type integer" ]);
-
-			return value;
-		}
-
-		if (exists(value, "uam-port")) {
-			obj.uam_port = parseUamPort(location + "/uam-port", value["uam-port"], errors);
-		}
-		else {
-			obj.uam_port = 3990;
-		}
-
-		function parseUamSecret(location, value, errors) {
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			return value;
-		}
-
-		if (exists(value, "uam-secret")) {
-			obj.uam_secret = parseUamSecret(location + "/uam-secret", value["uam-secret"], errors);
-		}
-
-		function parseUamServer(location, value, errors) {
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			return value;
-		}
-
-		if (exists(value, "uam-server")) {
-			obj.uam_server = parseUamServer(location + "/uam-server", value["uam-server"], errors);
-		}
-
-		function parseNasid(location, value, errors) {
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			return value;
-		}
-
-		if (exists(value, "nasid")) {
-			obj.nasid = parseNasid(location + "/nasid", value["nasid"], errors);
-		}
-
-		function parseNasmac(location, value, errors) {
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			return value;
-		}
-
-		if (exists(value, "nasmac")) {
-			obj.nasmac = parseNasmac(location + "/nasmac", value["nasmac"], errors);
-		}
-
-		function parseAuthServer(location, value, errors) {
-			if (type(value) == "string") {
-				if (!matchUcHost(value))
-					push(errors, [ location, "must be a valid hostname or IP address" ]);
-
-			}
-
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			return value;
-		}
-
-		if (exists(value, "auth-server")) {
-			obj.auth_server = parseAuthServer(location + "/auth-server", value["auth-server"], errors);
-		}
-
-		function parseAuthPort(location, value, errors) {
-			if (type(value) in [ "int", "double" ]) {
-				if (value > 65535)
-					push(errors, [ location, "must be lower than or equal to 65535" ]);
-
-				if (value < 1024)
-					push(errors, [ location, "must be bigger than or equal to 1024" ]);
-
-			}
-
-			if (type(value) != "int")
-				push(errors, [ location, "must be of type integer" ]);
-
-			return value;
-		}
-
-		if (exists(value, "auth-port")) {
-			obj.auth_port = parseAuthPort(location + "/auth-port", value["auth-port"], errors);
-		}
-		else {
-			obj.auth_port = 1812;
-		}
-
-		function parseAuthSecret(location, value, errors) {
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			return value;
-		}
-
-		if (exists(value, "auth-secret")) {
-			obj.auth_secret = parseAuthSecret(location + "/auth-secret", value["auth-secret"], errors);
-		}
-
-		function parseAcctServer(location, value, errors) {
-			if (type(value) == "string") {
-				if (!matchUcHost(value))
-					push(errors, [ location, "must be a valid hostname or IP address" ]);
-
-			}
-
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			return value;
-		}
-
-		if (exists(value, "acct-server")) {
-			obj.acct_server = parseAcctServer(location + "/acct-server", value["acct-server"], errors);
-		}
-
-		function parseAcctPort(location, value, errors) {
-			if (type(value) in [ "int", "double" ]) {
-				if (value > 65535)
-					push(errors, [ location, "must be lower than or equal to 65535" ]);
-
-				if (value < 1024)
-					push(errors, [ location, "must be bigger than or equal to 1024" ]);
-
-			}
-
-			if (type(value) != "int")
-				push(errors, [ location, "must be of type integer" ]);
-
-			return value;
-		}
-
-		if (exists(value, "acct-port")) {
-			obj.acct_port = parseAcctPort(location + "/acct-port", value["acct-port"], errors);
-		}
-		else {
-			obj.acct_port = 1812;
-		}
-
-		function parseAcctSecret(location, value, errors) {
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			return value;
-		}
-
-		if (exists(value, "acct-secret")) {
-			obj.acct_secret = parseAcctSecret(location + "/acct-secret", value["acct-secret"], errors);
-		}
-
-		function parseAcctInterval(location, value, errors) {
-			if (type(value) != "int")
-				push(errors, [ location, "must be of type integer" ]);
-
-			return value;
-		}
-
-		if (exists(value, "acct-interval")) {
-			obj.acct_interval = parseAcctInterval(location + "/acct-interval", value["acct-interval"], errors);
-		}
-		else {
-			obj.acct_interval = 600;
-		}
-
-		function parseSsid(location, value, errors) {
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			return value;
-		}
-
-		if (exists(value, "ssid")) {
-			obj.ssid = parseSsid(location + "/ssid", value["ssid"], errors);
-		}
-
-		function parseMacFormat(location, value, errors) {
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			if (!(value in [ "aabbccddeeff", "aa-bb-cc-dd-ee-ff", "aa:bb:cc:dd:ee:ff", "AABBCCDDEEFF", "AA:BB:CC:DD:EE:FF", "AA-BB-CC-DD-EE-FF" ]))
-				push(errors, [ location, "must be one of \"aabbccddeeff\", \"aa-bb-cc-dd-ee-ff\", \"aa:bb:cc:dd:ee:ff\", \"AABBCCDDEEFF\", \"AA:BB:CC:DD:EE:FF\" or \"AA-BB-CC-DD-EE-FF\"" ]);
-
-			return value;
-		}
-
-		if (exists(value, "mac-format")) {
-			obj.mac_format = parseMacFormat(location + "/mac-format", value["mac-format"], errors);
-		}
-
-		function parseFinalRedirectUrl(location, value, errors) {
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			if (!(value in [ "default", "uam" ]))
-				push(errors, [ location, "must be one of \"default\" or \"uam\"" ]);
-
-			return value;
-		}
-
-		if (exists(value, "final-redirect-url")) {
-			obj.final_redirect_url = parseFinalRedirectUrl(location + "/final-redirect-url", value["final-redirect-url"], errors);
-		}
-
-		function parseMacAuth(location, value, errors) {
-			if (type(value) != "bool")
-				push(errors, [ location, "must be of type boolean" ]);
-
-			return value;
-		}
-
-		if (exists(value, "mac-auth")) {
-			obj.mac_auth = parseMacAuth(location + "/mac-auth", value["mac-auth"], errors);
-		}
-		else {
-			obj.mac_auth = "default";
-		}
-
-		function parseRadiusGwProxy(location, value, errors) {
-			if (type(value) != "bool")
-				push(errors, [ location, "must be of type boolean" ]);
-
-			return value;
-		}
-
-		if (exists(value, "radius-gw-proxy")) {
-			obj.radius_gw_proxy = parseRadiusGwProxy(location + "/radius-gw-proxy", value["radius-gw-proxy"], errors);
-		}
-		else {
-			obj.radius_gw_proxy = false;
-		}
-
-		return obj;
-	}
-
-	if (type(value) != "object")
-		push(errors, [ location, "must be of type object" ]);
-
-	return value;
-}
-
-function instantiateServiceCaptive(location, value, errors) {
-	function parseVariant0(location, value, errors) {
-		function parseVariant0(location, value, errors) {
-			value = instantiateServiceCaptiveClick(location, value, errors);
-
-			return value;
-		}
-
-		function parseVariant1(location, value, errors) {
-			value = instantiateServiceCaptiveRadius(location, value, errors);
-
-			return value;
-		}
-
-		function parseVariant2(location, value, errors) {
-			value = instantiateServiceCaptiveCredentials(location, value, errors);
-
-			return value;
-		}
-
-		function parseVariant3(location, value, errors) {
-			value = instantiateServiceCaptiveUam(location, value, errors);
-
-			return value;
-		}
-
-		let success = 0, tryval, tryerr, vvalue = null, verrors = [];
-
-		tryerr = [];
-		tryval = parseVariant0(location, value, tryerr);
-		if (!length(tryerr)) {
-			if (type(vvalue) == "object" && type(tryval) == "object")
-				vvalue = { ...vvalue, ...tryval };
-			else
-				vvalue = tryval;
-
-			success++;
-		}
-		else {
-			push(verrors, join(" and\n", map(tryerr, err => "\t - " + err[1])));
-		}
-
-		tryerr = [];
-		tryval = parseVariant1(location, value, tryerr);
-		if (!length(tryerr)) {
-			if (type(vvalue) == "object" && type(tryval) == "object")
-				vvalue = { ...vvalue, ...tryval };
-			else
-				vvalue = tryval;
-
-			success++;
-		}
-		else {
-			push(verrors, join(" and\n", map(tryerr, err => "\t - " + err[1])));
-		}
-
-		tryerr = [];
-		tryval = parseVariant2(location, value, tryerr);
-		if (!length(tryerr)) {
-			if (type(vvalue) == "object" && type(tryval) == "object")
-				vvalue = { ...vvalue, ...tryval };
-			else
-				vvalue = tryval;
-
-			success++;
-		}
-		else {
-			push(verrors, join(" and\n", map(tryerr, err => "\t - " + err[1])));
-		}
-
-		tryerr = [];
-		tryval = parseVariant3(location, value, tryerr);
-		if (!length(tryerr)) {
-			if (type(vvalue) == "object" && type(tryval) == "object")
-				vvalue = { ...vvalue, ...tryval };
-			else
-				vvalue = tryval;
-
-			success++;
-		}
-		else {
-			push(verrors, join(" and\n", map(tryerr, err => "\t - " + err[1])));
-		}
-
-		if (success != 1) {
-			if (length(verrors))
-				push(errors, [ location, "must match exactly one of the following constraints:\n" + join("\n- or -\n", verrors) ]);
-			else
-				push(errors, [ location, "must match only one variant" ]);
-			return null;
-		}
-
-		value = vvalue;
-
-		return value;
-	}
-
-	function parseVariant1(location, value, errors) {
-		if (type(value) == "object") {
-			let obj = {};
-
-			function parseWalledGardenFqdn(location, value, errors) {
-				if (type(value) == "array") {
-					function parseItem(location, value, errors) {
-						if (type(value) != "string")
-							push(errors, [ location, "must be of type string" ]);
-
-						return value;
-					}
-
-					return map(value, (item, i) => parseItem(location + "/" + i, item, errors));
-				}
-
-				if (type(value) != "array")
-					push(errors, [ location, "must be of type array" ]);
-
-				return value;
-			}
-
-			if (exists(value, "walled-garden-fqdn")) {
-				obj.walled_garden_fqdn = parseWalledGardenFqdn(location + "/walled-garden-fqdn", value["walled-garden-fqdn"], errors);
-			}
-
-			function parseWalledGardenIpaddr(location, value, errors) {
-				if (type(value) == "array") {
-					function parseItem(location, value, errors) {
-						if (type(value) == "string") {
-							if (!matchUcIp(value))
-								push(errors, [ location, "must be a valid IPv4 or IPv6 address" ]);
-
-						}
-
-						if (type(value) != "string")
-							push(errors, [ location, "must be of type string" ]);
-
-						return value;
-					}
-
-					return map(value, (item, i) => parseItem(location + "/" + i, item, errors));
-				}
-
-				if (type(value) != "array")
-					push(errors, [ location, "must be of type array" ]);
-
-				return value;
-			}
-
-			if (exists(value, "walled-garden-ipaddr")) {
-				obj.walled_garden_ipaddr = parseWalledGardenIpaddr(location + "/walled-garden-ipaddr", value["walled-garden-ipaddr"], errors);
-			}
-
-			function parseWebRoot(location, value, errors) {
-				if (type(value) == "string") {
-					if (!matchUcBase64(value))
-						push(errors, [ location, "must be a valid base64 encoded data" ]);
-
-				}
-
-				if (type(value) != "string")
-					push(errors, [ location, "must be of type string" ]);
-
-				return value;
-			}
-
-			if (exists(value, "web-root")) {
-				obj.web_root = parseWebRoot(location + "/web-root", value["web-root"], errors);
-			}
-
-			function parseIdleTimeout(location, value, errors) {
-				if (type(value) != "int")
-					push(errors, [ location, "must be of type integer" ]);
-
-				return value;
-			}
-
-			if (exists(value, "idle-timeout")) {
-				obj.idle_timeout = parseIdleTimeout(location + "/idle-timeout", value["idle-timeout"], errors);
-			}
-			else {
-				obj.idle_timeout = 600;
-			}
-
-			function parseSessionTimeout(location, value, errors) {
-				if (type(value) != "int")
-					push(errors, [ location, "must be of type integer" ]);
-
-				return value;
-			}
-
-			if (exists(value, "session-timeout")) {
-				obj.session_timeout = parseSessionTimeout(location + "/session-timeout", value["session-timeout"], errors);
-			}
-
-			return obj;
-		}
-
-		if (type(value) != "object")
-			push(errors, [ location, "must be of type object" ]);
-
-		return value;
-	}
-
-	let success = 0, tryval, tryerr, vvalue = null, verrors = [];
-
-	tryerr = [];
-	tryval = parseVariant0(location, value, tryerr);
-	if (!length(tryerr)) {
-		if (type(vvalue) == "object" && type(tryval) == "object")
-			vvalue = { ...vvalue, ...tryval };
-		else
-			vvalue = tryval;
-
-		success++;
-	}
-	else {
-		push(verrors, join(" and\n", map(tryerr, err => "\t - " + err[1])));
-	}
-
-	tryerr = [];
-	tryval = parseVariant1(location, value, tryerr);
-	if (!length(tryerr)) {
-		if (type(vvalue) == "object" && type(tryval) == "object")
-			vvalue = { ...vvalue, ...tryval };
-		else
-			vvalue = tryval;
-
-		success++;
-	}
-	else {
-		push(verrors, join(" and\n", map(tryerr, err => "\t - " + err[1])));
-	}
-
-	if (success != 2) {
-		if (length(verrors))
-			push(errors, [ location, "must match all of the following constraints:\n" + join("\n- or -\n", verrors) ]);
-		else
-			push(errors, [ location, "must match only one variant" ]);
-		return null;
-	}
-
-	value = vvalue;
-
-	return value;
-}
-
-function instantiateInterfaceSsid(location, value, errors) {
-	if (type(value) == "object") {
-		let obj = {};
-
-		function parsePurpose(location, value, errors) {
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			if (!(value in [ "user-defined", "onboarding-ap", "onboarding-sta" ]))
-				push(errors, [ location, "must be one of \"user-defined\", \"onboarding-ap\" or \"onboarding-sta\"" ]);
-
-			return value;
-		}
-
-		if (exists(value, "purpose")) {
-			obj.purpose = parsePurpose(location + "/purpose", value["purpose"], errors);
-		}
-		else {
-			obj.purpose = "user-defined";
-		}
-
-		function parseName(location, value, errors) {
-			if (type(value) == "string") {
-				if (length(value) > 32)
-					push(errors, [ location, "must be at most 32 characters long" ]);
-
-				if (length(value) < 1)
-					push(errors, [ location, "must be at least 1 characters long" ]);
-
-			}
-
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			return value;
-		}
-
-		if (exists(value, "name")) {
-			obj.name = parseName(location + "/name", value["name"], errors);
-		}
-
-		function parseWifiBands(location, value, errors) {
-			if (type(value) == "array") {
-				function parseItem(location, value, errors) {
-					if (type(value) != "string")
-						push(errors, [ location, "must be of type string" ]);
-
-					if (!(value in [ "2G", "5G", "5G-lower", "5G-upper", "6G" ]))
-						push(errors, [ location, "must be one of \"2G\", \"5G\", \"5G-lower\", \"5G-upper\" or \"6G\"" ]);
-
-					return value;
-				}
-
-				return map(value, (item, i) => parseItem(location + "/" + i, item, errors));
-			}
-
-			if (type(value) != "array")
-				push(errors, [ location, "must be of type array" ]);
-
-			return value;
-		}
-
-		if (exists(value, "wifi-bands")) {
-			obj.wifi_bands = parseWifiBands(location + "/wifi-bands", value["wifi-bands"], errors);
-		}
-
-		function parseBssMode(location, value, errors) {
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			if (!(value in [ "ap", "sta", "mesh", "wds-ap", "wds-sta", "wds-repeater" ]))
-				push(errors, [ location, "must be one of \"ap\", \"sta\", \"mesh\", \"wds-ap\", \"wds-sta\" or \"wds-repeater\"" ]);
-
-			return value;
-		}
-
-		if (exists(value, "bss-mode")) {
-			obj.bss_mode = parseBssMode(location + "/bss-mode", value["bss-mode"], errors);
-		}
-		else {
-			obj.bss_mode = "ap";
-		}
-
-		function parseBssid(location, value, errors) {
-			if (type(value) == "string") {
-				if (!matchUcMac(value))
-					push(errors, [ location, "must be a valid MAC address" ]);
-
-			}
-
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			return value;
-		}
-
-		if (exists(value, "bssid")) {
-			obj.bssid = parseBssid(location + "/bssid", value["bssid"], errors);
-		}
-
-		function parseHiddenSsid(location, value, errors) {
-			if (type(value) != "bool")
-				push(errors, [ location, "must be of type boolean" ]);
-
-			return value;
-		}
-
-		if (exists(value, "hidden-ssid")) {
-			obj.hidden_ssid = parseHiddenSsid(location + "/hidden-ssid", value["hidden-ssid"], errors);
-		}
-
-		function parseIsolateClients(location, value, errors) {
-			if (type(value) != "bool")
-				push(errors, [ location, "must be of type boolean" ]);
-
-			return value;
-		}
-
-		if (exists(value, "isolate-clients")) {
-			obj.isolate_clients = parseIsolateClients(location + "/isolate-clients", value["isolate-clients"], errors);
-		}
-
-		function parseStrictForwarding(location, value, errors) {
-			if (type(value) != "bool")
-				push(errors, [ location, "must be of type boolean" ]);
-
-			return value;
-		}
-
-		if (exists(value, "strict-forwarding")) {
-			obj.strict_forwarding = parseStrictForwarding(location + "/strict-forwarding", value["strict-forwarding"], errors);
-		}
-		else {
-			obj.strict_forwarding = false;
-		}
-
-		function parsePowerSave(location, value, errors) {
-			if (type(value) != "bool")
-				push(errors, [ location, "must be of type boolean" ]);
-
-			return value;
-		}
-
-		if (exists(value, "power-save")) {
-			obj.power_save = parsePowerSave(location + "/power-save", value["power-save"], errors);
-		}
-
-		function parseRtsThreshold(location, value, errors) {
-			if (type(value) in [ "int", "double" ]) {
-				if (value > 65535)
-					push(errors, [ location, "must be lower than or equal to 65535" ]);
-
-				if (value < 1)
-					push(errors, [ location, "must be bigger than or equal to 1" ]);
-
-			}
-
-			if (type(value) != "int")
-				push(errors, [ location, "must be of type integer" ]);
-
-			return value;
-		}
-
-		if (exists(value, "rts-threshold")) {
-			obj.rts_threshold = parseRtsThreshold(location + "/rts-threshold", value["rts-threshold"], errors);
-		}
-
-		function parseBroadcastTime(location, value, errors) {
-			if (type(value) != "bool")
-				push(errors, [ location, "must be of type boolean" ]);
-
-			return value;
-		}
-
-		if (exists(value, "broadcast-time")) {
-			obj.broadcast_time = parseBroadcastTime(location + "/broadcast-time", value["broadcast-time"], errors);
-		}
-
-		function parseUnicastConversion(location, value, errors) {
-			if (type(value) != "bool")
-				push(errors, [ location, "must be of type boolean" ]);
-
-			return value;
-		}
-
-		if (exists(value, "unicast-conversion")) {
-			obj.unicast_conversion = parseUnicastConversion(location + "/unicast-conversion", value["unicast-conversion"], errors);
-		}
-		else {
-			obj.unicast_conversion = true;
-		}
-
-		function parseServices(location, value, errors) {
-			if (type(value) == "array") {
-				function parseItem(location, value, errors) {
-					if (type(value) != "string")
-						push(errors, [ location, "must be of type string" ]);
-
-					return value;
-				}
-
-				return map(value, (item, i) => parseItem(location + "/" + i, item, errors));
-			}
-
-			if (type(value) != "array")
-				push(errors, [ location, "must be of type array" ]);
-
-			return value;
-		}
-
-		if (exists(value, "services")) {
-			obj.services = parseServices(location + "/services", value["services"], errors);
-		}
-
-		function parseDtimPeriod(location, value, errors) {
-			if (type(value) in [ "int", "double" ]) {
-				if (value > 255)
-					push(errors, [ location, "must be lower than or equal to 255" ]);
-
-				if (value < 1)
-					push(errors, [ location, "must be bigger than or equal to 1" ]);
-
-			}
-
-			if (type(value) != "int")
-				push(errors, [ location, "must be of type integer" ]);
-
-			return value;
-		}
-
-		if (exists(value, "dtim-period")) {
-			obj.dtim_period = parseDtimPeriod(location + "/dtim-period", value["dtim-period"], errors);
-		}
-		else {
-			obj.dtim_period = 2;
-		}
-
-		function parseMaximumClients(location, value, errors) {
-			if (type(value) != "int")
-				push(errors, [ location, "must be of type integer" ]);
-
-			return value;
-		}
-
-		if (exists(value, "maximum-clients")) {
-			obj.maximum_clients = parseMaximumClients(location + "/maximum-clients", value["maximum-clients"], errors);
-		}
-
-		function parseProxyArp(location, value, errors) {
-			if (type(value) != "bool")
-				push(errors, [ location, "must be of type boolean" ]);
-
-			return value;
-		}
-
-		if (exists(value, "proxy-arp")) {
-			obj.proxy_arp = parseProxyArp(location + "/proxy-arp", value["proxy-arp"], errors);
-		}
-		else {
-			obj.proxy_arp = true;
-		}
-
-		function parseDisassocLowAck(location, value, errors) {
-			if (type(value) != "bool")
-				push(errors, [ location, "must be of type boolean" ]);
-
-			return value;
-		}
-
-		if (exists(value, "disassoc-low-ack")) {
-			obj.disassoc_low_ack = parseDisassocLowAck(location + "/disassoc-low-ack", value["disassoc-low-ack"], errors);
-		}
-		else {
-			obj.disassoc_low_ack = false;
-		}
-
-		function parseVendorElements(location, value, errors) {
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			return value;
-		}
-
-		if (exists(value, "vendor-elements")) {
-			obj.vendor_elements = parseVendorElements(location + "/vendor-elements", value["vendor-elements"], errors);
-		}
-
-		function parseTipInformationElement(location, value, errors) {
-			if (type(value) != "bool")
-				push(errors, [ location, "must be of type boolean" ]);
-
-			return value;
-		}
-
-		if (exists(value, "tip-information-element")) {
-			obj.tip_information_element = parseTipInformationElement(location + "/tip-information-element", value["tip-information-element"], errors);
-		}
-		else {
-			obj.tip_information_element = true;
-		}
-
-		function parseFilsDiscoveryInterval(location, value, errors) {
-			if (type(value) in [ "int", "double" ]) {
-				if (value > 20)
-					push(errors, [ location, "must be lower than or equal to 20" ]);
-
-			}
-
-			if (type(value) != "int")
-				push(errors, [ location, "must be of type integer" ]);
-
-			return value;
-		}
-
-		if (exists(value, "fils-discovery-interval")) {
-			obj.fils_discovery_interval = parseFilsDiscoveryInterval(location + "/fils-discovery-interval", value["fils-discovery-interval"], errors);
-		}
-		else {
-			obj.fils_discovery_interval = 20;
-		}
-
-		if (exists(value, "encryption")) {
-			obj.encryption = instantiateInterfaceSsidEncryption(location + "/encryption", value["encryption"], errors);
-		}
-
-		function parseMultiPsk(location, value, errors) {
-			if (type(value) == "array") {
-				return map(value, (item, i) => instantiateInterfaceSsidMultiPsk(location + "/" + i, item, errors));
-			}
-
-			if (type(value) != "array")
-				push(errors, [ location, "must be of type array" ]);
-
-			return value;
-		}
-
-		if (exists(value, "multi-psk")) {
-			obj.multi_psk = parseMultiPsk(location + "/multi-psk", value["multi-psk"], errors);
-		}
-
-		if (exists(value, "rrm")) {
-			obj.rrm = instantiateInterfaceSsidRrm(location + "/rrm", value["rrm"], errors);
-		}
-
-		if (exists(value, "rate-limit")) {
-			obj.rate_limit = instantiateInterfaceSsidRateLimit(location + "/rate-limit", value["rate-limit"], errors);
-		}
-
-		function parseRoaming(location, value, errors) {
-			function parseVariant0(location, value, errors) {
-				value = instantiateInterfaceSsidRoaming(location, value, errors);
-
-				return value;
-			}
-
-			function parseVariant1(location, value, errors) {
-				if (type(value) != "bool")
-					push(errors, [ location, "must be of type boolean" ]);
-
-				return value;
-			}
-
-			let success = 0, tryval, tryerr, vvalue = null, verrors = [];
-
-			tryerr = [];
-			tryval = parseVariant0(location, value, tryerr);
-			if (!length(tryerr)) {
-				if (type(vvalue) == "object" && type(tryval) == "object")
-					vvalue = { ...vvalue, ...tryval };
-				else
-					vvalue = tryval;
-
-				success++;
-			}
-			else {
-				push(verrors, join(" and\n", map(tryerr, err => "\t - " + err[1])));
-			}
-
-			tryerr = [];
-			tryval = parseVariant1(location, value, tryerr);
-			if (!length(tryerr)) {
-				if (type(vvalue) == "object" && type(tryval) == "object")
-					vvalue = { ...vvalue, ...tryval };
-				else
-					vvalue = tryval;
-
-				success++;
-			}
-			else {
-				push(verrors, join(" and\n", map(tryerr, err => "\t - " + err[1])));
-			}
-
-			if (success == 0) {
-				if (length(verrors))
-					push(errors, [ location, "must match at least one of the following constraints:\n" + join("\n- or -\n", verrors) ]);
-				else
-					push(errors, [ location, "must match only one variant" ]);
-				return null;
-			}
-
-			value = vvalue;
-
-			return value;
-		}
-
-		if (exists(value, "roaming")) {
-			obj.roaming = parseRoaming(location + "/roaming", value["roaming"], errors);
-		}
-
-		if (exists(value, "radius")) {
-			obj.radius = instantiateInterfaceSsidRadius(location + "/radius", value["radius"], errors);
-		}
-
-		if (exists(value, "certificates")) {
-			obj.certificates = instantiateInterfaceSsidCertificates(location + "/certificates", value["certificates"], errors);
-		}
-
-		if (exists(value, "pass-point")) {
-			obj.pass_point = instantiateInterfaceSsidPassPoint(location + "/pass-point", value["pass-point"], errors);
-		}
-
-		if (exists(value, "quality-thresholds")) {
-			obj.quality_thresholds = instantiateInterfaceSsidQualityThresholds(location + "/quality-thresholds", value["quality-thresholds"], errors);
-		}
-
-		if (exists(value, "access-control-list")) {
-			obj.access_control_list = instantiateInterfaceSsidAcl(location + "/access-control-list", value["access-control-list"], errors);
-		}
-
-		if (exists(value, "captive")) {
-			obj.captive = instantiateServiceCaptive(location + "/captive", value["captive"], errors);
-		}
-
-		function parseHostapdBssRaw(location, value, errors) {
-			if (type(value) == "array") {
-				function parseItem(location, value, errors) {
-					if (type(value) != "string")
-						push(errors, [ location, "must be of type string" ]);
-
-					return value;
-				}
-
-				return map(value, (item, i) => parseItem(location + "/" + i, item, errors));
-			}
-
-			if (type(value) != "array")
-				push(errors, [ location, "must be of type array" ]);
-
-			return value;
-		}
-
-		if (exists(value, "hostapd-bss-raw")) {
-			obj.hostapd_bss_raw = parseHostapdBssRaw(location + "/hostapd-bss-raw", value["hostapd-bss-raw"], errors);
-		}
-
-		return obj;
-	}
-
-	if (type(value) != "object")
-		push(errors, [ location, "must be of type object" ]);
 
 	return value;
 }
@@ -7804,23 +6412,16 @@ function instantiateInterface(location, value, errors) {
 			obj.ipv6 = instantiateInterfaceIpv6(location + "/ipv6", value["ipv6"], errors);
 		}
 
+		if (exists(value, "acl")) {
+			obj.acl = instantiateInterfaceAcl(location + "/acl", value["acl"], errors);
+		}
+
+		if (exists(value, "dhcp-snoop-port")) {
+			obj.dhcp_snoop_port = instantiateInterfaceDhcpSnoopPort(location + "/dhcp-snoop-port", value["dhcp-snoop-port"], errors);
+		}
+
 		if (exists(value, "broad-band")) {
 			obj.broad_band = instantiateInterfaceBroadBand(location + "/broad-band", value["broad-band"], errors);
-		}
-
-		function parseSsids(location, value, errors) {
-			if (type(value) == "array") {
-				return map(value, (item, i) => instantiateInterfaceSsid(location + "/" + i, item, errors));
-			}
-
-			if (type(value) != "array")
-				push(errors, [ location, "must be of type array" ]);
-
-			return value;
-		}
-
-		if (exists(value, "ssids")) {
-			obj.ssids = parseSsids(location + "/ssids", value["ssids"], errors);
 		}
 
 		if (exists(value, "tunnel")) {
@@ -8290,242 +6891,6 @@ function instantiateServiceIgmp(location, value, errors) {
 		}
 		else {
 			obj.enable = false;
-		}
-
-		return obj;
-	}
-
-	if (type(value) != "object")
-		push(errors, [ location, "must be of type object" ]);
-
-	return value;
-}
-
-function instantiateServiceIeee8021x(location, value, errors) {
-	if (type(value) == "object") {
-		let obj = {};
-
-		function parseMode(location, value, errors) {
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			if (!(value in [ "radius", "user" ]))
-				push(errors, [ location, "must be one of \"radius\" or \"user\"" ]);
-
-			return value;
-		}
-
-		if (exists(value, "mode")) {
-			obj.mode = parseMode(location + "/mode", value["mode"], errors);
-		}
-
-		function parsePortFilter(location, value, errors) {
-			if (type(value) == "array") {
-				function parseItem(location, value, errors) {
-					if (type(value) != "string")
-						push(errors, [ location, "must be of type string" ]);
-
-					return value;
-				}
-
-				return map(value, (item, i) => parseItem(location + "/" + i, item, errors));
-			}
-
-			if (type(value) != "array")
-				push(errors, [ location, "must be of type array" ]);
-
-			return value;
-		}
-
-		if (exists(value, "port-filter")) {
-			obj.port_filter = parsePortFilter(location + "/port-filter", value["port-filter"], errors);
-		}
-
-		function parseUsers(location, value, errors) {
-			if (type(value) == "array") {
-				return map(value, (item, i) => instantiateInterfaceSsidRadiusLocalUser(location + "/" + i, item, errors));
-			}
-
-			if (type(value) != "array")
-				push(errors, [ location, "must be of type array" ]);
-
-			return value;
-		}
-
-		if (exists(value, "users")) {
-			obj.users = parseUsers(location + "/users", value["users"], errors);
-		}
-
-		function parseRadius(location, value, errors) {
-			if (type(value) == "object") {
-				let obj = {};
-
-				function parseNasIdentifier(location, value, errors) {
-					if (type(value) != "string")
-						push(errors, [ location, "must be of type string" ]);
-
-					return value;
-				}
-
-				if (exists(value, "nas-identifier")) {
-					obj.nas_identifier = parseNasIdentifier(location + "/nas-identifier", value["nas-identifier"], errors);
-				}
-
-				function parseAuthServerAddr(location, value, errors) {
-					if (type(value) == "string") {
-						if (!matchUcHost(value))
-							push(errors, [ location, "must be a valid hostname or IP address" ]);
-
-					}
-
-					if (type(value) != "string")
-						push(errors, [ location, "must be of type string" ]);
-
-					return value;
-				}
-
-				if (exists(value, "auth-server-addr")) {
-					obj.auth_server_addr = parseAuthServerAddr(location + "/auth-server-addr", value["auth-server-addr"], errors);
-				}
-
-				function parseAuthServerPort(location, value, errors) {
-					if (type(value) in [ "int", "double" ]) {
-						if (value > 65535)
-							push(errors, [ location, "must be lower than or equal to 65535" ]);
-
-						if (value < 1024)
-							push(errors, [ location, "must be bigger than or equal to 1024" ]);
-
-					}
-
-					if (type(value) != "int")
-						push(errors, [ location, "must be of type integer" ]);
-
-					return value;
-				}
-
-				if (exists(value, "auth-server-port")) {
-					obj.auth_server_port = parseAuthServerPort(location + "/auth-server-port", value["auth-server-port"], errors);
-				}
-
-				function parseAuthServerSecret(location, value, errors) {
-					if (type(value) != "string")
-						push(errors, [ location, "must be of type string" ]);
-
-					return value;
-				}
-
-				if (exists(value, "auth-server-secret")) {
-					obj.auth_server_secret = parseAuthServerSecret(location + "/auth-server-secret", value["auth-server-secret"], errors);
-				}
-
-				function parseAcctServerAddr(location, value, errors) {
-					if (type(value) == "string") {
-						if (!matchUcHost(value))
-							push(errors, [ location, "must be a valid hostname or IP address" ]);
-
-					}
-
-					if (type(value) != "string")
-						push(errors, [ location, "must be of type string" ]);
-
-					return value;
-				}
-
-				if (exists(value, "acct-server-addr")) {
-					obj.acct_server_addr = parseAcctServerAddr(location + "/acct-server-addr", value["acct-server-addr"], errors);
-				}
-
-				function parseAcctServerPort(location, value, errors) {
-					if (type(value) in [ "int", "double" ]) {
-						if (value > 65535)
-							push(errors, [ location, "must be lower than or equal to 65535" ]);
-
-						if (value < 1024)
-							push(errors, [ location, "must be bigger than or equal to 1024" ]);
-
-					}
-
-					if (type(value) != "int")
-						push(errors, [ location, "must be of type integer" ]);
-
-					return value;
-				}
-
-				if (exists(value, "acct-server-port")) {
-					obj.acct_server_port = parseAcctServerPort(location + "/acct-server-port", value["acct-server-port"], errors);
-				}
-
-				function parseAcctServerSecret(location, value, errors) {
-					if (type(value) != "string")
-						push(errors, [ location, "must be of type string" ]);
-
-					return value;
-				}
-
-				if (exists(value, "acct-server-secret")) {
-					obj.acct_server_secret = parseAcctServerSecret(location + "/acct-server-secret", value["acct-server-secret"], errors);
-				}
-
-				function parseCoaServerAddr(location, value, errors) {
-					if (type(value) == "string") {
-						if (!matchUcHost(value))
-							push(errors, [ location, "must be a valid hostname or IP address" ]);
-
-					}
-
-					if (type(value) != "string")
-						push(errors, [ location, "must be of type string" ]);
-
-					return value;
-				}
-
-				if (exists(value, "coa-server-addr")) {
-					obj.coa_server_addr = parseCoaServerAddr(location + "/coa-server-addr", value["coa-server-addr"], errors);
-				}
-
-				function parseCoaServerPort(location, value, errors) {
-					if (type(value) in [ "int", "double" ]) {
-						if (value > 65535)
-							push(errors, [ location, "must be lower than or equal to 65535" ]);
-
-						if (value < 1024)
-							push(errors, [ location, "must be bigger than or equal to 1024" ]);
-
-					}
-
-					if (type(value) != "int")
-						push(errors, [ location, "must be of type integer" ]);
-
-					return value;
-				}
-
-				if (exists(value, "coa-server-port")) {
-					obj.coa_server_port = parseCoaServerPort(location + "/coa-server-port", value["coa-server-port"], errors);
-				}
-
-				function parseCoaServerSecret(location, value, errors) {
-					if (type(value) != "string")
-						push(errors, [ location, "must be of type string" ]);
-
-					return value;
-				}
-
-				if (exists(value, "coa-server-secret")) {
-					obj.coa_server_secret = parseCoaServerSecret(location + "/coa-server-secret", value["coa-server-secret"], errors);
-				}
-
-				return obj;
-			}
-
-			if (type(value) != "object")
-				push(errors, [ location, "must be of type object" ]);
-
-			return value;
-		}
-
-		if (exists(value, "radius")) {
-			obj.radius = parseRadius(location + "/radius", value["radius"], errors);
 		}
 
 		return obj;
@@ -9113,8 +7478,8 @@ function instantiateServiceOnlineCheck(location, value, errors) {
 					if (type(value) != "string")
 						push(errors, [ location, "must be of type string" ]);
 
-					if (!(value in [ "wifi", "leds" ]))
-						push(errors, [ location, "must be one of \"wifi\" or \"leds\"" ]);
+					if (!(value in [ "leds" ]))
+						push(errors, [ location, "must be one of \"leds\"" ]);
 
 					return value;
 				}
@@ -9199,131 +7564,6 @@ function instantiateServiceDataPlane(location, value, errors) {
 
 		if (exists(value, "ingress-filters")) {
 			obj.ingress_filters = parseIngressFilters(location + "/ingress-filters", value["ingress-filters"], errors);
-		}
-
-		return obj;
-	}
-
-	if (type(value) != "object")
-		push(errors, [ location, "must be of type object" ]);
-
-	return value;
-}
-
-function instantiateServiceWifiSteering(location, value, errors) {
-	if (type(value) == "object") {
-		let obj = {};
-
-		function parseMode(location, value, errors) {
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			if (!(value in [ "local", "none" ]))
-				push(errors, [ location, "must be one of \"local\" or \"none\"" ]);
-
-			return value;
-		}
-
-		if (exists(value, "mode")) {
-			obj.mode = parseMode(location + "/mode", value["mode"], errors);
-		}
-
-		function parseAssocSteering(location, value, errors) {
-			if (type(value) != "bool")
-				push(errors, [ location, "must be of type boolean" ]);
-
-			return value;
-		}
-
-		if (exists(value, "assoc-steering")) {
-			obj.assoc_steering = parseAssocSteering(location + "/assoc-steering", value["assoc-steering"], errors);
-		}
-		else {
-			obj.assoc_steering = false;
-		}
-
-		function parseRequiredSnr(location, value, errors) {
-			if (type(value) != "int")
-				push(errors, [ location, "must be of type integer" ]);
-
-			return value;
-		}
-
-		if (exists(value, "required-snr")) {
-			obj.required_snr = parseRequiredSnr(location + "/required-snr", value["required-snr"], errors);
-		}
-		else {
-			obj.required_snr = 0;
-		}
-
-		function parseRequiredProbeSnr(location, value, errors) {
-			if (type(value) != "int")
-				push(errors, [ location, "must be of type integer" ]);
-
-			return value;
-		}
-
-		if (exists(value, "required-probe-snr")) {
-			obj.required_probe_snr = parseRequiredProbeSnr(location + "/required-probe-snr", value["required-probe-snr"], errors);
-		}
-		else {
-			obj.required_probe_snr = 0;
-		}
-
-		function parseRequiredRoamSnr(location, value, errors) {
-			if (type(value) != "int")
-				push(errors, [ location, "must be of type integer" ]);
-
-			return value;
-		}
-
-		if (exists(value, "required-roam-snr")) {
-			obj.required_roam_snr = parseRequiredRoamSnr(location + "/required-roam-snr", value["required-roam-snr"], errors);
-		}
-		else {
-			obj.required_roam_snr = 0;
-		}
-
-		function parseLoadKickThreshold(location, value, errors) {
-			if (type(value) != "int")
-				push(errors, [ location, "must be of type integer" ]);
-
-			return value;
-		}
-
-		if (exists(value, "load-kick-threshold")) {
-			obj.load_kick_threshold = parseLoadKickThreshold(location + "/load-kick-threshold", value["load-kick-threshold"], errors);
-		}
-		else {
-			obj.load_kick_threshold = 0;
-		}
-
-		function parseAutoChannel(location, value, errors) {
-			if (type(value) != "bool")
-				push(errors, [ location, "must be of type boolean" ]);
-
-			return value;
-		}
-
-		if (exists(value, "auto-channel")) {
-			obj.auto_channel = parseAutoChannel(location + "/auto-channel", value["auto-channel"], errors);
-		}
-		else {
-			obj.auto_channel = false;
-		}
-
-		function parseIpv6(location, value, errors) {
-			if (type(value) != "bool")
-				push(errors, [ location, "must be of type boolean" ]);
-
-			return value;
-		}
-
-		if (exists(value, "ipv6")) {
-			obj.ipv6 = parseIpv6(location + "/ipv6", value["ipv6"], errors);
-		}
-		else {
-			obj.ipv6 = false;
 		}
 
 		return obj;
@@ -9646,163 +7886,6 @@ function instantiateServiceQualityOfService(location, value, errors) {
 
 		if (exists(value, "classifier")) {
 			obj.classifier = parseClassifier(location + "/classifier", value["classifier"], errors);
-		}
-
-		return obj;
-	}
-
-	if (type(value) != "object")
-		push(errors, [ location, "must be of type object" ]);
-
-	return value;
-}
-
-function instantiateServiceFacebookWifi(location, value, errors) {
-	if (type(value) == "object") {
-		let obj = {};
-
-		function parseVendorId(location, value, errors) {
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			return value;
-		}
-
-		if (exists(value, "vendor-id")) {
-			obj.vendor_id = parseVendorId(location + "/vendor-id", value["vendor-id"], errors);
-		}
-
-		function parseGatewayId(location, value, errors) {
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			return value;
-		}
-
-		if (exists(value, "gateway-id")) {
-			obj.gateway_id = parseGatewayId(location + "/gateway-id", value["gateway-id"], errors);
-		}
-
-		function parseSecret(location, value, errors) {
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			return value;
-		}
-
-		if (exists(value, "secret")) {
-			obj.secret = parseSecret(location + "/secret", value["secret"], errors);
-		}
-
-		return obj;
-	}
-
-	if (type(value) != "object")
-		push(errors, [ location, "must be of type object" ]);
-
-	return value;
-}
-
-function instantiateServiceAirtimeFairness(location, value, errors) {
-	if (type(value) == "object") {
-		let obj = {};
-
-		function parseVoiceWeight(location, value, errors) {
-			if (!(type(value) in [ "int", "double" ]))
-				push(errors, [ location, "must be of type number" ]);
-
-			return value;
-		}
-
-		if (exists(value, "voice-weight")) {
-			obj.voice_weight = parseVoiceWeight(location + "/voice-weight", value["voice-weight"], errors);
-		}
-		else {
-			obj.voice_weight = 4;
-		}
-
-		function parsePacketThreshold(location, value, errors) {
-			if (!(type(value) in [ "int", "double" ]))
-				push(errors, [ location, "must be of type number" ]);
-
-			return value;
-		}
-
-		if (exists(value, "packet-threshold")) {
-			obj.packet_threshold = parsePacketThreshold(location + "/packet-threshold", value["packet-threshold"], errors);
-		}
-		else {
-			obj.packet_threshold = 100;
-		}
-
-		function parseBulkThreshold(location, value, errors) {
-			if (!(type(value) in [ "int", "double" ]))
-				push(errors, [ location, "must be of type number" ]);
-
-			return value;
-		}
-
-		if (exists(value, "bulk-threshold")) {
-			obj.bulk_threshold = parseBulkThreshold(location + "/bulk-threshold", value["bulk-threshold"], errors);
-		}
-		else {
-			obj.bulk_threshold = 50;
-		}
-
-		function parsePriorityThreshold(location, value, errors) {
-			if (!(type(value) in [ "int", "double" ]))
-				push(errors, [ location, "must be of type number" ]);
-
-			return value;
-		}
-
-		if (exists(value, "priority-threshold")) {
-			obj.priority_threshold = parsePriorityThreshold(location + "/priority-threshold", value["priority-threshold"], errors);
-		}
-		else {
-			obj.priority_threshold = 30;
-		}
-
-		function parseWeightNormal(location, value, errors) {
-			if (!(type(value) in [ "int", "double" ]))
-				push(errors, [ location, "must be of type number" ]);
-
-			return value;
-		}
-
-		if (exists(value, "weight-normal")) {
-			obj.weight_normal = parseWeightNormal(location + "/weight-normal", value["weight-normal"], errors);
-		}
-		else {
-			obj.weight_normal = 256;
-		}
-
-		function parseWeightPriority(location, value, errors) {
-			if (!(type(value) in [ "int", "double" ]))
-				push(errors, [ location, "must be of type number" ]);
-
-			return value;
-		}
-
-		if (exists(value, "weight-priority")) {
-			obj.weight_priority = parseWeightPriority(location + "/weight-priority", value["weight-priority"], errors);
-		}
-		else {
-			obj.weight_priority = 394;
-		}
-
-		function parseWeightBulk(location, value, errors) {
-			if (!(type(value) in [ "int", "double" ]))
-				push(errors, [ location, "must be of type number" ]);
-
-			return value;
-		}
-
-		if (exists(value, "weight-bulk")) {
-			obj.weight_bulk = parseWeightBulk(location + "/weight-bulk", value["weight-bulk"], errors);
-		}
-		else {
-			obj.weight_bulk = 128;
 		}
 
 		return obj;
@@ -10212,261 +8295,6 @@ function instantiateServiceGps(location, value, errors) {
 	return value;
 }
 
-function instantiateServiceDhcpRelay(location, value, errors) {
-	if (type(value) == "object") {
-		let obj = {};
-
-		function parseSelectPorts(location, value, errors) {
-			if (type(value) == "array") {
-				function parseItem(location, value, errors) {
-					if (type(value) != "string")
-						push(errors, [ location, "must be of type string" ]);
-
-					return value;
-				}
-
-				return map(value, (item, i) => parseItem(location + "/" + i, item, errors));
-			}
-
-			if (type(value) != "array")
-				push(errors, [ location, "must be of type array" ]);
-
-			return value;
-		}
-
-		if (exists(value, "select-ports")) {
-			obj.select_ports = parseSelectPorts(location + "/select-ports", value["select-ports"], errors);
-		}
-
-		function parseVlans(location, value, errors) {
-			if (type(value) == "array") {
-				function parseItem(location, value, errors) {
-					if (type(value) == "object") {
-						let obj = {};
-
-						function parseVlan(location, value, errors) {
-							if (!(type(value) in [ "int", "double" ]))
-								push(errors, [ location, "must be of type number" ]);
-
-							return value;
-						}
-
-						if (exists(value, "vlan")) {
-							obj.vlan = parseVlan(location + "/vlan", value["vlan"], errors);
-						}
-
-						function parseRelayServer(location, value, errors) {
-							if (type(value) == "string") {
-								if (!matchUcIp(value))
-									push(errors, [ location, "must be a valid IPv4 or IPv6 address" ]);
-
-							}
-
-							if (type(value) != "string")
-								push(errors, [ location, "must be of type string" ]);
-
-							return value;
-						}
-
-						if (exists(value, "relay-server")) {
-							obj.relay_server = parseRelayServer(location + "/relay-server", value["relay-server"], errors);
-						}
-
-						function parseCircuitIdFormat(location, value, errors) {
-							if (type(value) != "string")
-								push(errors, [ location, "must be of type string" ]);
-
-							if (!(value in [ "vlan-id", "ap-mac", "ssid" ]))
-								push(errors, [ location, "must be one of \"vlan-id\", \"ap-mac\" or \"ssid\"" ]);
-
-							return value;
-						}
-
-						if (exists(value, "circuit-id-format")) {
-							obj.circuit_id_format = parseCircuitIdFormat(location + "/circuit-id-format", value["circuit-id-format"], errors);
-						}
-						else {
-							obj.circuit_id_format = "vlan-id";
-						}
-
-						function parseRemoteIdFormat(location, value, errors) {
-							if (type(value) != "string")
-								push(errors, [ location, "must be of type string" ]);
-
-							if (!(value in [ "vlan-id", "ap-mac", "ssid" ]))
-								push(errors, [ location, "must be one of \"vlan-id\", \"ap-mac\" or \"ssid\"" ]);
-
-							return value;
-						}
-
-						if (exists(value, "remote-id-format")) {
-							obj.remote_id_format = parseRemoteIdFormat(location + "/remote-id-format", value["remote-id-format"], errors);
-						}
-						else {
-							obj.remote_id_format = "ap-mac";
-						}
-
-						return obj;
-					}
-
-					if (type(value) != "object")
-						push(errors, [ location, "must be of type object" ]);
-
-					return value;
-				}
-
-				return map(value, (item, i) => parseItem(location + "/" + i, item, errors));
-			}
-
-			if (type(value) != "array")
-				push(errors, [ location, "must be of type array" ]);
-
-			return value;
-		}
-
-		if (exists(value, "vlans")) {
-			obj.vlans = parseVlans(location + "/vlans", value["vlans"], errors);
-		}
-
-		return obj;
-	}
-
-	if (type(value) != "object")
-		push(errors, [ location, "must be of type object" ]);
-
-	return value;
-}
-
-function instantiateServiceAdminUi(location, value, errors) {
-	if (type(value) == "object") {
-		let obj = {};
-
-		function parseWifiSsid(location, value, errors) {
-			if (type(value) == "string") {
-				if (length(value) > 32)
-					push(errors, [ location, "must be at most 32 characters long" ]);
-
-				if (length(value) < 1)
-					push(errors, [ location, "must be at least 1 characters long" ]);
-
-			}
-
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			return value;
-		}
-
-		if (exists(value, "wifi-ssid")) {
-			obj.wifi_ssid = parseWifiSsid(location + "/wifi-ssid", value["wifi-ssid"], errors);
-		}
-		else {
-			obj.wifi_ssid = "Maverick";
-		}
-
-		function parseWifiKey(location, value, errors) {
-			if (type(value) == "string") {
-				if (length(value) > 63)
-					push(errors, [ location, "must be at most 63 characters long" ]);
-
-				if (length(value) < 8)
-					push(errors, [ location, "must be at least 8 characters long" ]);
-
-			}
-
-			if (type(value) != "string")
-				push(errors, [ location, "must be of type string" ]);
-
-			return value;
-		}
-
-		if (exists(value, "wifi-key")) {
-			obj.wifi_key = parseWifiKey(location + "/wifi-key", value["wifi-key"], errors);
-		}
-
-		function parseWifiBands(location, value, errors) {
-			if (type(value) == "array") {
-				function parseItem(location, value, errors) {
-					if (type(value) != "string")
-						push(errors, [ location, "must be of type string" ]);
-
-					if (!(value in [ "2G", "5G", "5G-lower", "5G-upper", "6G" ]))
-						push(errors, [ location, "must be one of \"2G\", \"5G\", \"5G-lower\", \"5G-upper\" or \"6G\"" ]);
-
-					return value;
-				}
-
-				return map(value, (item, i) => parseItem(location + "/" + i, item, errors));
-			}
-
-			if (type(value) != "array")
-				push(errors, [ location, "must be of type array" ]);
-
-			return value;
-		}
-
-		if (exists(value, "wifi-bands")) {
-			obj.wifi_bands = parseWifiBands(location + "/wifi-bands", value["wifi-bands"], errors);
-		}
-
-		function parseOfflineTrigger(location, value, errors) {
-			if (!(type(value) in [ "int", "double" ]))
-				push(errors, [ location, "must be of type number" ]);
-
-			return value;
-		}
-
-		if (exists(value, "offline-trigger")) {
-			obj.offline_trigger = parseOfflineTrigger(location + "/offline-trigger", value["offline-trigger"], errors);
-		}
-
-		return obj;
-	}
-
-	if (type(value) != "object")
-		push(errors, [ location, "must be of type object" ]);
-
-	return value;
-}
-
-function instantiateServiceRrm(location, value, errors) {
-	if (type(value) == "object") {
-		let obj = {};
-
-		function parseBeaconRequestAssoc(location, value, errors) {
-			if (type(value) != "bool")
-				push(errors, [ location, "must be of type boolean" ]);
-
-			return value;
-		}
-
-		if (exists(value, "beacon-request-assoc")) {
-			obj.beacon_request_assoc = parseBeaconRequestAssoc(location + "/beacon-request-assoc", value["beacon-request-assoc"], errors);
-		}
-		else {
-			obj.beacon_request_assoc = true;
-		}
-
-		function parseStationStatsInterval(location, value, errors) {
-			if (!(type(value) in [ "int", "double" ]))
-				push(errors, [ location, "must be of type number" ]);
-
-			return value;
-		}
-
-		if (exists(value, "station-stats-interval")) {
-			obj.station_stats_interval = parseStationStatsInterval(location + "/station-stats-interval", value["station-stats-interval"], errors);
-		}
-
-		return obj;
-	}
-
-	if (type(value) != "object")
-		push(errors, [ location, "must be of type object" ]);
-
-	return value;
-}
-
 function instantiateServiceTelnet(location, value, errors) {
 	if (type(value) == "object") {
 		let obj = {};
@@ -10574,10 +8402,6 @@ function instantiateService(location, value, errors) {
 			obj.igmp = instantiateServiceIgmp(location + "/igmp", value["igmp"], errors);
 		}
 
-		if (exists(value, "ieee8021x")) {
-			obj.ieee8021x = instantiateServiceIeee8021x(location + "/ieee8021x", value["ieee8021x"], errors);
-		}
-
 		if (exists(value, "radius-proxy")) {
 			obj.radius_proxy = instantiateServiceRadiusProxy(location + "/radius-proxy", value["radius-proxy"], errors);
 		}
@@ -10590,44 +8414,16 @@ function instantiateService(location, value, errors) {
 			obj.data_plane = instantiateServiceDataPlane(location + "/data-plane", value["data-plane"], errors);
 		}
 
-		if (exists(value, "wifi-steering")) {
-			obj.wifi_steering = instantiateServiceWifiSteering(location + "/wifi-steering", value["wifi-steering"], errors);
-		}
-
 		if (exists(value, "quality-of-service")) {
 			obj.quality_of_service = instantiateServiceQualityOfService(location + "/quality-of-service", value["quality-of-service"], errors);
-		}
-
-		if (exists(value, "facebook-wifi")) {
-			obj.facebook_wifi = instantiateServiceFacebookWifi(location + "/facebook-wifi", value["facebook-wifi"], errors);
-		}
-
-		if (exists(value, "airtime-fairness")) {
-			obj.airtime_fairness = instantiateServiceAirtimeFairness(location + "/airtime-fairness", value["airtime-fairness"], errors);
 		}
 
 		if (exists(value, "wireguard-overlay")) {
 			obj.wireguard_overlay = instantiateServiceWireguardOverlay(location + "/wireguard-overlay", value["wireguard-overlay"], errors);
 		}
 
-		if (exists(value, "captive")) {
-			obj.captive = instantiateServiceCaptive(location + "/captive", value["captive"], errors);
-		}
-
 		if (exists(value, "gps")) {
 			obj.gps = instantiateServiceGps(location + "/gps", value["gps"], errors);
-		}
-
-		if (exists(value, "dhcp-relay")) {
-			obj.dhcp_relay = instantiateServiceDhcpRelay(location + "/dhcp-relay", value["dhcp-relay"], errors);
-		}
-
-		if (exists(value, "admin-ui")) {
-			obj.admin_ui = instantiateServiceAdminUi(location + "/admin-ui", value["admin-ui"], errors);
-		}
-
-		if (exists(value, "rrm")) {
-			obj.rrm = instantiateServiceRrm(location + "/rrm", value["rrm"], errors);
 		}
 
 		if (exists(value, "telnet")) {
@@ -10674,8 +8470,8 @@ function instantiateMetricsStatistics(location, value, errors) {
 					if (type(value) != "string")
 						push(errors, [ location, "must be of type string" ]);
 
-					if (!(value in [ "ssids", "lldp", "clients", "tid-stats" ]))
-						push(errors, [ location, "must be one of \"ssids\", \"lldp\", \"clients\" or \"tid-stats\"" ]);
+					if (!(value in [ "lldp", "clients" ]))
+						push(errors, [ location, "must be one of \"lldp\" or \"clients\"" ]);
 
 					return value;
 				}
@@ -10799,44 +8595,6 @@ function instantiateMetricsHealth(location, value, errors) {
 	return value;
 }
 
-function instantiateMetricsWifiFrames(location, value, errors) {
-	if (type(value) == "object") {
-		let obj = {};
-
-		function parseFilters(location, value, errors) {
-			if (type(value) == "array") {
-				function parseItem(location, value, errors) {
-					if (type(value) != "string")
-						push(errors, [ location, "must be of type string" ]);
-
-					if (!(value in [ "probe", "auth", "assoc", "disassoc", "deauth", "local-deauth", "inactive-deauth", "key-mismatch", "beacon-report", "radar-detected" ]))
-						push(errors, [ location, "must be one of \"probe\", \"auth\", \"assoc\", \"disassoc\", \"deauth\", \"local-deauth\", \"inactive-deauth\", \"key-mismatch\", \"beacon-report\" or \"radar-detected\"" ]);
-
-					return value;
-				}
-
-				return map(value, (item, i) => parseItem(location + "/" + i, item, errors));
-			}
-
-			if (type(value) != "array")
-				push(errors, [ location, "must be of type array" ]);
-
-			return value;
-		}
-
-		if (exists(value, "filters")) {
-			obj.filters = parseFilters(location + "/filters", value["filters"], errors);
-		}
-
-		return obj;
-	}
-
-	if (type(value) != "object")
-		push(errors, [ location, "must be of type object" ]);
-
-	return value;
-}
-
 function instantiateMetricsDhcpSnooping(location, value, errors) {
 	if (type(value) == "object") {
 		let obj = {};
@@ -10875,52 +8633,6 @@ function instantiateMetricsDhcpSnooping(location, value, errors) {
 	return value;
 }
 
-function instantiateMetricsWifiScan(location, value, errors) {
-	if (type(value) == "object") {
-		let obj = {};
-
-		function parseInterval(location, value, errors) {
-			if (type(value) != "int")
-				push(errors, [ location, "must be of type integer" ]);
-
-			return value;
-		}
-
-		if (exists(value, "interval")) {
-			obj.interval = parseInterval(location + "/interval", value["interval"], errors);
-		}
-
-		function parseVerbose(location, value, errors) {
-			if (type(value) != "bool")
-				push(errors, [ location, "must be of type boolean" ]);
-
-			return value;
-		}
-
-		if (exists(value, "verbose")) {
-			obj.verbose = parseVerbose(location + "/verbose", value["verbose"], errors);
-		}
-
-		function parseInformationElements(location, value, errors) {
-			if (type(value) != "bool")
-				push(errors, [ location, "must be of type boolean" ]);
-
-			return value;
-		}
-
-		if (exists(value, "information-elements")) {
-			obj.information_elements = parseInformationElements(location + "/information-elements", value["information-elements"], errors);
-		}
-
-		return obj;
-	}
-
-	if (type(value) != "object")
-		push(errors, [ location, "must be of type object" ]);
-
-	return value;
-}
-
 function instantiateMetricsTelemetry(location, value, errors) {
 	if (type(value) == "object") {
 		let obj = {};
@@ -10942,8 +8654,8 @@ function instantiateMetricsTelemetry(location, value, errors) {
 					if (type(value) != "string")
 						push(errors, [ location, "must be of type string" ]);
 
-					if (!(value in [ "ssh", "health", "health.dns", "health.dhcp", "health.radius", "health.memory", "client", "client.join", "client.leave", "client.key-mismatch", "wifi", "wifi.start", "wifi.stop", "wired", "wired.carrier-up", "wired.carrier-down", "unit", "unit.boot-up" ]))
-						push(errors, [ location, "must be one of \"ssh\", \"health\", \"health.dns\", \"health.dhcp\", \"health.radius\", \"health.memory\", \"client\", \"client.join\", \"client.leave\", \"client.key-mismatch\", \"wifi\", \"wifi.start\", \"wifi.stop\", \"wired\", \"wired.carrier-up\", \"wired.carrier-down\", \"unit\" or \"unit.boot-up\"" ]);
+					if (!(value in [ "ssh", "health", "health.dns", "health.dhcp", "health.radius", "health.memory", "client", "client.join", "client.leave", "client.key-mismatch", "wired", "wired.carrier-up", "wired.carrier-down", "unit", "unit.boot-up" ]))
+						push(errors, [ location, "must be one of \"ssh\", \"health\", \"health.dns\", \"health.dhcp\", \"health.radius\", \"health.memory\", \"client\", \"client.join\", \"client.leave\", \"client.key-mismatch\", \"wired\", \"wired.carrier-up\", \"wired.carrier-down\", \"unit\" or \"unit.boot-up\"" ]);
 
 					return value;
 				}
@@ -10980,8 +8692,8 @@ function instantiateMetricsRealtime(location, value, errors) {
 					if (type(value) != "string")
 						push(errors, [ location, "must be of type string" ]);
 
-					if (!(value in [ "ssh", "health", "health.dns", "health.dhcp", "health.radius", "health.memory", "client", "client.join", "client.leave", "client.key-mismatch", "wifi", "wifi.start", "wifi.stop", "wired", "wired.carrier-up", "wired.carrier-down", "unit", "unit.boot-up" ]))
-						push(errors, [ location, "must be one of \"ssh\", \"health\", \"health.dns\", \"health.dhcp\", \"health.radius\", \"health.memory\", \"client\", \"client.join\", \"client.leave\", \"client.key-mismatch\", \"wifi\", \"wifi.start\", \"wifi.stop\", \"wired\", \"wired.carrier-up\", \"wired.carrier-down\", \"unit\" or \"unit.boot-up\"" ]);
+					if (!(value in [ "ssh", "health", "health.dns", "health.dhcp", "health.radius", "health.memory", "client", "client.join", "client.leave", "client.key-mismatch", "wired", "wired.carrier-up", "wired.carrier-down", "unit", "unit.boot-up" ]))
+						push(errors, [ location, "must be one of \"ssh\", \"health\", \"health.dns\", \"health.dhcp\", \"health.radius\", \"health.memory\", \"client\", \"client.join\", \"client.leave\", \"client.key-mismatch\", \"wired\", \"wired.carrier-up\", \"wired.carrier-down\", \"unit\" or \"unit.boot-up\"" ]);
 
 					return value;
 				}
@@ -11020,16 +8732,8 @@ function instantiateMetrics(location, value, errors) {
 			obj.health = instantiateMetricsHealth(location + "/health", value["health"], errors);
 		}
 
-		if (exists(value, "wifi-frames")) {
-			obj.wifi_frames = instantiateMetricsWifiFrames(location + "/wifi-frames", value["wifi-frames"], errors);
-		}
-
 		if (exists(value, "dhcp-snooping")) {
 			obj.dhcp_snooping = instantiateMetricsDhcpSnooping(location + "/dhcp-snooping", value["dhcp-snooping"], errors);
-		}
-
-		if (exists(value, "wifi-scan")) {
-			obj.wifi_scan = instantiateMetricsWifiScan(location + "/wifi-scan", value["wifi-scan"], errors);
 		}
 
 		if (exists(value, "telemetry")) {
@@ -11135,10 +8839,6 @@ function newUCentralState(location, value, errors) {
 			obj.globals = instantiateGlobals(location + "/globals", value["globals"], errors);
 		}
 
-		if (exists(value, "definitions")) {
-			obj.definitions = instantiateDefinitions(location + "/definitions", value["definitions"], errors);
-		}
-
 		function parseEthernet(location, value, errors) {
 			if (type(value) == "array") {
 				return map(value, (item, i) => instantiateEthernet(location + "/" + i, item, errors));
@@ -11156,21 +8856,6 @@ function newUCentralState(location, value, errors) {
 
 		if (exists(value, "switch")) {
 			obj.switch = instantiateSwitch(location + "/switch", value["switch"], errors);
-		}
-
-		function parseRadios(location, value, errors) {
-			if (type(value) == "array") {
-				return map(value, (item, i) => instantiateRadio(location + "/" + i, item, errors));
-			}
-
-			if (type(value) != "array")
-				push(errors, [ location, "must be of type array" ]);
-
-			return value;
-		}
-
-		if (exists(value, "radios")) {
-			obj.radios = parseRadios(location + "/radios", value["radios"], errors);
 		}
 
 		function parseInterfaces(location, value, errors) {
