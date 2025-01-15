@@ -707,3 +707,166 @@ properties:
               minLength: 1
               examples:
                 - "A VoIP Phone"
+  rt-event-config:
+    description: Configuration for enabling or disabling specific event categories and their sub-events.
+    type: object
+    properties:
+      port-status:
+        description: Enable/Disable Port Status events.
+        type: object
+        properties:
+          enabled:
+            description: Enable/Disable Port Status category.
+            type: boolean
+            default: false
+          sub-events:
+            type: object
+            properties:
+              wired.carrier-down:
+                type: boolean
+                description: Enable/Disable carrier down event.
+                default: false
+              wired.carrier-up:
+                type: boolean
+                description: Enable/Disable carrier up event.
+                default: false
+      module:
+        description: Enable/Disable Module events.
+        type: object
+        properties:
+          enabled:
+            type: boolean
+            description: Enable/Disable Module category.
+            default: false
+          sub-events:
+            type: object
+            properties:
+              module.plugout:
+                type: boolean
+                description: Enable/Disable module plugout event.
+                default: false
+              module.plugin:
+                type: boolean
+                description: Enable/Disable module plugin event.
+                default: false
+      stp:
+        description: Enable/Disable STP events.
+        type: object
+        properties:
+          enabled:
+            type: boolean
+            description: Enable/Disable STP category.
+            default: false
+          sub-events:
+            type: object
+            properties:
+              stp.loop-detected:
+                type: boolean
+                description: Enable/Disable loop detected event.
+                default: false
+              stp.loop-cleared:
+                type: boolean
+                description: Enable/Disable loop cleared event.
+                default: false
+              stp.state-change:
+                type: boolean
+                description: Enable/Disable state change event.
+                default: false
+      rstp:
+        description: Enable/Disable RSTP events.
+        type: object
+        properties:
+          enabled:
+            type: boolean
+            description: Enable/Disable RSTP category.
+            default: false
+          sub-events:
+            type: object
+            properties:
+              rstp.loop-detected:
+                type: boolean
+                description: Enable/Disable loop detected event.
+                default: false
+              rstp.loop-cleared:
+                type: boolean
+                description: Enable/Disable loop cleared event.
+                default: false
+              rstp.state-change:
+                type: boolean
+                description: Enable/Disable state change event.
+                default: false
+      fw-upgrade:
+        description: Enable/Disable Firmware Upgrade events.
+        type: object
+        properties:
+          enabled:
+            type: boolean
+            description: Enable/Disable Firmware Upgrade category.
+            default: false
+          sub-events:
+            type: object
+            properties:
+              upg.download-start:
+                type: boolean
+                description: Enable/Disable download start event.
+                default: false
+              upg.download-in-progress:
+                type: boolean
+                description: Enable/Disable download in progress event.
+                default: false
+              upg.download-failed:
+                type: boolean
+                description: Enable/Disable download failed event.
+                default: false
+              upg.validation-start:
+                type: boolean
+                description: Enable/Disable validation start event.
+                default: false
+              upg.validation-success:
+                type: boolean
+                description: Enable/Disable validation success event.
+                default: false
+              upg.validation-failed:
+                type: boolean
+                description: Enable/Disable validation failed event.
+                default: false
+              upg.backup-current-firmware:
+                type: boolean
+                description: Enable/Disable firmware backup event.
+                default: false
+              upg.install-start:
+                type: boolean
+                description: Enable/Disable install start event.
+                default: false
+              upg.install-failed:
+                type: boolean
+                description: Enable/Disable install failed event.
+                default: false
+              upg.reboot-start:
+                type: boolean
+                description: Enable/Disable reboot start event.
+                default: false
+              upg.success:
+                type: boolean
+                description: Enable/Disable upgrade success event.
+                default: false
+      dhcp-snooping:
+        description: Enable/Disable DHCP Snooping events.
+        type: object
+        properties:
+          enabled:
+            type: boolean
+            description: Enable/Disable DHCP Snooping category.
+            default: false
+          sub-events:
+            type: object
+            properties:
+              dhcp-snooping.violation-detected:
+                type: boolean
+                description: Enable/Disable DHCP Snooping violation detected event.
+                default: false
+              dhcp-snooping.violation-cleared:
+                type: boolean
+                description: Enable/Disable DHCP Snooping violation cleared event.
+                default: false
+      # Continue similarly for ARP Inspection, IPSG, PoE Status, PoE Fault, and Device Events.
