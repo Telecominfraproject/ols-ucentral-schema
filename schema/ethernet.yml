@@ -368,3 +368,28 @@ properties:
         type: boolean
         description: Enables the transmission of SNMP trap notifications about LLDP changes.
         default: false
+  ip-source-guard-intf-config:
+    type: object
+    description: Configuration of IP Source Guard (IPSG) on a physical interface in a Layer 2 switch.
+    properties:
+      ip-source-guard-rule:
+        type: string
+        description: Configures the switch to filter inbound traffic based on source IP address only, 
+          or source IP address and corresponding MAC address combined.
+        enum:
+          - sip
+          - sip-mac
+      ip-source-guard-mode:
+        type: string
+        description: Specifies the learning mode to use for validation, either MAC address table or ACL table. 
+          The system searches for source addresses in the specified table.
+        enum:
+          - mac
+          - acl
+      ip-source-guard-max-binding:
+        type: integer
+        description: Sets the maximum number of address entries that can be mapped to an interface 
+          in the binding table. Includes both static entries and dynamically learned entries 
+          via DHCP Snooping.
+        minimum: 1
+        maximum: 65535

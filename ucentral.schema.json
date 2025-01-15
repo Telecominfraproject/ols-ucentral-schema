@@ -528,6 +528,30 @@
                             "default": false
                         }
                     }
+                },
+                "ip-source-guard-intf-config": {
+                    "type": "object",
+                    "properties": {
+                        "ip-source-guard-rule": {
+                            "type": "string",
+                            "enum": [
+                                "sip",
+                                "sip-mac"
+                            ]
+                        },
+                        "ip-source-guard-mode": {
+                            "type": "string",
+                            "enum": [
+                                "mac",
+                                "acl"
+                            ]
+                        },
+                        "ip-source-guard-max-binding": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 65535
+                        }
+                    }
                 }
             }
         },
@@ -1226,6 +1250,40 @@
                                         "examples": [
                                             "A VoIP Phone"
                                         ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "ip-source-guard-config": {
+                    "type": "object",
+                    "properties": {
+                        "ip-source-guard-bindings": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "ip-source-guard-binding-mode": {
+                                        "type": "string",
+                                        "enum": [
+                                            "mac",
+                                            "acl"
+                                        ]
+                                    },
+                                    "ip-source-guard-binding-mac": {
+                                        "type": "string",
+                                        "format": "uc-mac"
+                                    },
+                                    "ip-source-guard-binding-vlans": {
+                                        "type": "integer"
+                                    },
+                                    "ip-source-guard-binding-ip": {
+                                        "type": "string",
+                                        "format": "ipv4"
+                                    },
+                                    "ip-source-guard-binding-interface": {
+                                        "type": "string"
                                     }
                                 }
                             }

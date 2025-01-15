@@ -707,3 +707,35 @@ properties:
               minLength: 1
               examples:
                 - "A VoIP Phone"
+  ip-source-guard-config:
+    type: object
+    description: Configuration for IP Source Guard global static bindings in a Layer 2 switch.
+    properties:
+      ip-source-guard-bindings:
+        type: array
+        description: List of static bindings for IP Source Guard.
+        items:
+          type: object
+          properties:
+            ip-source-guard-binding-mode:
+              type: string
+              description: Specifies the mode for adding a static address to the Source Guard ACL or MAC address 
+                binding table. It determines whether the binding is based on MAC addresses or ACLs.
+              enum:
+                - mac
+                - acl
+            ip-source-guard-binding-mac:
+              type: string
+              format: uc-mac
+              description: A valid unicast MAC address for binding to the Source Guard filtering table.
+            ip-source-guard-binding-vlans:
+              type: integer
+              description: The VLAN ID associated with the static binding for Source Guard filtering. Must be 
+                a valid, configured VLAN on the switch.
+            ip-source-guard-binding-ip:
+              type: string
+              format: ipv4
+              description: A valid unicast IPv4 address to associate with the Source Guard filtering table.
+            ip-source-guard-binding-interface:
+              type: string
+              description: The physical interface (e.g., ethernet0, ethernet1) where the Source Guard binding applies.
