@@ -528,6 +528,21 @@
                             "default": false
                         }
                     }
+                },
+                "rate-limit-config": {
+                    "type": "object",
+                    "properties": {
+                        "rate-limit-ingress": {
+                            "type": "integer",
+                            "minimum": 64,
+                            "maximum": 1000000000
+                        },
+                        "rate-limit-egress": {
+                            "type": "integer",
+                            "minimum": 64,
+                            "maximum": 1000000000
+                        }
+                    }
                 }
             }
         },

@@ -368,3 +368,17 @@ properties:
         type: boolean
         description: Enables the transmission of SNMP trap notifications about LLDP changes.
         default: false
+  rate-limit-config:
+    type: object
+    description: "Configuration for ingress and egress rate limiting on a specific port or interface."
+    properties:
+      rate-limit-ingress:
+        type: integer
+        description: Sets the maximum allowed ingress (input) traffic rate for the interface, in kilobits per second (kbps).
+        minimum: 64
+        maximum: 1000000000
+      rate-limit-egress:
+        type: integer
+        description: Sets the maximum allowed egress (output) traffic rate for the interface, in kilobits per second (kbps).
+        minimum: 64
+        maximum: 1000000000
