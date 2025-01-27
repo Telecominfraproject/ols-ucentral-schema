@@ -1000,152 +1000,6 @@
                         }
                     }
                 },
-                "acl": {
-                    "description": "Contains all the access control rule definitions",
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "acl-index": {
-                                "description": "Unique identifier for the ACL grouping",
-                                "type": "integer",
-                                "minimum": 1
-                            },
-                            "acl-name": {
-                                "description": "The identifier or name for the Access Control List",
-                                "type": "string",
-                                "maxLength": 32,
-                                "minLength": 1
-                            },
-                            "acl-type": {
-                                "description": "Type of the access control list",
-                                "type": "string",
-                                "enum": [
-                                    "ipv4",
-                                    "ipv6",
-                                    "ipv4Ext",
-                                    "ipv6Ext",
-                                    "mac",
-                                    "arp"
-                                ]
-                            },
-                            "acl-rules": {
-                                "description": "List of access control rules under this ACL",
-                                "type": "array",
-                                "items": {
-                                    "type": "object",
-                                    "properties": {
-                                        "acl-rule-priority": {
-                                            "description": "Priority of the rule within the ACL",
-                                            "type": "integer",
-                                            "minimum": 0,
-                                            "maximum": 1024
-                                        },
-                                        "acl-rule-action": {
-                                            "description": "Defines whether to permit or deny traffic matching the rule",
-                                            "type": "string",
-                                            "enum": [
-                                                "permit",
-                                                "deny"
-                                            ]
-                                        },
-                                        "acl-source-macaddress": {
-                                            "description": "Specifies the source MAC address to filter on",
-                                            "type": "string",
-                                            "format": "uc-mac"
-                                        },
-                                        "acl-source-macbitmask": {
-                                            "description": "The mask applied to the source MAC address",
-                                            "type": "string",
-                                            "format": "uc-mac"
-                                        },
-                                        "acl-dest-macaddress": {
-                                            "description": "Specifies the destination MAC address for the filter",
-                                            "type": "string",
-                                            "format": "uc-mac"
-                                        },
-                                        "acl-dest-macbitmask": {
-                                            "description": "The mask applied to the destination MAC address",
-                                            "type": "string",
-                                            "format": "uc-mac"
-                                        },
-                                        "acl-packet-format": {
-                                            "description": "Identifies the protocol encapsulated in the Ethernet frame by its EtherType",
-                                            "type": "string",
-                                            "enum": [
-                                                "any",
-                                                "untagged-eth2",
-                                                "untagged-802.3",
-                                                "tagged-eth2",
-                                                "tagged-802.3"
-                                            ]
-                                        },
-                                        "acl-vlanid": {
-                                            "description": "Specifies a VLAN ID to filter traffic from a specific VLAN",
-                                            "type": "integer",
-                                            "minimum": 1,
-                                            "maximum": 4094
-                                        },
-                                        "acl-vid-bitmask": {
-                                            "description": "The mask applied to the VLAN ID",
-                                            "type": "integer",
-                                            "minimum": 1,
-                                            "maximum": 4095
-                                        },
-                                        "acl-ethertype": {
-                                            "description": "Filters packets based on the custom EtherType field (HEX) in the Ethernet frame",
-                                            "type": "string",
-                                            "default": "800"
-                                        },
-                                        "acl-ethertype-bitmask": {
-                                            "description": "The mask applied to the EtherType field",
-                                            "type": "string",
-                                            "default": "FFFF"
-                                        },
-                                        "acl-cos": {
-                                            "description": "Filters based on the Class of Service (CoS) field in the frame",
-                                            "type": "integer",
-                                            "minimum": 0,
-                                            "maximum": 7
-                                        },
-                                        "acl-cos-bitmask": {
-                                            "description": "The mask applied to the CoS field",
-                                            "type": "integer",
-                                            "minimum": 0,
-                                            "maximum": 7
-                                        },
-                                        "acl-ipv4-source-address": {
-                                            "description": "The IPv4 address of the source to filter on",
-                                            "type": "string",
-                                            "format": "ipv4"
-                                        },
-                                        "acl-ipv4-source-subnetmask": {
-                                            "description": "The subnet mask applied to the source IPv4 address",
-                                            "type": "string",
-                                            "format": "ipv4"
-                                        },
-                                        "acl-ipv4-dest-address": {
-                                            "description": "The IPv4 address of the destination to filter on",
-                                            "type": "string",
-                                            "format": "ipv4"
-                                        },
-                                        "acl-ipv4-dest-subnetmask": {
-                                            "description": "The subnet mask applied to the destination IPv4 address",
-                                            "type": "string",
-                                            "format": "ipv4"
-                                        },
-                                        "acl-ip-proto": {
-                                            "description": "Filters based on the IP protocol number",
-                                            "type": "integer",
-                                            "minimum": 0,
-                                            "maximum": 255
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
                 "mvr-config": {
                     "description": "This section defines the Multicast VLAN Registration (MVR) general configuration.",
                     "type": "object",
@@ -1457,6 +1311,146 @@
                                         "examples": [
                                             "A VoIP Phone"
                                         ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "acl": {
+                    "description": "Contains all the access control rule definitions",
+                    "type": "array",
+                    "uniqueItems": true,
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "acl-name": {
+                                "description": "The identifier or name for the Access Control List",
+                                "type": "string",
+                                "maxLength": 32,
+                                "minLength": 1
+                            },
+                            "acl-type": {
+                                "description": "Type of the access control list",
+                                "type": "string",
+                                "enum": [
+                                    "ipv4",
+                                    "ipv6",
+                                    "ipv4Ext",
+                                    "ipv6Ext",
+                                    "mac",
+                                    "arp"
+                                ]
+                            },
+                            "acl-rules": {
+                                "description": "access control rules under this ACL",
+                                "type": "object",
+                                "additionalProperties": {
+                                    "type": "array",
+                                    "uniqueItems": true,
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "acl-rule-action": {
+                                                "description": "Defines whether to permit or deny traffic matching the rule",
+                                                "type": "string",
+                                                "enum": [
+                                                    "permit",
+                                                    "deny"
+                                                ]
+                                            },
+                                            "acl-source-macaddress": {
+                                                "description": "Specifies the source MAC address to filter on",
+                                                "type": "string",
+                                                "format": "uc-mac"
+                                            },
+                                            "acl-source-macbitmask": {
+                                                "description": "The mask applied to the source MAC address",
+                                                "type": "string",
+                                                "format": "uc-mac"
+                                            },
+                                            "acl-dest-macaddress": {
+                                                "description": "Specifies the destination MAC address for the filter",
+                                                "type": "string",
+                                                "format": "uc-mac"
+                                            },
+                                            "acl-dest-macbitmask": {
+                                                "description": "The mask applied to the destination MAC address",
+                                                "type": "string",
+                                                "format": "uc-mac"
+                                            },
+                                            "acl-packet-format": {
+                                                "description": "Identifies the protocol encapsulated in the Ethernet frame by its EtherType",
+                                                "type": "string",
+                                                "enum": [
+                                                    "any",
+                                                    "untagged-eth2",
+                                                    "untagged-802.3",
+                                                    "tagged-eth2",
+                                                    "tagged-802.3"
+                                                ]
+                                            },
+                                            "acl-vlanid": {
+                                                "description": "Specifies a VLAN ID to filter traffic from a specific VLAN",
+                                                "type": "integer",
+                                                "minimum": 1,
+                                                "maximum": 4094
+                                            },
+                                            "acl-vid-bitmask": {
+                                                "description": "The mask applied to the VLAN ID",
+                                                "type": "integer",
+                                                "minimum": 1,
+                                                "maximum": 4095
+                                            },
+                                            "acl-ethertype": {
+                                                "description": "Filters packets based on the custom EtherType field (HEX) in the Ethernet frame",
+                                                "type": "string",
+                                                "default": "800"
+                                            },
+                                            "acl-ethertype-bitmask": {
+                                                "description": "The mask applied to the EtherType field",
+                                                "type": "string",
+                                                "default": "FFFF"
+                                            },
+                                            "acl-cos": {
+                                                "description": "Filters based on the Class of Service (CoS) field in the frame",
+                                                "type": "integer",
+                                                "minimum": 0,
+                                                "maximum": 7
+                                            },
+                                            "acl-cos-bitmask": {
+                                                "description": "The mask applied to the CoS field",
+                                                "type": "integer",
+                                                "minimum": 0,
+                                                "maximum": 7
+                                            },
+                                            "acl-ipv4-source-address": {
+                                                "description": "The IPv4 address of the source to filter on",
+                                                "type": "string",
+                                                "format": "ipv4"
+                                            },
+                                            "acl-ipv4-source-subnetmask": {
+                                                "description": "The subnet mask applied to the source IPv4 address",
+                                                "type": "string",
+                                                "format": "ipv4"
+                                            },
+                                            "acl-ipv4-dest-address": {
+                                                "description": "The IPv4 address of the destination to filter on",
+                                                "type": "string",
+                                                "format": "ipv4"
+                                            },
+                                            "acl-ipv4-dest-subnetmask": {
+                                                "description": "The subnet mask applied to the destination IPv4 address",
+                                                "type": "string",
+                                                "format": "ipv4"
+                                            },
+                                            "acl-ip-proto": {
+                                                "description": "Filters based on the IP protocol number",
+                                                "type": "integer",
+                                                "minimum": 0,
+                                                "maximum": 255
+                                            }
+                                        }
                                     }
                                 }
                             }

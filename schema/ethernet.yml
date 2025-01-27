@@ -403,11 +403,11 @@ properties:
           type: boolean
           default: false
   voice-vlan-intf-config:
-    description: "Configure the Voice VLAN feature at the interface level, allowing for VoIP traffic to be prioritized on this specific port."
+    description: Configure the Voice VLAN feature at the interface level, allowing for VoIP traffic to be prioritized on this specific port.
     type: object
     properties:
       voice-vlan-intf-mode:
-        description: "Specify the mode of placing this port on the voice VLAN."
+        description: Specify the mode of placing this port on the voice VLAN.
         type: string
         default: "auto"
         enum:
@@ -415,36 +415,36 @@ properties:
           - manual
           - auto
       voice-vlan-intf-priority:
-        description: "Define the Class of Service (CoS) priority for VoIP traffic passing through this port, ensuring higher priority over other traffic types."
+        description: Define the Class of Service (CoS) priority for VoIP traffic passing through this port, ensuring higher priority over other traffic types.
         type: integer
         default: 6
         minimum: 0
         maximum: 6
       voice-vlan-intf-detect-voice:
-        description: "Select the detection method for identifying VoIP traffic on this port, such as OUI-based detection or traffic pattern recognition."
+        description: Select the detection method for identifying VoIP traffic on this port, such as OUI-based detection or traffic pattern recognition.
         type: string
         default: "oui"
         enum:
           - oui
           - lldp
       voice-vlan-intf-security:
-        description: "Enable or configure security filtering for VoIP traffic on the interface to protect against unauthorized devices."
+        description: Enable or configure security filtering for VoIP traffic on the interface to protect against unauthorized devices.
         type: boolean
         default: false
 dhcp-snoop-port:
-  description: "Configuration for DHCP Snooping on a port level on a switch"
+  description: Configuration for DHCP Snooping on a port level on a switch
   type: object
   properties:
     dhcp-snoop-port-trust:
-      description: "This parameter designates a switch port as ‘trusted’ for DHCP messages, meaning it can forward DHCP offers and acknowledgments, which is essential for connecting to legitimate DHCP servers"
+      description: This parameter designates a switch port as ‘trusted’ for DHCP messages, meaning it can forward DHCP offers and acknowledgments, which is essential for connecting to legitimate DHCP servers
       type: boolean
       default: false
     dhcp-snoop-port-client-limit:
-      description: "It sets a limit on the number of DHCP clients that can be associated with a single port, helping to prevent a single port from exhausting the network’s IP address pool"
+      description: It sets a limit on the number of DHCP clients that can be associated with a single port, helping to prevent a single port from exhausting the network’s IP address pool
       type: integer
       minimum: 1
     dhcp-snoop-port-circuit-id:
-      description: "Specifies DHCP Option 82 circuit ID suboption information. Often including information like the interface number and VLAN ID, this can be useful for network management and troubleshooting"
+      description: Specifies DHCP Option 82 circuit ID suboption information. Often including information like the interface number and VLAN ID, this can be useful for network management and troubleshooting
       type: string
       minLength: 1
       maxLength: 32

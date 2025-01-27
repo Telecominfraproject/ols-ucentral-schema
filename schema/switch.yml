@@ -279,122 +279,6 @@ properties:
             - drop
             - keep
             - replace
-  acl:
-    description: Contains all the access control rule definitions
-    type: array
-    items:
-      type: object
-      properties:
-        acl-index:
-          description: Unique identifier for the ACL grouping
-          type: integer
-          minimum: 1
-        acl-name:
-          description: The identifier or name for the Access Control List
-          type: string
-          maxLength: 32
-          minLength: 1
-        acl-type:
-          description: Type of the access control list
-          type: string
-          enum:
-            - ipv4
-            - ipv6
-            - ipv4Ext
-            - ipv6Ext
-            - mac
-            - arp
-        acl-rules:
-          description: List of access control rules under this ACL
-          type: array
-          items:
-            type: object
-            properties:
-              acl-rule-priority:
-                description: Priority of the rule within the ACL
-                type: integer
-                minimum: 0
-                maximum: 1024
-              acl-rule-action:
-                description: Defines whether to permit or deny traffic matching the rule
-                type: string
-                enum:
-                  - permit
-                  - deny
-              acl-source-macaddress:
-                description: Specifies the source MAC address to filter on
-                type: string
-                format: uc-mac
-              acl-source-macbitmask:
-                description: The mask applied to the source MAC address
-                type: string
-                format: uc-mac
-              acl-dest-macaddress:
-                description: Specifies the destination MAC address for the filter
-                type: string
-                format: uc-mac
-              acl-dest-macbitmask:
-                description: The mask applied to the destination MAC address
-                type: string
-                format: uc-mac
-              acl-packet-format:
-                description: Identifies the protocol encapsulated in the Ethernet frame by its EtherType
-                type: string
-                enum:
-                  - any
-                  - untagged-eth2
-                  - untagged-802.3
-                  - tagged-eth2
-                  - tagged-802.3
-              acl-vlanid:
-                description: Specifies a VLAN ID to filter traffic from a specific VLAN
-                type: integer
-                minimum: 1
-                maximum: 4094
-              acl-vid-bitmask:
-                description: The mask applied to the VLAN ID
-                type: integer
-                minimum: 1
-                maximum: 4095
-              acl-ethertype:
-                description: Filters packets based on the custom EtherType field (HEX) in the Ethernet frame
-                type: string
-                default: "800"
-              acl-ethertype-bitmask:
-                description: The mask applied to the EtherType field
-                type: string
-                default: "FFFF"
-              acl-cos:
-                description: Filters based on the Class of Service (CoS) field in the frame
-                type: integer
-                minimum: 0
-                maximum: 7
-              acl-cos-bitmask:
-                description: The mask applied to the CoS field
-                type: integer
-                minimum: 0
-                maximum: 7
-              acl-ipv4-source-address:
-                description: The IPv4 address of the source to filter on
-                type: string
-                format: ipv4
-              acl-ipv4-source-subnetmask:
-                description: The subnet mask applied to the source IPv4 address
-                type: string
-                format: ipv4
-              acl-ipv4-dest-address:
-                description: The IPv4 address of the destination to filter on
-                type: string
-                format: ipv4
-              acl-ipv4-dest-subnetmask:
-                description: The subnet mask applied to the destination IPv4 address
-                type: string
-                format: ipv4
-              acl-ip-proto:
-                description: Filters based on the IP protocol number
-                type: integer
-                minimum: 0
-                maximum: 255
   mvr-config:
     description: This section defines the Multicast VLAN Registration (MVR) general configuration.
     type: object
@@ -618,38 +502,40 @@ properties:
               type: boolean
               default: true
   voice-vlan-config:
-    description: "This parameter enables or disables the overall configuration of the Voice VLAN feature on the switch. When enabled, it allows the system to classify and prioritize voice traffic."
+    description: This parameter enables or disables the overall configuration of the Voice VLAN feature on the switch. When enabled, it allows the system to classify and prioritize voice traffic.
     type: object
     properties:
       voice-vlan-id:
-        description: "Specifies the VLAN ID assigned to the Voice VLAN. This is the unique identifier for the VLAN that will be used for prioritizing voice traffic."
+        description: Specifies the VLAN ID assigned to the Voice VLAN. This is the unique identifier for the VLAN that will be used for prioritizing voice traffic.
         type: integer
         minimum: 1
         maximum: 4094
       voice-vlan-ageing-time:
-        description: "Defines the time, in minutes, that a dynamic Voice VLAN entry remains in the VLAN after voice traffic is no longer detected. It helps manage resources by removing inactive voice devices from the VLAN after this time elapses."
+        description: Defines the time, in minutes, that a dynamic Voice VLAN entry remains in the VLAN after voice traffic is no longer detected. It helps manage resources by removing inactive voice devices from the VLAN after this time elapses.
         type: integer
         minimum: 5
         maximum: 43200
         default: 1440
       voice-vlan-oui-config:
-        description: "Configures the Organizationally Unique Identifier (OUI) for identifying the voice devices (like IP phones)."
+        description: Configures the Organizationally Unique Identifier (OUI) for identifying the voice devices (like IP phones).
         type: array
         items:
           type: object
           properties:
             voice-vlan-oui-mac:
-              description: "The specific MAC address pattern that corresponds to voice devices, as determined by the OUI. It is used for identifying and classifying voice traffic."
+              description: The specific MAC address pattern that corresponds to voice devices, as determined by the OUI. It is used for identifying and classifying voice traffic.
               type: string
               format: uc-mac
             voice-vlan-oui-mask:
-              description: "A mask applied to the MAC address to help match the OUI more precisely. It ensures that the correct portion of the MAC address is evaluated to identify a device as a voice device."
+              description: A mask applied to the MAC address to help match the OUI more precisely. It ensures that the correct portion of the MAC address is evaluated to identify a device as a voice device.
               type: string
               format: uc-mac
             voice-vlan-oui-description:
-              description: "A descriptive label or comment for the OUI configuration. This can help administrators keep track of which OUI belongs to which type of voice device or vendor."
+              description: A descriptive label or comment for the OUI configuration. This can help administrators keep track of which OUI belongs to which type of voice device or vendor.
               type: string
               maxLength: 32
               minLength: 1
               examples:
                 - "A VoIP Phone"
+  acl:
+    $ref: "https://ucentral.io/schema/v1/switch/acl/"
