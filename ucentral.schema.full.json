@@ -1422,7 +1422,7 @@
                         }
                     }
                 },
-                "rt-event-config": {
+                "rt-events": {
                     "description": "Configuration for enabling or disabling specific event categories and their sub-events.",
                     "type": "object",
                     "properties": {

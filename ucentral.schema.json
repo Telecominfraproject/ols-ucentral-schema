@@ -531,6 +531,187 @@
                 }
             }
         },
+        "switch.rtevent": {
+            "type": "object",
+            "properties": {
+                "port-status": {
+                    "type": "object",
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean",
+                            "default": false
+                        },
+                        "sub-events": {
+                            "type": "object",
+                            "properties": {
+                                "wired.carrier-down": {
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "wired.carrier-up": {
+                                    "type": "boolean",
+                                    "default": false
+                                }
+                            }
+                        }
+                    }
+                },
+                "module": {
+                    "type": "object",
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean",
+                            "default": false
+                        },
+                        "sub-events": {
+                            "type": "object",
+                            "properties": {
+                                "module.plugout": {
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "module.plugin": {
+                                    "type": "boolean",
+                                    "default": false
+                                }
+                            }
+                        }
+                    }
+                },
+                "stp": {
+                    "type": "object",
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean",
+                            "default": false
+                        },
+                        "sub-events": {
+                            "type": "object",
+                            "properties": {
+                                "stp.loop-detected": {
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "stp.loop-cleared": {
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "stp.state-change": {
+                                    "type": "boolean",
+                                    "default": false
+                                }
+                            }
+                        }
+                    }
+                },
+                "rstp": {
+                    "type": "object",
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean",
+                            "default": false
+                        },
+                        "sub-events": {
+                            "type": "object",
+                            "properties": {
+                                "rstp.loop-detected": {
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "rstp.loop-cleared": {
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "rstp.state-change": {
+                                    "type": "boolean",
+                                    "default": false
+                                }
+                            }
+                        }
+                    }
+                },
+                "fw-upgrade": {
+                    "type": "object",
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean",
+                            "default": false
+                        },
+                        "sub-events": {
+                            "type": "object",
+                            "properties": {
+                                "upg.download-start": {
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "upg.download-in-progress": {
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "upg.download-failed": {
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "upg.validation-start": {
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "upg.validation-success": {
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "upg.validation-failed": {
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "upg.backup-current-firmware": {
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "upg.install-start": {
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "upg.install-failed": {
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "upg.reboot-start": {
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "upg.success": {
+                                    "type": "boolean",
+                                    "default": false
+                                }
+                            }
+                        }
+                    }
+                },
+                "dhcp-snooping": {
+                    "type": "object",
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean",
+                            "default": false
+                        },
+                        "sub-events": {
+                            "type": "object",
+                            "properties": {
+                                "dhcp-snooping.violation-detected": {
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "dhcp-snooping.violation-cleared": {
+                                    "type": "boolean",
+                                    "default": false
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "switch": {
             "type": "object",
             "properties": {
@@ -1232,186 +1413,8 @@
                         }
                     }
                 },
-                "rt-event-config": {
-                    "type": "object",
-                    "properties": {
-                        "port-status": {
-                            "type": "object",
-                            "properties": {
-                                "enabled": {
-                                    "type": "boolean",
-                                    "default": false
-                                },
-                                "sub-events": {
-                                    "type": "object",
-                                    "properties": {
-                                        "wired.carrier-down": {
-                                            "type": "boolean",
-                                            "default": false
-                                        },
-                                        "wired.carrier-up": {
-                                            "type": "boolean",
-                                            "default": false
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                        "module": {
-                            "type": "object",
-                            "properties": {
-                                "enabled": {
-                                    "type": "boolean",
-                                    "default": false
-                                },
-                                "sub-events": {
-                                    "type": "object",
-                                    "properties": {
-                                        "module.plugout": {
-                                            "type": "boolean",
-                                            "default": false
-                                        },
-                                        "module.plugin": {
-                                            "type": "boolean",
-                                            "default": false
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                        "stp": {
-                            "type": "object",
-                            "properties": {
-                                "enabled": {
-                                    "type": "boolean",
-                                    "default": false
-                                },
-                                "sub-events": {
-                                    "type": "object",
-                                    "properties": {
-                                        "stp.loop-detected": {
-                                            "type": "boolean",
-                                            "default": false
-                                        },
-                                        "stp.loop-cleared": {
-                                            "type": "boolean",
-                                            "default": false
-                                        },
-                                        "stp.state-change": {
-                                            "type": "boolean",
-                                            "default": false
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                        "rstp": {
-                            "type": "object",
-                            "properties": {
-                                "enabled": {
-                                    "type": "boolean",
-                                    "default": false
-                                },
-                                "sub-events": {
-                                    "type": "object",
-                                    "properties": {
-                                        "rstp.loop-detected": {
-                                            "type": "boolean",
-                                            "default": false
-                                        },
-                                        "rstp.loop-cleared": {
-                                            "type": "boolean",
-                                            "default": false
-                                        },
-                                        "rstp.state-change": {
-                                            "type": "boolean",
-                                            "default": false
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                        "fw-upgrade": {
-                            "type": "object",
-                            "properties": {
-                                "enabled": {
-                                    "type": "boolean",
-                                    "default": false
-                                },
-                                "sub-events": {
-                                    "type": "object",
-                                    "properties": {
-                                        "upg.download-start": {
-                                            "type": "boolean",
-                                            "default": false
-                                        },
-                                        "upg.download-in-progress": {
-                                            "type": "boolean",
-                                            "default": false
-                                        },
-                                        "upg.download-failed": {
-                                            "type": "boolean",
-                                            "default": false
-                                        },
-                                        "upg.validation-start": {
-                                            "type": "boolean",
-                                            "default": false
-                                        },
-                                        "upg.validation-success": {
-                                            "type": "boolean",
-                                            "default": false
-                                        },
-                                        "upg.validation-failed": {
-                                            "type": "boolean",
-                                            "default": false
-                                        },
-                                        "upg.backup-current-firmware": {
-                                            "type": "boolean",
-                                            "default": false
-                                        },
-                                        "upg.install-start": {
-                                            "type": "boolean",
-                                            "default": false
-                                        },
-                                        "upg.install-failed": {
-                                            "type": "boolean",
-                                            "default": false
-                                        },
-                                        "upg.reboot-start": {
-                                            "type": "boolean",
-                                            "default": false
-                                        },
-                                        "upg.success": {
-                                            "type": "boolean",
-                                            "default": false
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                        "dhcp-snooping": {
-                            "type": "object",
-                            "properties": {
-                                "enabled": {
-                                    "type": "boolean",
-                                    "default": false
-                                },
-                                "sub-events": {
-                                    "type": "object",
-                                    "properties": {
-                                        "dhcp-snooping.violation-detected": {
-                                            "type": "boolean",
-                                            "default": false
-                                        },
-                                        "dhcp-snooping.violation-cleared": {
-                                            "type": "boolean",
-                                            "default": false
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+                "rt-events": {
+                    "$ref": "#/$defs/switch.rtevent"
                 }
             }
         },
