@@ -707,22 +707,5 @@ properties:
               minLength: 1
               examples:
                 - "A VoIP Phone"
-  arp-inspect-config:
-    type: object
-    description: Global configuration for ARP Inspection on the switch.
-    properties:
-      ip-arp-inspect:
-        type: boolean
-        description: Enable or disable ARP Inspection globally.
-      ip-arp-inspect-validate-dst-mac:
-        type: boolean
-        description: Validate that the destination MAC address in the Ethernet header matches the target MAC address in the ARP body for ARP responses.
-      ip-arp-inspect-validate-ip:
-        type: boolean
-        description: Validate ARP packets for unexpected or invalid IP addresses, such as 0.0.0.0, 255.255.255.255, and IP multicast addresses.
-      ip-arp-inspect-validate-allow-zeros:
-        type: boolean
-        description: Allow ARP packets where the sender IP address is 0.0.0.0.
-      ip-arp-inspect-validate-src-mac:
-        type: boolean
-        description: Validate that the source MAC address in the Ethernet header matches the sender MAC address in the ARP body for both ARP requests and responses.
+  arp-inspect:
+    $ref: "https://ucentral.io/schema/v1/switch/arp-inspect/"

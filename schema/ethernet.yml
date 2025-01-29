@@ -368,17 +368,15 @@ properties:
         type: boolean
         description: Enables the transmission of SNMP trap notifications about LLDP changes.
         default: false
-  ip-arp-inspect-intf-config:
+  ip-arp-inspect-port:
     type: object
-    description: "Configuration for ARP Inspection on specific interfaces or ports in the switch."
+    description: Configuration for ARP Inspection on specific interfaces or ports in the switch.
     properties:
-      ip-arp-inspect-rate-limit:
+      rate-limit-pps:
         type: integer
-        description: Sets a rate limit (packets per second) for the ARP packets received on a port. 
-          Ensures that the port does not process ARP packets beyond the configured limit.
+        description: Sets a rate limit (packets per second) for the ARP packets received on a port. Ensures that the port does not process ARP packets beyond the configured limit.
         minimum: 0
         maximum: 65535
-      ip-arp-inspect-trust:
+      trusted:
         type: boolean
-        description: Configures the port as trusted, exempting it from ARP Inspection. 
-          Trusted ports bypass ARP validation checks.
+        description: Configures the port as trusted, exempting it from ARP Inspection. Trusted ports bypass ARP validation checks.

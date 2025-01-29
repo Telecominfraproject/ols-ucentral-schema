@@ -1,0 +1,14 @@
+type: object
+description: Configuration for ARP Inspection on specific VLANs in the switch.
+properties:
+  vlan-enable:
+    type: boolean
+    description: Enable or disable ARP Inspection for a specified VLAN.
+  vlan-acl-rule:
+    type: string
+    description: Specifies an ARP ACL to apply to one or more VLANs.
+    maxLength: 32
+    minLength: 1
+  vlan-acl-nodhcp-bindings:
+    type: boolean
+    description: Validate ARP packets against only the specified ACL without checking address bindings in the DHCP snooping database.

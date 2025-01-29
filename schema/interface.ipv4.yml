@@ -200,22 +200,8 @@ properties:
     description: "Enables DHCP Snooping on a VLAN"
     type: boolean
     default: false
-  ip-arp-inspect-vlan-config:
-    type: object
-    description: "Configuration for ARP Inspection on specific VLANs in the switch."
-    properties:
-      ip-arp-inspect-vlan-enable:
-        type: boolean
-        description: "Enable or disable ARP Inspection for a specified VLAN."
-      ip-arp-inspect-vlan-acl-rule:
-        type: string
-        description: "Specifies an ARP ACL to apply to one or more VLANs."
-        maxLength: 32
-        minLength: 1
-      ip-arp-inspect-vlan-acl-nodhcp-bindings:
-        type: boolean
-        description: Validate ARP packets against only the specified ACL without checking 
-          address bindings in the DHCP snooping database.
+  ip-arp-inspect-vlan:
+      $ref: "https://ucentral.io/schema/v1/interface/ipv4/arp-inspect/"
   voice-vlan-intf-config:
     description: "Configure the Voice VLAN feature at the interface level, allowing for VoIP traffic to be prioritized on this specific port."
     type: object

@@ -62,30 +62,29 @@ properties:
       Current interface that serves as the Uplink. Example Ethernet2.
   arp-inspect-stats:
     type: object
-    description: "Statistics related to ARP Inspection activity in the switch."
+    description: Statistics related to ARP Inspection activity in the switch.
     properties:
       arp-pkt-rcvd:
         type: integer
-        description: "Total number of ARP packets received."
+        description: Total number of ARP packets received.
       arp-pkt-dropped-rate-limit:
         type: integer
-        description: "Number of ARP packets dropped due to rate limiting."
+        description: Number of ARP packets dropped due to rate limiting.
       arp-pkt-processed:
         type: integer
-        description: "Total number of ARP packets processed by ARP Inspection.
+        description: Total number of ARP packets processed by ARP Inspection.
       arp-pkt-dropped-src-mac:
         type: integer
-        description: "Number of ARP packets dropped due to source MAC address validation failures."
+        description: Number of ARP packets dropped due to source MAC address validation failures.
       arp-pkt-dropped-dst-mac:
         type: integer
-        description: "Number of ARP packets dropped due to destination MAC address validation failures."
+        description: Number of ARP packets dropped due to destination MAC address validation failures.
       arp-pkt-dropped-ip:
         type: integer
-        description: "Number of ARP packets dropped due to IP address validation failures."
+        description: Number of ARP packets dropped due to IP address validation failures."
       arp-pkt-dropped-acl:
         type: integer
-        description: "Number of ARP packets dropped due to ARP ACL rules."
+        description: Number of ARP packets dropped due to ARP ACL rules.
       arp-pkt-dropped-dhcp:
         type: integer
-        description: "Number of ARP packets dropped due to DHCP snooping validation failures."
-
+        description: Number of ARP packets dropped due to DHCP snooping validation failures.

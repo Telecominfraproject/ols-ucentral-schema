@@ -588,6 +588,22 @@
                                 "default": false
                             }
                         }
+                    },
+                    "ip-arp-inspect-port": {
+                        "type": "object",
+                        "description": "Configuration for ARP Inspection on specific interfaces or ports in the switch.",
+                        "properties": {
+                            "rate-limit-pps": {
+                                "type": "integer",
+                                "description": "Sets a rate limit (packets per second) for the ARP packets received on a port. Ensures that the port does not process ARP packets beyond the configured limit.",
+                                "minimum": 0,
+                                "maximum": 65535
+                            },
+                            "trusted": {
+                                "type": "boolean",
+                                "description": "Configures the port as trusted, exempting it from ARP Inspection. Trusted ports bypass ARP validation checks."
+                            }
+                        }
                     }
                 }
             }
@@ -1421,6 +1437,33 @@
                             }
                         }
                     }
+                },
+                "arp-inspect": {
+                    "type": "object",
+                    "description": "Global configuration for ARP Inspection on the switch.",
+                    "properties": {
+                        "ip-arp-inspect": {
+                            "type": "boolean",
+                            "description": "Enable or disable ARP Inspection globally.",
+                            "default": false
+                        },
+                        "validate-dst-mac": {
+                            "type": "boolean",
+                            "description": "Validate that the destination MAC address in the Ethernet header matches the target MAC address in the ARP body for ARP responses."
+                        },
+                        "validate-ip": {
+                            "type": "boolean",
+                            "description": "Validate ARP packets for unexpected or invalid IP addresses, such as 0.0.0.0, 255.255.255.255, and IP multicast addresses."
+                        },
+                        "validate-allow-zeros": {
+                            "type": "boolean",
+                            "description": "Allow ARP packets where the sender IP address is 0.0.0.0."
+                        },
+                        "validate-src-mac": {
+                            "type": "boolean",
+                            "description": "Validate that the source MAC address in the Ethernet header matches the sender MAC address in the ARP body for both ARP requests and responses."
+                        }
+                    }
                 }
             }
         },
@@ -1828,6 +1871,26 @@
                                 "description": "Enables DHCP Snooping on a VLAN",
                                 "type": "boolean",
                                 "default": false
+                            },
+                            "ip-arp-inspect-vlan": {
+                                "type": "object",
+                                "description": "Configuration for ARP Inspection on specific VLANs in the switch.",
+                                "properties": {
+                                    "vlan-enable": {
+                                        "type": "boolean",
+                                        "description": "Enable or disable ARP Inspection for a specified VLAN."
+                                    },
+                                    "vlan-acl-rule": {
+                                        "type": "string",
+                                        "description": "Specifies an ARP ACL to apply to one or more VLANs.",
+                                        "maxLength": 32,
+                                        "minLength": 1
+                                    },
+                                    "vlan-acl-nodhcp-bindings": {
+                                        "type": "boolean",
+                                        "description": "Validate ARP packets against only the specified ACL without checking address bindings in the DHCP snooping database."
+                                    }
+                                }
                             },
                             "voice-vlan-intf-config": {
                                 "description": "Configure the Voice VLAN feature at the interface level, allowing for VoIP traffic to be prioritized on this specific port.",
