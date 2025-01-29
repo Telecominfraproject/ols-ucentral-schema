@@ -623,19 +623,19 @@
                         }
                     }
                 },
-                "rate-limit-config": {
+                "rate-limit-port": {
                     "type": "object",
-                    "description": "Configuration for ingress and egress rate limiting on a specific port or interface.",
+                    "description": "Configuration for ingress and egress rate limiting on a specific port (in kbps)",
                     "properties": {
-                        "rate-limit-ingress": {
+                        "ingress-kbps": {
                             "type": "integer",
-                            "description": "Sets the maximum allowed ingress (input) traffic rate for the interface, in kilobits per second (kbps).",
+                            "description": "Sets the maximum allowed ingress (input) traffic rate for the port, in kilobits per second (kbps).",
                             "minimum": 64,
                             "maximum": 1000000000
                         },
-                        "rate-limit-egress": {
+                        "egress-kbps": {
                             "type": "integer",
-                            "description": "Sets the maximum allowed egress (output) traffic rate for the interface, in kilobits per second (kbps).",
+                            "description": "Sets the maximum allowed egress (output) traffic rate for the port, in kilobits per second (kbps).",
                             "minimum": 64,
                             "maximum": 1000000000
                         }
