@@ -529,27 +529,61 @@
                         }
                     }
                 },
-                "ip-source-guard-intf-config": {
+                "ip-source-guard-port": {
                     "type": "object",
                     "properties": {
-                        "ip-source-guard-rule": {
+                        "rule": {
                             "type": "string",
                             "enum": [
                                 "sip",
                                 "sip-mac"
                             ]
                         },
-                        "ip-source-guard-mode": {
+                        "mode": {
                             "type": "string",
                             "enum": [
                                 "mac",
                                 "acl"
                             ]
                         },
-                        "ip-source-guard-max-binding": {
+                        "max-binding": {
                             "type": "integer",
                             "minimum": 1,
                             "maximum": 65535
+                        }
+                    }
+                }
+            }
+        },
+        "switch.ip-source-guard": {
+            "type": "object",
+            "properties": {
+                "bindings": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "binding-mode": {
+                                "type": "string",
+                                "enum": [
+                                    "mac",
+                                    "acl"
+                                ]
+                            },
+                            "binding-mac": {
+                                "type": "string",
+                                "format": "uc-mac"
+                            },
+                            "binding-vlans": {
+                                "type": "integer"
+                            },
+                            "binding-ip": {
+                                "type": "string",
+                                "format": "ipv4"
+                            },
+                            "binding-port": {
+                                "type": "string"
+                            }
                         }
                     }
                 }
@@ -1256,39 +1290,8 @@
                         }
                     }
                 },
-                "ip-source-guard-config": {
-                    "type": "object",
-                    "properties": {
-                        "ip-source-guard-bindings": {
-                            "type": "array",
-                            "items": {
-                                "type": "object",
-                                "properties": {
-                                    "ip-source-guard-binding-mode": {
-                                        "type": "string",
-                                        "enum": [
-                                            "mac",
-                                            "acl"
-                                        ]
-                                    },
-                                    "ip-source-guard-binding-mac": {
-                                        "type": "string",
-                                        "format": "uc-mac"
-                                    },
-                                    "ip-source-guard-binding-vlans": {
-                                        "type": "integer"
-                                    },
-                                    "ip-source-guard-binding-ip": {
-                                        "type": "string",
-                                        "format": "ipv4"
-                                    },
-                                    "ip-source-guard-binding-interface": {
-                                        "type": "string"
-                                    }
-                                }
-                            }
-                        }
-                    }
+                "ip-source-guard": {
+                    "$ref": "#/$defs/switch.ip-source-guard"
                 }
             }
         },

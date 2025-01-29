@@ -62,27 +62,27 @@ properties:
       Current interface that serves as the Uplink. Example Ethernet2.
   ip-source-guard:
     type: object
-    description: "Represents the configuration and state of IP Source Guard."
+    description: Represents the configuration and state of IP Source Guard.
     properties:
-      ip-source-guard-blocked-entries:
+      blocked-entries:
         type: array
-        description: "Displays a list of entries that are currently blocked by IP Source Guard (IPSG)."
+        description: Displays a list of entries that are currently blocked by IP Source Guard (IPSG).
         items:
           type: object
           properties:
-            ip-source-guard-blocked-mac:
+            blocked-mac:
               type: string
-              description: "The MAC address that has been blocked by IP Source Guard."
+              description: The MAC address that has been blocked by IP Source Guard.
               format: "mac-address"
-            ip-source-guard-blocked-ip:
+            blocked-ip:
               type: string
-              description: "The IP address that has been blocked by IP Source Guard."
+              description: The IP address that has been blocked by IP Source Guard.
               format: "ipv4"
-            ip-source-guard-blocked-vlan:
+            blocked-vlan:
               type: integer
-              description: "The VLAN ID associated with the blocked IP/MAC entry."
+              description: The VLAN ID associated with the blocked IP/MAC entry.
               minimum: 1
               maximum: 4095
-            ip-source-guard-blocked-interface:
+            blocked-interface:
               type: string
-              description: "The interface (e.g., port) where the blocked entry was detected."
+              description: The interface (e.g., port) where the blocked entry was detected.
