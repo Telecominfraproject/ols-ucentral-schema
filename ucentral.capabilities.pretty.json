@@ -17,25 +17,53 @@
         },
         "version": {
             "type": "object",
-            "description": "The ols schema version to be used with this Switch",
+            "description": "Switch version info, OLS release and schema.",
             "properties": {
-                "major": {
-                    "type": "integer"
+                "switch": {
+                    "type": "object",
+                    "description": "the ols client version for this Switch",
+                    "properties": {
+                        "major": {
+                            "type": "integer"
+                        },
+                        "minor": {
+                            "type": "integer"
+                        },
+                        "patch": {
+                            "type": "integer"
+                        }
+                    },
+                    "examples": [
+                        {
+                            "major": 3,
+                            "minor": 2,
+                            "patch": 0
+                        }
+                    ]
                 },
-                "minor": {
-                    "type": "integer"
-                },
-                "patch": {
-                    "type": "integer"
+                "schema": {
+                    "type": "object",
+                    "description": "the ols schema version used with the ols client.",
+                    "properties": {
+                        "major": {
+                            "type": "integer"
+                        },
+                        "minor": {
+                            "type": "integer"
+                        },
+                        "patch": {
+                            "type": "integer"
+                        }
+                    },
+                    "examples": [
+                        {
+                            "major": 3,
+                            "minor": 2,
+                            "patch": 0
+                        }
+                    ]
                 }
-            },
-            "examples": [
-                {
-                    "major": 3,
-                    "minor": 2,
-                    "patch": 0
-                }
-            ]
+            }
         },
         "platform": {
             "type": "string",
