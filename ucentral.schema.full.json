@@ -669,27 +669,27 @@
                                 "default": false
                             }
                         }
-                    }
-                },
-                "dhcp-snoop-port": {
-                    "description": "Configuration for DHCP Snooping on a port level on a switch",
-                    "type": "object",
-                    "properties": {
-                        "dhcp-snoop-port-trust": {
-                            "description": "This parameter designates a switch port as \u2018trusted\u2019 for DHCP messages, meaning it can forward DHCP offers and acknowledgments, which is essential for connecting to legitimate DHCP servers",
-                            "type": "boolean",
-                            "default": false
-                        },
-                        "dhcp-snoop-port-client-limit": {
-                            "description": "It sets a limit on the number of DHCP clients that can be associated with a single port, helping to prevent a single port from exhausting the network\u2019s IP address pool",
-                            "type": "integer",
-                            "minimum": 1
-                        },
-                        "dhcp-snoop-port-circuit-id": {
-                            "description": "Specifies DHCP Option 82 circuit ID suboption information. Often including information like the interface number and VLAN ID, this can be useful for network management and troubleshooting",
-                            "type": "string",
-                            "minLength": 1,
-                            "maxLength": 32
+                    },
+                    "dhcp-snoop-port": {
+                        "description": "Configuration for DHCP Snooping on a port level on a switch",
+                        "type": "object",
+                        "properties": {
+                            "dhcp-snoop-port-trust": {
+                                "description": "This parameter designates a switch port as \u2018trusted\u2019 for DHCP messages, meaning it can forward DHCP offers and acknowledgments, which is essential for connecting to legitimate DHCP servers",
+                                "type": "boolean",
+                                "default": false
+                            },
+                            "dhcp-snoop-port-client-limit": {
+                                "description": "It sets a limit on the number of DHCP clients that can be associated with a single port, helping to prevent a single port from exhausting the network\u2019s IP address pool",
+                                "type": "integer",
+                                "minimum": 1
+                            },
+                            "dhcp-snoop-port-circuit-id": {
+                                "description": "Specifies DHCP Option 82 circuit ID suboption information. Often including information like the interface number and VLAN ID, this can be useful for network management and troubleshooting",
+                                "type": "string",
+                                "minLength": 1,
+                                "maxLength": 32
+                            }
                         }
                     }
                 }

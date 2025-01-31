@@ -598,23 +598,23 @@
                             "default": false
                         }
                     }
-                }
-            },
-            "dhcp-snoop-port": {
-                "type": "object",
-                "properties": {
-                    "dhcp-snoop-port-trust": {
-                        "type": "boolean",
-                        "default": false
-                    },
-                    "dhcp-snoop-port-client-limit": {
-                        "type": "integer",
-                        "minimum": 1
-                    },
-                    "dhcp-snoop-port-circuit-id": {
-                        "type": "string",
-                        "minLength": 1,
-                        "maxLength": 32
+                },
+                "dhcp-snoop-port": {
+                    "type": "object",
+                    "properties": {
+                        "dhcp-snoop-port-trust": {
+                            "type": "boolean",
+                            "default": false
+                        },
+                        "dhcp-snoop-port-client-limit": {
+                            "type": "integer",
+                            "minimum": 1
+                        },
+                        "dhcp-snoop-port-circuit-id": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 32
+                        }
                     }
                 }
             }
