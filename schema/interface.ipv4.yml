@@ -200,35 +200,6 @@ properties:
     description: "Enables DHCP Snooping on a VLAN"
     type: boolean
     default: false
-  voice-vlan-intf-config:
-    description: "Configure the Voice VLAN feature at the interface level, allowing for VoIP traffic to be prioritized on this specific port."
-    type: object
-    properties:
-      voice-vlan-intf-mode:
-        description: "Specify the mode of placing this port on the voice VLAN."
-        type: string
-        default: "auto"
-        enum:
-          - none
-          - manual
-          - auto
-      voice-vlan-intf-priority:
-        description: "Define the Class of Service (CoS) priority for VoIP traffic passing through this port, ensuring higher priority over other traffic types."
-        type: integer
-        default: 6
-        minimum: 0
-        maximum: 6
-      voice-vlan-intf-detect-voice:
-        description: "Select the detection method for identifying VoIP traffic on this port, such as OUI-based detection or traffic pattern recognition."
-        type: string
-        default: "oui"
-        enum:
-          - oui
-          - lldp
-      voice-vlan-intf-security:
-        description: "Enable or configure security filtering for VoIP traffic on the interface to protect against unauthorized devices."
-        type: boolean
-        default: false
   dhcp:
     $ref: "https://ucentral.io/schema/v1/interface/ipv4/dhcp/"
   dhcp-leases:
