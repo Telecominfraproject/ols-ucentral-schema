@@ -88,3 +88,29 @@ properties:
       arp-pkt-dropped-dhcp:
         type: integer
         description: Number of ARP packets dropped due to DHCP snooping validation failures.
+  ip-source-guard:
+    type: object
+    description: Represents the configuration and state of IP Source Guard.
+    properties:
+      blocked-entries:
+        type: array
+        description: Displays a list of entries that are currently blocked by IP Source Guard (IPSG).
+        items:
+          type: object
+          properties:
+            blocked-mac:
+              type: string
+              description: The MAC address that has been blocked by IP Source Guard.
+              format: "mac-address"
+            blocked-ip:
+              type: string
+              description: The IP address that has been blocked by IP Source Guard.
+              format: "ipv4"
+            blocked-vlan:
+              type: integer
+              description: The VLAN ID associated with the blocked IP/MAC entry.
+              minimum: 1
+              maximum: 4095
+            blocked-interface:
+              type: string
+              description: The interface (e.g., port) where the blocked entry was detected.
