@@ -529,6 +529,19 @@
                         }
                     }
                 },
+                "ip-arp-inspect-port": {
+                    "type": "object",
+                    "properties": {
+                        "rate-limit-pps": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "trusted": {
+                            "type": "boolean"
+                        }
+                    }
+                },
                 "rate-limit-port": {
                     "type": "object",
                     "properties": {
@@ -655,6 +668,27 @@
                             "maxLength": 32
                         }
                     }
+                }
+            }
+        },
+        "switch.arp-inspect": {
+            "type": "object",
+            "properties": {
+                "ip-arp-inspect": {
+                    "type": "boolean",
+                    "default": false
+                },
+                "validate-dst-mac": {
+                    "type": "boolean"
+                },
+                "validate-ip": {
+                    "type": "boolean"
+                },
+                "validate-allow-zeros": {
+                    "type": "boolean"
+                },
+                "validate-src-mac": {
+                    "type": "boolean"
                 }
             }
         },
@@ -1519,6 +1553,9 @@
                         }
                     }
                 },
+                "arp-inspect": {
+                    "$ref": "#/$defs/switch.arp-inspect"
+                },
                 "ip-source-guard": {
                     "$ref": "#/$defs/switch.ip-source-guard"
                 },
@@ -1621,6 +1658,22 @@
                         "auto"
                     ],
                     "default": "auto"
+                }
+            }
+        },
+        "interface.ipv4.arp-inspect": {
+            "type": "object",
+            "properties": {
+                "vlan-enable": {
+                    "type": "boolean"
+                },
+                "vlan-acl-rule": {
+                    "type": "string",
+                    "maxLength": 32,
+                    "minLength": 1
+                },
+                "vlan-acl-nodhcp-bindings": {
+                    "type": "boolean"
                 }
             }
         },
@@ -1927,6 +1980,9 @@
                 "dhcp-snoop-vlan-enable": {
                     "type": "boolean",
                     "default": false
+                },
+                "ip-arp-inspect-vlan": {
+                    "$ref": "#/$defs/interface.ipv4.arp-inspect"
                 },
                 "dhcp": {
                     "$ref": "#/$defs/interface.ipv4.dhcp"

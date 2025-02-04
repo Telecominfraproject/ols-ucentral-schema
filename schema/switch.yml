@@ -537,6 +537,8 @@ properties:
               minLength: 1
               examples:
                 - "A VoIP Phone"
+  arp-inspect:
+    $ref: "https://ucentral.io/schema/v1/switch/arp-inspect/"
   ip-source-guard:
     $ref: "https://ucentral.io/schema/v1/switch/ip-source-guard/"
   rt-events:

@@ -200,6 +200,8 @@ properties:
     description: "Enables DHCP Snooping on a VLAN"
     type: boolean
     default: false
+  ip-arp-inspect-vlan:
+      $ref: "https://ucentral.io/schema/v1/interface/ipv4/arp-inspect/"
   dhcp:
     $ref: "https://ucentral.io/schema/v1/interface/ipv4/dhcp/"
   dhcp-leases:
