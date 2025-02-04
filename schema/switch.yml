@@ -1,4 +1,4 @@
-description:
+description: 
   This section defines the switch fabric specific features of a physical switch.
 type: object
 properties:
@@ -537,5 +537,7 @@ properties:
               minLength: 1
               examples:
                 - "A VoIP Phone"
+  rt-events:
+    $ref: "https://ucentral.io/schema/v1/switch/rtevent/"
   acl:
     $ref: "https://ucentral.io/schema/v1/switch/acl/"
