@@ -622,6 +622,109 @@
                             "default": false
                         }
                     }
+                },
+                "acl": {
+                    "description": "A collection of access control entries that define the rules for filtering traffic through a network port.",
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "acl-inf-policy-preference": {
+                                "description": "Determines the priority of multiple ACL policies when more than one is applied to an interface, if any.",
+                                "type": "integer",
+                                "minimum": 1,
+                                "maximum": 64,
+                                "default": 1
+                            },
+                            "acl-inf-policy-ingress": {
+                                "description": "Specifies the ACL policy that is applied to incoming traffic on an interface.",
+                                "type": "string",
+                                "maxLength": 32,
+                                "minLength": 1,
+                                "examples": [
+                                    "blacklisted-macs"
+                                ]
+                            },
+                            "acl-inf-counters-ingress": {
+                                "description": "Tracks the number and type of packets that match the ingress ACL rules on an interface.",
+                                "type": "boolean",
+                                "default": false
+                            },
+                            "acl-inf-policy-egress": {
+                                "description": "Specifies the ACL policy that is applied to outgoing traffic from an interface.",
+                                "type": "string",
+                                "maxLength": 32,
+                                "minLength": 1,
+                                "examples": [
+                                    "blacklisted-macs"
+                                ]
+                            },
+                            "acl-inf-counters-egress": {
+                                "description": "Tracks the number and type of packets that match the egress ACL rules on an interface.",
+                                "type": "boolean",
+                                "default": false
+                            }
+                        }
+                    }
+                },
+                "voice-vlan-intf-config": {
+                    "description": "Configure the Voice VLAN feature at the interface level, allowing for VoIP traffic to be prioritized on this specific port.",
+                    "type": "object",
+                    "properties": {
+                        "voice-vlan-intf-mode": {
+                            "description": "Specify the mode of placing this port on the voice VLAN.",
+                            "type": "string",
+                            "default": "auto",
+                            "enum": [
+                                "none",
+                                "manual",
+                                "auto"
+                            ]
+                        },
+                        "voice-vlan-intf-priority": {
+                            "description": "Define the Class of Service (CoS) priority for VoIP traffic passing through this port, ensuring higher priority over other traffic types.",
+                            "type": "integer",
+                            "default": 6,
+                            "minimum": 0,
+                            "maximum": 6
+                        },
+                        "voice-vlan-intf-detect-voice": {
+                            "description": "Select the detection method for identifying VoIP traffic on this port, such as OUI-based detection or traffic pattern recognition.",
+                            "type": "string",
+                            "default": "oui",
+                            "enum": [
+                                "oui",
+                                "lldp"
+                            ]
+                        },
+                        "voice-vlan-intf-security": {
+                            "description": "Enable or configure security filtering for VoIP traffic on the interface to protect against unauthorized devices.",
+                            "type": "boolean",
+                            "default": false
+                        }
+                    }
+                },
+                "dhcp-snoop-port": {
+                    "description": "Configuration for DHCP Snooping on a port level on a switch",
+                    "type": "object",
+                    "properties": {
+                        "dhcp-snoop-port-trust": {
+                            "description": "This parameter designates a switch port as \u2018trusted\u2019 for DHCP messages, meaning it can forward DHCP offers and acknowledgments, which is essential for connecting to legitimate DHCP servers",
+                            "type": "boolean",
+                            "default": false
+                        },
+                        "dhcp-snoop-port-client-limit": {
+                            "description": "It sets a limit on the number of DHCP clients that can be associated with a single port, helping to prevent a single port from exhausting the network\u2019s IP address pool",
+                            "type": "integer",
+                            "minimum": 1
+                        },
+                        "dhcp-snoop-port-circuit-id": {
+                            "description": "Specifies DHCP Option 82 circuit ID suboption information. Often including information like the interface number and VLAN ID, this can be useful for network management and troubleshooting",
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 32
+                        }
+                    }
                 }
             }
         },
@@ -835,6 +938,146 @@
                                     "type": "boolean",
                                     "description": "Enable/Disable DHCP Snooping violation cleared event.",
                                     "default": false
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "switch.acl": {
+            "description": "Contains all the access control rule definitions",
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+                "type": "object",
+                "properties": {
+                    "acl-name": {
+                        "description": "The identifier or name for the Access Control List",
+                        "type": "string",
+                        "maxLength": 32,
+                        "minLength": 1
+                    },
+                    "acl-type": {
+                        "description": "Type of the access control list",
+                        "type": "string",
+                        "enum": [
+                            "ipv4",
+                            "ipv6",
+                            "ipv4Ext",
+                            "ipv6Ext",
+                            "mac",
+                            "arp"
+                        ]
+                    },
+                    "acl-rules": {
+                        "description": "access control rules under this ACL",
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "array",
+                            "uniqueItems": true,
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "acl-rule-action": {
+                                        "description": "Defines whether to permit or deny traffic matching the rule",
+                                        "type": "string",
+                                        "enum": [
+                                            "permit",
+                                            "deny"
+                                        ]
+                                    },
+                                    "acl-source-macaddress": {
+                                        "description": "Specifies the source MAC address to filter on",
+                                        "type": "string",
+                                        "format": "uc-mac"
+                                    },
+                                    "acl-source-macbitmask": {
+                                        "description": "The mask applied to the source MAC address",
+                                        "type": "string",
+                                        "format": "uc-mac"
+                                    },
+                                    "acl-dest-macaddress": {
+                                        "description": "Specifies the destination MAC address for the filter",
+                                        "type": "string",
+                                        "format": "uc-mac"
+                                    },
+                                    "acl-dest-macbitmask": {
+                                        "description": "The mask applied to the destination MAC address",
+                                        "type": "string",
+                                        "format": "uc-mac"
+                                    },
+                                    "acl-packet-format": {
+                                        "description": "Identifies the protocol encapsulated in the Ethernet frame by its EtherType",
+                                        "type": "string",
+                                        "enum": [
+                                            "any",
+                                            "untagged-eth2",
+                                            "untagged-802.3",
+                                            "tagged-eth2",
+                                            "tagged-802.3"
+                                        ]
+                                    },
+                                    "acl-vlanid": {
+                                        "description": "Specifies a VLAN ID to filter traffic from a specific VLAN",
+                                        "type": "integer",
+                                        "minimum": 1,
+                                        "maximum": 4094
+                                    },
+                                    "acl-vid-bitmask": {
+                                        "description": "The mask applied to the VLAN ID",
+                                        "type": "integer",
+                                        "minimum": 1,
+                                        "maximum": 4095
+                                    },
+                                    "acl-ethertype": {
+                                        "description": "Filters packets based on the custom EtherType field (HEX) in the Ethernet frame",
+                                        "type": "string",
+                                        "default": "800"
+                                    },
+                                    "acl-ethertype-bitmask": {
+                                        "description": "The mask applied to the EtherType field",
+                                        "type": "string",
+                                        "default": "FFFF"
+                                    },
+                                    "acl-cos": {
+                                        "description": "Filters based on the Class of Service (CoS) field in the frame",
+                                        "type": "integer",
+                                        "minimum": 0,
+                                        "maximum": 7
+                                    },
+                                    "acl-cos-bitmask": {
+                                        "description": "The mask applied to the CoS field",
+                                        "type": "integer",
+                                        "minimum": 0,
+                                        "maximum": 7
+                                    },
+                                    "acl-ipv4-source-address": {
+                                        "description": "The IPv4 address of the source to filter on",
+                                        "type": "string",
+                                        "format": "ipv4"
+                                    },
+                                    "acl-ipv4-source-subnetmask": {
+                                        "description": "The subnet mask applied to the source IPv4 address",
+                                        "type": "string",
+                                        "format": "ipv4"
+                                    },
+                                    "acl-ipv4-dest-address": {
+                                        "description": "The IPv4 address of the destination to filter on",
+                                        "type": "string",
+                                        "format": "ipv4"
+                                    },
+                                    "acl-ipv4-dest-subnetmask": {
+                                        "description": "The subnet mask applied to the destination IPv4 address",
+                                        "type": "string",
+                                        "format": "ipv4"
+                                    },
+                                    "acl-ip-proto": {
+                                        "description": "Filters based on the IP protocol number",
+                                        "type": "integer",
+                                        "minimum": 0,
+                                        "maximum": 255
+                                    }
                                 }
                             }
                         }
@@ -1144,214 +1387,6 @@
                                 "keep",
                                 "replace"
                             ]
-                        }
-                    }
-                },
-                "acl": {
-                    "description": "Contains all the access control rule definitions",
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "acl-type": {
-                                "description": "Type of the access control list",
-                                "type": "string",
-                                "enum": [
-                                    "ipv4",
-                                    "ipv6",
-                                    "ipv4Ext",
-                                    "ipv6Ext",
-                                    "mac",
-                                    "arp"
-                                ]
-                            },
-                            "acl-name": {
-                                "description": "The identifier or name for the Access Control List",
-                                "type": "string",
-                                "maxLength": 32,
-                                "minLength": 1
-                            },
-                            "acl-rule-action": {
-                                "description": "Defines whether to permit or deny traffic matching the rule",
-                                "type": "string",
-                                "enum": [
-                                    "permit",
-                                    "deny"
-                                ]
-                            },
-                            "acl-source-macaddress": {
-                                "description": "Specifies the source MAC address to filter on",
-                                "type": "string",
-                                "format": "uc-mac"
-                            },
-                            "acl-source-macbitmask": {
-                                "description": "The mask applied to the source MAC address",
-                                "type": "string",
-                                "format": "uc-mac"
-                            },
-                            "acl-dest-macaddress": {
-                                "description": "Specifies the destination MAC address for the filter",
-                                "type": "string",
-                                "format": "uc-mac"
-                            },
-                            "acl-dest-macbitmask": {
-                                "description": "The mask applied to the destination MAC address",
-                                "type": "string",
-                                "format": "uc-mac"
-                            },
-                            "acl-packet-format": {
-                                "description": "Identifies the protocol encapsulated in the Ethernet frame by its EtherType",
-                                "type": "string",
-                                "enum": [
-                                    "any",
-                                    "untagged-eth2",
-                                    "untagged-802.3",
-                                    "tagged-eth2",
-                                    "tagged-802.3"
-                                ]
-                            },
-                            "acl-vlanid": {
-                                "description": "Specifies a VLAN ID to filter traffic from a specific VLAN",
-                                "type": "integer",
-                                "minimum": 1,
-                                "maximum": 4094
-                            },
-                            "acl-vid-bitmask": {
-                                "description": "The mask applied to the VLAN ID",
-                                "type": "integer",
-                                "minimum": 1,
-                                "maximum": 4095
-                            },
-                            "acl-ethertype": {
-                                "description": "Filters packets based on the custom EtherType field (HEX) in the Ethernet frame",
-                                "type": "string",
-                                "default": "800"
-                            },
-                            "acl-ethertype-bitmask": {
-                                "description": "The mask applied to the EtherType field",
-                                "type": "string",
-                                "default": "FFFF"
-                            },
-                            "acl-cos": {
-                                "description": "Filters based on the Class of Service (CoS) field in the frame",
-                                "type": "integer",
-                                "minimum": 0,
-                                "maximum": 7
-                            },
-                            "acl-cos-bitmask": {
-                                "description": "The mask applied to the CoS field",
-                                "type": "integer",
-                                "minimum": 0,
-                                "maximum": 7
-                            },
-                            "acl-ipv4-source-address": {
-                                "description": "The IPv4 address of the source to filter on",
-                                "type": "string",
-                                "format": "ipv4"
-                            },
-                            "acl-ipv4-source-subnetmask": {
-                                "description": "The subnet mask applied to the source IPv4 address",
-                                "type": "string",
-                                "format": "ipv4"
-                            },
-                            "acl-ipv4-dest-address": {
-                                "description": "The IPv4 address of the destination to filter on",
-                                "type": "string",
-                                "format": "ipv4"
-                            },
-                            "acl-ipv4-dest-subnetmask": {
-                                "description": "The subnet mask applied to the destination IPv4 address",
-                                "type": "string",
-                                "format": "ipv4"
-                            },
-                            "acl-ipv6-source-address": {
-                                "description": "The IPv6 address of the source to filter on",
-                                "type": "string",
-                                "format": "ipv6"
-                            },
-                            "acl-ipv6-source-prefix-length": {
-                                "description": "Defines the length of the prefix used in filtering IPv6 source addresses",
-                                "type": "integer",
-                                "minimum": 0,
-                                "maximum": 128
-                            },
-                            "acl-ipv6-dest-address": {
-                                "description": "The IPv6 address of the destination to filter on",
-                                "type": "string",
-                                "format": "ipv6"
-                            },
-                            "acl-ipv6-dest-prefix-length": {
-                                "description": "Defines the length of the prefix used in filtering IPv6 destination addresses",
-                                "type": "integer",
-                                "minimum": 0,
-                                "maximum": 128
-                            },
-                            "acl-ip-proto": {
-                                "description": "Filters based on the IP protocol number",
-                                "type": "integer",
-                                "minimum": 0,
-                                "maximum": 255
-                            },
-                            "acl-ipv6-next-header": {
-                                "description": "Specifies the next header type in IPv6 traffic, such as TCP, UDP, or ICMPv6",
-                                "type": "integer",
-                                "minimum": 0,
-                                "maximum": 255
-                            },
-                            "acl-ipv6-flow-label": {
-                                "description": "Filters packets based on the IPv6 Flow Label field",
-                                "type": "integer",
-                                "minimum": 0,
-                                "maximum": 1048575
-                            },
-                            "acl-ip-source-port": {
-                                "description": "Specifies the source port number for filtering",
-                                "type": "integer",
-                                "minimum": 0,
-                                "maximum": 65535
-                            },
-                            "acl-ip-source-port-bitmask": {
-                                "description": "The mask applied to the source port number",
-                                "type": "integer",
-                                "minimum": 0,
-                                "maximum": 65535
-                            },
-                            "acl-ip-dest-port": {
-                                "description": "Specifies the destination port number for filtering",
-                                "type": "integer",
-                                "minimum": 0,
-                                "maximum": 65535
-                            },
-                            "acl-ip-dest-port-bitmask": {
-                                "description": "The mask applied to the destination port number",
-                                "type": "integer",
-                                "minimum": 0,
-                                "maximum": 65535
-                            },
-                            "acl-ipv4-fragment-offset": {
-                                "description": "Filters based on IPv4 fragment offset for fragmented packets",
-                                "type": "integer",
-                                "minimum": 0,
-                                "maximum": 8191
-                            },
-                            "acl-ipv6-fragment-offset": {
-                                "description": "Filters based on IPv6 fragment offset for fragmented packets",
-                                "type": "integer",
-                                "minimum": 0,
-                                "maximum": 8191
-                            },
-                            "acl-ip-ttl": {
-                                "description": "Filters IPv4 traffic based on the TTL (Time to Live) value",
-                                "type": "integer",
-                                "minimum": 0,
-                                "maximum": 255
-                            },
-                            "acl-ipv6-hop-limit": {
-                                "description": "Filters IPv6 traffic based on the hop limit value, equivalent to IPv4 TTL",
-                                "type": "integer",
-                                "minimum": 0,
-                                "maximum": 255
-                            }
                         }
                     }
                 },
@@ -1674,6 +1709,9 @@
                 },
                 "rt-events": {
                     "$ref": "#/$defs/switch.rtevent"
+                },
+                "acl": {
+                    "$ref": "#/$defs/switch.acl"
                 }
             }
         },
@@ -2136,43 +2174,6 @@
                     "type": "boolean",
                     "default": false
                 },
-                "voice-vlan-intf-config": {
-                    "description": "Configure the Voice VLAN feature at the interface level, allowing for VoIP traffic to be prioritized on this specific port.",
-                    "type": "object",
-                    "properties": {
-                        "voice-vlan-intf-mode": {
-                            "description": "Specify the mode of placing this port on the voice VLAN.",
-                            "type": "string",
-                            "default": "auto",
-                            "enum": [
-                                "none",
-                                "manual",
-                                "auto"
-                            ]
-                        },
-                        "voice-vlan-intf-priority": {
-                            "description": "Define the Class of Service (CoS) priority for VoIP traffic passing through this port, ensuring higher priority over other traffic types.",
-                            "type": "integer",
-                            "default": 6,
-                            "minimum": 0,
-                            "maximum": 6
-                        },
-                        "voice-vlan-intf-detect-voice": {
-                            "description": "Select the detection method for identifying VoIP traffic on this port, such as OUI-based detection or traffic pattern recognition.",
-                            "type": "string",
-                            "default": "oui",
-                            "enum": [
-                                "oui",
-                                "lldp"
-                            ]
-                        },
-                        "voice-vlan-intf-security": {
-                            "description": "Enable or configure security filtering for VoIP traffic on the interface to protect against unauthorized devices.",
-                            "type": "boolean",
-                            "default": false
-                        }
-                    }
-                },
                 "dhcp": {
                     "$ref": "#/$defs/interface.ipv4.dhcp"
                 },
@@ -2369,72 +2370,6 @@
                     "items": {
                         "$ref": "#/$defs/interface.ipv6.traffic-allow"
                     }
-                }
-            }
-        },
-        "interface.acl": {
-            "description": "A collection of access control entries that define the rules for filtering traffic through a network interface.",
-            "type": "array",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "acl-inf-policy-preference": {
-                        "description": "Determines the priority of multiple ACL policies when more than one is applied to an interface, if any.",
-                        "type": "integer",
-                        "minimum": 1,
-                        "maximum": 64,
-                        "default": 1
-                    },
-                    "acl-inf-policy-ingress": {
-                        "description": "Specifies the ACL policy that is applied to incoming traffic on an interface.",
-                        "type": "string",
-                        "maxLength": 32,
-                        "minLength": 1,
-                        "examples": [
-                            "blacklisted-macs"
-                        ]
-                    },
-                    "acl-inf-counters-ingress": {
-                        "description": "Tracks the number and type of packets that match the ingress ACL rules on an interface.",
-                        "type": "boolean",
-                        "default": false
-                    },
-                    "acl-inf-policy-egress": {
-                        "description": "Specifies the ACL policy that is applied to outgoing traffic from an interface.",
-                        "type": "string",
-                        "maxLength": 32,
-                        "minLength": 1,
-                        "examples": [
-                            "blacklisted-macs"
-                        ]
-                    },
-                    "acl-inf-counters-egress": {
-                        "description": "Tracks the number and type of packets that match the egress ACL rules on an interface.",
-                        "type": "boolean",
-                        "default": false
-                    }
-                }
-            }
-        },
-        "interface.dhcp-snoop-port": {
-            "description": "Configuration for DHCP Snooping on a port level on a switch",
-            "type": "object",
-            "properties": {
-                "dhcp-snoop-port-trust": {
-                    "description": "This parameter designates a switch port as \u2018trusted\u2019 for DHCP messages, meaning it can forward DHCP offers and acknowledgments, which is essential for connecting to legitimate DHCP servers",
-                    "type": "boolean",
-                    "default": false
-                },
-                "dhcp-snoop-port-client-limit": {
-                    "description": "It sets a limit on the number of DHCP clients that can be associated with a single port, helping to prevent a single port from exhausting the network\u2019s IP address pool",
-                    "type": "integer",
-                    "minimum": 1
-                },
-                "dhcp-snoop-port-circuit-id": {
-                    "description": "Specifies DHCP Option 82 circuit ID suboption information. Often including information like the interface number and VLAN ID, this can be useful for network management and troubleshooting",
-                    "type": "string",
-                    "minLength": 1,
-                    "maxLength": 32
                 }
             }
         },
@@ -2729,12 +2664,6 @@
                 },
                 "ipv6": {
                     "$ref": "#/$defs/interface.ipv6"
-                },
-                "acl": {
-                    "$ref": "#/$defs/interface.acl"
-                },
-                "dhcp-snoop-port": {
-                    "$ref": "#/$defs/interface.dhcp-snoop-port"
                 },
                 "broad-band": {
                     "$ref": "#/$defs/interface.broad-band"

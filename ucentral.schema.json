@@ -528,6 +528,94 @@
                             "default": false
                         }
                     }
+                },
+                "acl": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "acl-inf-policy-preference": {
+                                "type": "integer",
+                                "minimum": 1,
+                                "maximum": 64,
+                                "default": 1
+                            },
+                            "acl-inf-policy-ingress": {
+                                "type": "string",
+                                "maxLength": 32,
+                                "minLength": 1,
+                                "examples": [
+                                    "blacklisted-macs"
+                                ]
+                            },
+                            "acl-inf-counters-ingress": {
+                                "type": "boolean",
+                                "default": false
+                            },
+                            "acl-inf-policy-egress": {
+                                "type": "string",
+                                "maxLength": 32,
+                                "minLength": 1,
+                                "examples": [
+                                    "blacklisted-macs"
+                                ]
+                            },
+                            "acl-inf-counters-egress": {
+                                "type": "boolean",
+                                "default": false
+                            }
+                        }
+                    }
+                },
+                "voice-vlan-intf-config": {
+                    "type": "object",
+                    "properties": {
+                        "voice-vlan-intf-mode": {
+                            "type": "string",
+                            "default": "auto",
+                            "enum": [
+                                "none",
+                                "manual",
+                                "auto"
+                            ]
+                        },
+                        "voice-vlan-intf-priority": {
+                            "type": "integer",
+                            "default": 6,
+                            "minimum": 0,
+                            "maximum": 6
+                        },
+                        "voice-vlan-intf-detect-voice": {
+                            "type": "string",
+                            "default": "oui",
+                            "enum": [
+                                "oui",
+                                "lldp"
+                            ]
+                        },
+                        "voice-vlan-intf-security": {
+                            "type": "boolean",
+                            "default": false
+                        }
+                    }
+                },
+                "dhcp-snoop-port": {
+                    "type": "object",
+                    "properties": {
+                        "dhcp-snoop-port-trust": {
+                            "type": "boolean",
+                            "default": false
+                        },
+                        "dhcp-snoop-port-client-limit": {
+                            "type": "integer",
+                            "minimum": 1
+                        },
+                        "dhcp-snoop-port-circuit-id": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 32
+                        }
+                    }
                 }
             }
         },
@@ -705,6 +793,125 @@
                                 "dhcp-snooping.violation-cleared": {
                                     "type": "boolean",
                                     "default": false
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "switch.acl": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+                "type": "object",
+                "properties": {
+                    "acl-name": {
+                        "type": "string",
+                        "maxLength": 32,
+                        "minLength": 1
+                    },
+                    "acl-type": {
+                        "type": "string",
+                        "enum": [
+                            "ipv4",
+                            "ipv6",
+                            "ipv4Ext",
+                            "ipv6Ext",
+                            "mac",
+                            "arp"
+                        ]
+                    },
+                    "acl-rules": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "array",
+                            "uniqueItems": true,
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "acl-rule-action": {
+                                        "type": "string",
+                                        "enum": [
+                                            "permit",
+                                            "deny"
+                                        ]
+                                    },
+                                    "acl-source-macaddress": {
+                                        "type": "string",
+                                        "format": "uc-mac"
+                                    },
+                                    "acl-source-macbitmask": {
+                                        "type": "string",
+                                        "format": "uc-mac"
+                                    },
+                                    "acl-dest-macaddress": {
+                                        "type": "string",
+                                        "format": "uc-mac"
+                                    },
+                                    "acl-dest-macbitmask": {
+                                        "type": "string",
+                                        "format": "uc-mac"
+                                    },
+                                    "acl-packet-format": {
+                                        "type": "string",
+                                        "enum": [
+                                            "any",
+                                            "untagged-eth2",
+                                            "untagged-802.3",
+                                            "tagged-eth2",
+                                            "tagged-802.3"
+                                        ]
+                                    },
+                                    "acl-vlanid": {
+                                        "type": "integer",
+                                        "minimum": 1,
+                                        "maximum": 4094
+                                    },
+                                    "acl-vid-bitmask": {
+                                        "type": "integer",
+                                        "minimum": 1,
+                                        "maximum": 4095
+                                    },
+                                    "acl-ethertype": {
+                                        "type": "string",
+                                        "default": "800"
+                                    },
+                                    "acl-ethertype-bitmask": {
+                                        "type": "string",
+                                        "default": "FFFF"
+                                    },
+                                    "acl-cos": {
+                                        "type": "integer",
+                                        "minimum": 0,
+                                        "maximum": 7
+                                    },
+                                    "acl-cos-bitmask": {
+                                        "type": "integer",
+                                        "minimum": 0,
+                                        "maximum": 7
+                                    },
+                                    "acl-ipv4-source-address": {
+                                        "type": "string",
+                                        "format": "ipv4"
+                                    },
+                                    "acl-ipv4-source-subnetmask": {
+                                        "type": "string",
+                                        "format": "ipv4"
+                                    },
+                                    "acl-ipv4-dest-address": {
+                                        "type": "string",
+                                        "format": "ipv4"
+                                    },
+                                    "acl-ipv4-dest-subnetmask": {
+                                        "type": "string",
+                                        "format": "ipv4"
+                                    },
+                                    "acl-ip-proto": {
+                                        "type": "integer",
+                                        "minimum": 0,
+                                        "maximum": 255
+                                    }
                                 }
                             }
                         }
@@ -966,180 +1173,6 @@
                                 "keep",
                                 "replace"
                             ]
-                        }
-                    }
-                },
-                "acl": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "acl-type": {
-                                "type": "string",
-                                "enum": [
-                                    "ipv4",
-                                    "ipv6",
-                                    "ipv4Ext",
-                                    "ipv6Ext",
-                                    "mac",
-                                    "arp"
-                                ]
-                            },
-                            "acl-name": {
-                                "type": "string",
-                                "maxLength": 32,
-                                "minLength": 1
-                            },
-                            "acl-rule-action": {
-                                "type": "string",
-                                "enum": [
-                                    "permit",
-                                    "deny"
-                                ]
-                            },
-                            "acl-source-macaddress": {
-                                "type": "string",
-                                "format": "uc-mac"
-                            },
-                            "acl-source-macbitmask": {
-                                "type": "string",
-                                "format": "uc-mac"
-                            },
-                            "acl-dest-macaddress": {
-                                "type": "string",
-                                "format": "uc-mac"
-                            },
-                            "acl-dest-macbitmask": {
-                                "type": "string",
-                                "format": "uc-mac"
-                            },
-                            "acl-packet-format": {
-                                "type": "string",
-                                "enum": [
-                                    "any",
-                                    "untagged-eth2",
-                                    "untagged-802.3",
-                                    "tagged-eth2",
-                                    "tagged-802.3"
-                                ]
-                            },
-                            "acl-vlanid": {
-                                "type": "integer",
-                                "minimum": 1,
-                                "maximum": 4094
-                            },
-                            "acl-vid-bitmask": {
-                                "type": "integer",
-                                "minimum": 1,
-                                "maximum": 4095
-                            },
-                            "acl-ethertype": {
-                                "type": "string",
-                                "default": "800"
-                            },
-                            "acl-ethertype-bitmask": {
-                                "type": "string",
-                                "default": "FFFF"
-                            },
-                            "acl-cos": {
-                                "type": "integer",
-                                "minimum": 0,
-                                "maximum": 7
-                            },
-                            "acl-cos-bitmask": {
-                                "type": "integer",
-                                "minimum": 0,
-                                "maximum": 7
-                            },
-                            "acl-ipv4-source-address": {
-                                "type": "string",
-                                "format": "ipv4"
-                            },
-                            "acl-ipv4-source-subnetmask": {
-                                "type": "string",
-                                "format": "ipv4"
-                            },
-                            "acl-ipv4-dest-address": {
-                                "type": "string",
-                                "format": "ipv4"
-                            },
-                            "acl-ipv4-dest-subnetmask": {
-                                "type": "string",
-                                "format": "ipv4"
-                            },
-                            "acl-ipv6-source-address": {
-                                "type": "string",
-                                "format": "ipv6"
-                            },
-                            "acl-ipv6-source-prefix-length": {
-                                "type": "integer",
-                                "minimum": 0,
-                                "maximum": 128
-                            },
-                            "acl-ipv6-dest-address": {
-                                "type": "string",
-                                "format": "ipv6"
-                            },
-                            "acl-ipv6-dest-prefix-length": {
-                                "type": "integer",
-                                "minimum": 0,
-                                "maximum": 128
-                            },
-                            "acl-ip-proto": {
-                                "type": "integer",
-                                "minimum": 0,
-                                "maximum": 255
-                            },
-                            "acl-ipv6-next-header": {
-                                "type": "integer",
-                                "minimum": 0,
-                                "maximum": 255
-                            },
-                            "acl-ipv6-flow-label": {
-                                "type": "integer",
-                                "minimum": 0,
-                                "maximum": 1048575
-                            },
-                            "acl-ip-source-port": {
-                                "type": "integer",
-                                "minimum": 0,
-                                "maximum": 65535
-                            },
-                            "acl-ip-source-port-bitmask": {
-                                "type": "integer",
-                                "minimum": 0,
-                                "maximum": 65535
-                            },
-                            "acl-ip-dest-port": {
-                                "type": "integer",
-                                "minimum": 0,
-                                "maximum": 65535
-                            },
-                            "acl-ip-dest-port-bitmask": {
-                                "type": "integer",
-                                "minimum": 0,
-                                "maximum": 65535
-                            },
-                            "acl-ipv4-fragment-offset": {
-                                "type": "integer",
-                                "minimum": 0,
-                                "maximum": 8191
-                            },
-                            "acl-ipv6-fragment-offset": {
-                                "type": "integer",
-                                "minimum": 0,
-                                "maximum": 8191
-                            },
-                            "acl-ip-ttl": {
-                                "type": "integer",
-                                "minimum": 0,
-                                "maximum": 255
-                            },
-                            "acl-ipv6-hop-limit": {
-                                "type": "integer",
-                                "minimum": 0,
-                                "maximum": 255
-                            }
                         }
                     }
                 },
@@ -1415,6 +1448,9 @@
                 },
                 "rt-events": {
                     "$ref": "#/$defs/switch.rtevent"
+                },
+                "acl": {
+                    "$ref": "#/$defs/switch.acl"
                 }
             }
         },
@@ -1816,38 +1852,6 @@
                     "type": "boolean",
                     "default": false
                 },
-                "voice-vlan-intf-config": {
-                    "type": "object",
-                    "properties": {
-                        "voice-vlan-intf-mode": {
-                            "type": "string",
-                            "default": "auto",
-                            "enum": [
-                                "none",
-                                "manual",
-                                "auto"
-                            ]
-                        },
-                        "voice-vlan-intf-priority": {
-                            "type": "integer",
-                            "default": 6,
-                            "minimum": 0,
-                            "maximum": 6
-                        },
-                        "voice-vlan-intf-detect-voice": {
-                            "type": "string",
-                            "default": "oui",
-                            "enum": [
-                                "oui",
-                                "lldp"
-                            ]
-                        },
-                        "voice-vlan-intf-security": {
-                            "type": "boolean",
-                            "default": false
-                        }
-                    }
-                },
                 "dhcp": {
                     "$ref": "#/$defs/interface.ipv4.dhcp"
                 },
@@ -2024,62 +2028,6 @@
                     "items": {
                         "$ref": "#/$defs/interface.ipv6.traffic-allow"
                     }
-                }
-            }
-        },
-        "interface.acl": {
-            "type": "array",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "acl-inf-policy-preference": {
-                        "type": "integer",
-                        "minimum": 1,
-                        "maximum": 64,
-                        "default": 1
-                    },
-                    "acl-inf-policy-ingress": {
-                        "type": "string",
-                        "maxLength": 32,
-                        "minLength": 1,
-                        "examples": [
-                            "blacklisted-macs"
-                        ]
-                    },
-                    "acl-inf-counters-ingress": {
-                        "type": "boolean",
-                        "default": false
-                    },
-                    "acl-inf-policy-egress": {
-                        "type": "string",
-                        "maxLength": 32,
-                        "minLength": 1,
-                        "examples": [
-                            "blacklisted-macs"
-                        ]
-                    },
-                    "acl-inf-counters-egress": {
-                        "type": "boolean",
-                        "default": false
-                    }
-                }
-            }
-        },
-        "interface.dhcp-snoop-port": {
-            "type": "object",
-            "properties": {
-                "dhcp-snoop-port-trust": {
-                    "type": "boolean",
-                    "default": false
-                },
-                "dhcp-snoop-port-client-limit": {
-                    "type": "integer",
-                    "minimum": 1
-                },
-                "dhcp-snoop-port-circuit-id": {
-                    "type": "string",
-                    "minLength": 1,
-                    "maxLength": 32
                 }
             }
         },
@@ -2333,12 +2281,6 @@
                 },
                 "ipv6": {
                     "$ref": "#/$defs/interface.ipv6"
-                },
-                "acl": {
-                    "$ref": "#/$defs/interface.acl"
-                },
-                "dhcp-snoop-port": {
-                    "$ref": "#/$defs/interface.dhcp-snoop-port"
                 },
                 "broad-band": {
                     "$ref": "#/$defs/interface.broad-band"

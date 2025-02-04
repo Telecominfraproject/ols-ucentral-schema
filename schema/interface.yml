@@ -68,10 +68,6 @@ properties:
     $ref: "https://ucentral.io/schema/v1/interface/ipv4/"
   ipv6:
     $ref: "https://ucentral.io/schema/v1/interface/ipv6/"
-  acl:
-    $ref: "https://ucentral.io/schema/v1/interface/acl/"
-  dhcp-snoop-port:
-    $ref: "https://ucentral.io/schema/v1/interface/dhcp-snoop-port/"
   broad-band:
     $ref: "https://ucentral.io/schema/v1/interface/broad-band/"
   tunnel:
