@@ -537,6 +537,8 @@ properties:
               minLength: 1
               examples:
                 - "A VoIP Phone"
+  ip-source-guard:
+    $ref: "https://ucentral.io/schema/v1/switch/ip-source-guard/"
   rt-events:
     $ref: "https://ucentral.io/schema/v1/switch/rtevent/"
   acl:
