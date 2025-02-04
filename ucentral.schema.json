@@ -529,6 +529,21 @@
                         }
                     }
                 },
+                "rate-limit-port": {
+                    "type": "object",
+                    "properties": {
+                        "ingress-kbps": {
+                            "type": "integer",
+                            "minimum": 64,
+                            "maximum": 1000000000
+                        },
+                        "egress-kbps": {
+                            "type": "integer",
+                            "minimum": 64,
+                            "maximum": 1000000000
+                        }
+                    }
+                },
                 "ip-source-guard-port": {
                     "type": "object",
                     "properties": {

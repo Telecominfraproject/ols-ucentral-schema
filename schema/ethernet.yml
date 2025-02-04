@@ -368,6 +368,20 @@ properties:
         type: boolean
         description: Enables the transmission of SNMP trap notifications about LLDP changes.
         default: false
+  rate-limit-port:
+    type: object
+    description: Configuration for ingress and egress rate limiting on a specific port (in kbps)
+    properties:
+      ingress-kbps:
+        type: integer
+        description: Sets the maximum allowed ingress (input) traffic rate for the port, in kilobits per second (kbps).
+        minimum: 64
+        maximum: 1000000000
+      egress-kbps:
+        type: integer
+        description: Sets the maximum allowed egress (output) traffic rate for the port, in kilobits per second (kbps).
+        minimum: 64
+        maximum: 1000000000
   ip-source-guard-port:
     type: object
     description: Configuration of IP Source Guard (IPSG) on a physical interface in a Layer 2 switch.
