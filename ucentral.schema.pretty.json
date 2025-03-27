@@ -1848,6 +1848,13 @@
                 },
                 "acl": {
                     "$ref": "#/$defs/switch.acl"
+                },
+                "dns": {
+                    "description": "Define a list of dns servers",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 }
             }
         },
