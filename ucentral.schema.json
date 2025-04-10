@@ -1564,6 +1564,12 @@
                 },
                 "acl": {
                     "$ref": "#/$defs/switch.acl"
+                },
+                "dns": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 }
             }
         },

@@ -300,6 +300,7 @@ properties:
       - Service-Online-Check
       - Service-CaptivePortal
       - Service-PublicIpCheck
+      - Service-Global-DNS
       # Tunneling
       - Tunneling-VxLAN
       - Tunneling-GRE

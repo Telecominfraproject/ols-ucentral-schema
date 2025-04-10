@@ -545,3 +545,8 @@ properties:
     $ref: "https://ucentral.io/schema/v1/switch/rtevent/"
   acl:
     $ref: "https://ucentral.io/schema/v1/switch/acl/"
+  dns:
+    description: Define a global list of dns servers.
+    type: array
+    items:
+      type: string
