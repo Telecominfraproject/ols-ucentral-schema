@@ -1850,7 +1850,7 @@
                     "$ref": "#/$defs/switch.acl"
                 },
                 "dns": {
-                    "description": "Define a list of dns servers",
+                    "description": "Define a global list of dns servers.",
                     "type": "array",
                     "items": {
                         "type": "string"

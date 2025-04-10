@@ -361,6 +361,7 @@
                     "Service-Online-Check",
                     "Service-CaptivePortal",
                     "Service-PublicIpCheck",
+                    "Service-Global-DNS",
                     "Tunneling-VxLAN",
                     "Tunneling-GRE",
                     "Tunneling-GRE6",
