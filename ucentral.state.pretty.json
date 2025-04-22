@@ -524,6 +524,11 @@
                         "type": "string",
                         "description": "The administrative name of this logical interface. This field is freetext"
                     },
+                    "id": {
+                        "description": "VLAN-ID of the logical interface",
+                        "type": "integer",
+                        "maximum": 4094
+                    },
                     "ntp_server": {
                         "type": "string",
                         "description": "The upstream NTP server being used by this interface."
