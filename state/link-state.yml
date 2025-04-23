@@ -210,20 +210,20 @@ properties:
             type: string
             description: STP state of the port.
             enum:
-              - DISABLED
-              - BLOCKING
-              - LISTENING
-              - LEARNING
-              - FORWARDING
+              - disabled
+              - blocking
+              - listening
+              - learning
+              - forwarding
           role:
             type: string
             description: Role of the port in STP topology.
             enum:
-              - ROOT
-              - DESIGNATED
-              - ALTERNATE
-              - BACKUP
-              - DISABLED
+              - root
+              - designated
+              - alternate
+              - backup
+              - disabled
           bridge-id:
             type: string
             description: STP Bridge ID
@@ -253,13 +253,13 @@ properties:
             type: string
             description: Current loop detection status.
             enum:
-              - NO_LOOP
-              - LOOP_DETECTED
-              - DISABLED
+              - no_loop
+              - loop_detected
+              - disabled
           action:
             type: string
             description: Action taken when loop is detected (e.g., block, shutdown).
             enum:
-              - NONE
-              - BLOCK
-              - SHUTDOWN
+              - none
+              - block
+              - shutdown

@@ -194,64 +194,65 @@
                     "type": "integer",
                     "description": "Maximum hop count used in MSTP."
                 },
-                "instances": null,
-                "type": "array",
-                "description": "List of STP instances (e.g., MSTP instances).",
-                "items": {
-                    "type": "object",
-                    "properties": {
-                        "instance-id": {
+                "instances": {
+                    "type": "array",
+                    "description": "List of STP instances (e.g., MSTP instances).",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "instance-id": {
+                                "type": "integer",
+                                "description": "Instance number (for MSTP or multiple-instance support)."
+                            }
+                        },
+                        "vlans": {
+                            "type": "string",
+                            "description": "VLAN ranges associated with the STP instance.",
+                            "example": "1-4094"
+                        },
+                        "bridge-priority": {
                             "type": "integer",
-                            "description": "Instance number (for MSTP or multiple-instance support)."
+                            "description": "Bridge priority value for STP election."
+                        },
+                        "bridge-hello-time": {
+                            "type": "integer",
+                            "description": "Hello Time interval (in seconds) configured on the bridge."
+                        },
+                        "bridge-max-age": {
+                            "type": "integer",
+                            "description": "Max Age value (in seconds) used for aging STP information."
+                        },
+                        "bridge-forward-delay": {
+                            "type": "integer",
+                            "description": "Delay (in seconds) before transitioning port to forwarding state."
+                        },
+                        "remaining-hops": {
+                            "type": "integer",
+                            "description": "Remaining hop count from the Root Bridge to this bridge."
+                        },
+                        "root-bridge-id": {
+                            "type": "string",
+                            "description": "Bridge ID of the current Root Bridge."
+                        },
+                        "root-port": {
+                            "type": "string",
+                            "description": "Local interface acting as Root Port.",
+                            "example": [
+                                "\u00cbthernet1"
+                            ]
+                        },
+                        "root-cost": {
+                            "type": "integer",
+                            "description": "Cumulative cost to reach the Root Bridge."
+                        },
+                        "topology-changes": {
+                            "type": "integer",
+                            "description": "Total number of topology changes detected."
+                        },
+                        "last-topology-change-seconds": {
+                            "type": "integer",
+                            "description": "Time (in seconds) since the last topology change."
                         }
-                    },
-                    "vlans": {
-                        "type": "string",
-                        "description": "VLAN ranges associated with the STP instance.",
-                        "example": "1-4094"
-                    },
-                    "bridge-priority": {
-                        "type": "integer",
-                        "description": "Bridge priority value for STP election."
-                    },
-                    "bridge-hello-time": {
-                        "type": "integer",
-                        "description": "Hello Time interval (in seconds) configured on the bridge."
-                    },
-                    "bridge-max-age": {
-                        "type": "integer",
-                        "description": "Max Age value (in seconds) used for aging STP information."
-                    },
-                    "bridge-forward-delay": {
-                        "type": "integer",
-                        "description": "Delay (in seconds) before transitioning port to forwarding state."
-                    },
-                    "remaining-hops": {
-                        "type": "integer",
-                        "description": "Remaining hop count from the Root Bridge to this bridge."
-                    },
-                    "root-bridge-id": {
-                        "type": "string",
-                        "description": "Bridge ID of the current Root Bridge."
-                    },
-                    "root-port": {
-                        "type": "string",
-                        "description": "Local interface acting as Root Port.",
-                        "example": [
-                            "\u00cbthernet1"
-                        ]
-                    },
-                    "root-cost": {
-                        "type": "integer",
-                        "description": "Cumulative cost to reach the Root Bridge."
-                    },
-                    "topology-changes": {
-                        "type": "integer",
-                        "description": "Total number of topology changes detected."
-                    },
-                    "last-topology-change-seconds": {
-                        "type": "integer",
-                        "description": "Time (in seconds) since the last topology change."
                     }
                 }
             }
@@ -1272,22 +1273,22 @@
                                     "type": "string",
                                     "description": "STP state of the port.",
                                     "enum": [
-                                        "DISABLED",
-                                        "BLOCKING",
-                                        "LISTENING",
-                                        "LEARNING",
-                                        "FORWARDING"
+                                        "disabled",
+                                        "blocking",
+                                        "listening",
+                                        "learning",
+                                        "forwarding"
                                     ]
                                 },
                                 "role": {
                                     "type": "string",
                                     "description": "Role of the port in STP topology.",
                                     "enum": [
-                                        "ROOT",
-                                        "DESIGNATED",
-                                        "ALTERNATE",
-                                        "BACKUP",
-                                        "DISABLED"
+                                        "root",
+                                        "designated",
+                                        "alternate",
+                                        "backup",
+                                        "disabled"
                                     ]
                                 },
                                 "bridge-id": {
@@ -1328,18 +1329,18 @@
                                     "type": "string",
                                     "description": "Current loop detection status.",
                                     "enum": [
-                                        "NO_LOOP",
-                                        "LOOP_DETECTED",
-                                        "DISABLED"
+                                        "no_loop",
+                                        "loop_detected",
+                                        "disabled"
                                     ]
                                 },
                                 "action": {
                                     "type": "string",
                                     "description": "Action taken when loop is detected (e.g., block, shutdown).",
                                     "enum": [
-                                        "NONE",
-                                        "BLOCK",
-                                        "SHUTDOWN"
+                                        "none",
+                                        "block",
+                                        "shutdown"
                                     ]
                                 }
                             }
