@@ -171,11 +171,11 @@
                     "type": "string",
                     "description": "Operational STP mode used across the switch.",
                     "enum": [
-                        "STP",
-                        "RSTP",
-                        "MSTP",
-                        "PVST",
-                        "RPVSTP"
+                        "stp",
+                        "rstp",
+                        "mstp",
+                        "pvst",
+                        "rpvstp"
                     ]
                 },
                 "transmission-limit": {
@@ -186,8 +186,8 @@
                     "type": "string",
                     "description": "Indicates whether \"Short\" or \"Long\" path cost method is in use.",
                     "enum": [
-                        "Short",
-                        "Long"
+                        "short",
+                        "long"
                     ]
                 },
                 "max-hops": {
