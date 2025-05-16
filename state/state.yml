@@ -114,3 +114,77 @@ properties:
             blocked-interface:
               type: string
               description: The interface (e.g., port) where the blocked entry was detected.
+  stp:
+    description: Global status and configuration of the Spanning Tree Protocol (STP) across the switch.
+      Supports variants like STP, RSTP, MSTP. Includes bridge-wide parameters and protocol behavior.
+    type: object
+    properties:
+      enabled:
+        type: boolean
+        description: Whether STP is enabled globally on the switch.
+      mode:
+        type: string
+        description: Operational STP mode used across the switch.
+        enum:
+          - stp
+          - rstp
+          - mstp
+          - pvst
+          - rpvstp
+      transmission-limit:
+          type: integer
+          description: Maximum number of BPDUs that can be transmitted per hello time.
+      path-cost-method:
+          type: string
+          description: Indicates whether "Short" or "Long" path cost method is in use.
+          enum:
+            - short
+            - long
+      max-hops:
+          type: integer
+          description: Maximum hop count used in MSTP.
+      instances:
+        type: array
+        description: List of STP instances (e.g., MSTP instances).
+        items:
+          type: object
+          properties:
+            instance-id:
+              type: integer
+              description: Instance number (for MSTP or multiple-instance support).
+          vlans:
+            type: string
+            description: VLAN ranges associated with the STP instance.
+            example: "1-4094"
+          bridge-priority:
+            type: integer
+            description: Bridge priority value for STP election.
+          bridge-hello-time:
+            type: integer
+            description: Hello Time interval (in seconds) configured on the bridge.
+          bridge-max-age:
+            type: integer
+            description: Max Age value (in seconds) used for aging STP information.
+          bridge-forward-delay:
+            type: integer
+            description: Delay (in seconds) before transitioning port to forwarding state.
+          remaining-hops:
+            type: integer
+            description: Remaining hop count from the Root Bridge to this bridge.
+          root-bridge-id:
+            type: string
+            description: Bridge ID of the current Root Bridge.
+          root-port:
+            type: string
+            description: Local interface acting as Root Port.
+            example:
+              - Ëthernet1
+          root-cost:
+            type: integer
+            description: Cumulative cost to reach the Root Bridge.
+          topology-changes:
+            type: integer
+            description: Total number of topology changes detected.
+          last-topology-change-seconds:
+            type: integer
+            description: Time (in seconds) since the last topology change.

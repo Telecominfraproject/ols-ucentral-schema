@@ -191,3 +191,75 @@ properties:
         description:
           Max power (in Watts) module can drain.
         type: number
+  loop-detect-protocol:
+    description: Status and protocol information for loop detection or prevention mechanisms 
+      active on this interface. Includes STP/xSTP/MSTP, Loopback Detection (LBD), etc.
+    type: object
+    properties:
+      stp:
+        description: Spanning Tree Protocol (IEEE 802.1D/RSTP/MSTP) state on the port.
+        type: object
+        properties:
+          protocol:
+            type: string
+            description: Variant of STP running (e.g., STP, RSTP, MSTP, RPVST+).
+            examples:
+              - RSTP
+              - MSTP
+          state:
+            type: string
+            description: STP state of the port.
+            enum:
+              - disabled
+              - blocking
+              - listening
+              - learning
+              - forwarding
+          role:
+            type: string
+            description: Role of the port in STP topology.
+            enum:
+              - root
+              - designated
+              - alternate
+              - backup
+              - disabled
+          bridge-id:
+            type: string
+            description: STP Bridge ID
+          root-bridge-id:
+            type: string
+            description: STP Root Bridge ID for the instance.
+          oper-edge-port:
+            type: boolean
+            description: Whether the port is operating as an edge port (no BPDU expected).
+          cost:
+            type: integer
+            description: Operational path cost of the port.
+          designated-cost:
+            type: integer
+            description: Cost advertised by the designated port.
+          transitions:
+            type: integer
+            description: Number of STP state transitions (forwarding/discarding) on this port.
+      lbd:
+        description: Loopback Detection (LBD) status on this port.
+        type: object
+        properties:
+          enabled:
+            type: boolean
+            description: Whether LBD is enabled on this port.
+          state:
+            type: string
+            description: Current loop detection status.
+            enum:
+              - no_loop
+              - loop_detected
+              - disabled
+          action:
+            type: string
+            description: Action taken when loop is detected (e.g., block, shutdown).
+            enum:
+              - none
+              - block
+              - shutdown
