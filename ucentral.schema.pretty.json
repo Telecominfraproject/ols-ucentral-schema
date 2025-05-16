@@ -1865,7 +1865,17 @@
                 "id": {
                     "description": "This is the pvid of the vlan that shall be assigned to the interface. The individual physical network devices contained within the interface need to be told explicitly if egress traffic shall be tagged.",
                     "type": "integer",
-                    "maximum": 4050
+                    "maximum": 4094
+                },
+                "range-start": {
+                    "decription": "Start vlan-id of the specified range",
+                    "type": "integer",
+                    "maximum": 4094
+                },
+                "range-end": {
+                    "decription": "End vlan-id of the specified range",
+                    "type": "integer",
+                    "maximum": 4094
                 },
                 "proto": {
                     "decription": "The L2 vlan tag that shall be added (1q,1ad)",
