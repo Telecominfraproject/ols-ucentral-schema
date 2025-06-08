@@ -668,6 +668,21 @@
                             "maxLength": 32
                         }
                     }
+                },
+                "bpdu-guard": {
+                    "type": "object",
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean"
+                        },
+                        "auto-recovery-intvl-secs": {
+                            "type": "integer"
+                        }
+                    }
+                },
+                "edge-port": {
+                    "type": "boolean",
+                    "default": false
                 }
             }
         },
