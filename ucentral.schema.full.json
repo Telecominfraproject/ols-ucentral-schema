@@ -753,6 +753,54 @@
                                 "maxLength": 32
                             }
                         }
+                    },
+                    "storm-control": {
+                        "description": "Storm Control configuration per storm type. Allows enabling or disabling traffic storm control for broadcast, multicast, and unknown unicast packets, with independent packet-per-second thresholds.",
+                        "type": "object",
+                        "properties": {
+                            "broadcast": {
+                                "type": "object",
+                                "properties": {
+                                    "enabled": {
+                                        "description": "Enable or disable broadcast storm control.",
+                                        "type": "boolean"
+                                    },
+                                    "limit-pps": {
+                                        "description": "Maximum allowed broadcast packets per second. Traffic beyond this is dropped.",
+                                        "type": "integer",
+                                        "minimum": 0
+                                    }
+                                }
+                            },
+                            "multicast": {
+                                "type": "object",
+                                "properties": {
+                                    "enabled": {
+                                        "description": "Enable or disable multicast storm control.",
+                                        "type": "boolean"
+                                    },
+                                    "limit-pps": {
+                                        "description": "Maximum allowed multicast packets per second. Traffic beyond this is dropped.",
+                                        "type": "integer",
+                                        "minimum": 0
+                                    }
+                                }
+                            },
+                            "unknown-unicast": {
+                                "type": "object",
+                                "properties": {
+                                    "enabled": {
+                                        "description": "Enable or disable unknown unicast storm control.",
+                                        "type": "boolean"
+                                    },
+                                    "limit-pps": {
+                                        "description": "Maximum allowed unknown unicast packets per second. Traffic beyond this is dropped.",
+                                        "type": "integer",
+                                        "minimum": 0
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
