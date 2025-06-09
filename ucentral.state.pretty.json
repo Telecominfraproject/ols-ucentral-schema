@@ -1351,6 +1351,39 @@
                             }
                         }
                     }
+                },
+                "storm-control": {
+                    "description": "Runtime status of Storm Control feature on the port for each storm type.",
+                    "type": "object",
+                    "properties": {
+                        "broadcast": {
+                            "type": "string",
+                            "description": "Runtime status of Broadcast Storm Control on the port. - `enabled`- Actively monitoring and limiting broadcast traffic. - `storming`- Storm condition detected; packets are being dropped. - `disabled`- Feature not applied on this port.",
+                            "enum": [
+                                "enabled",
+                                "storming",
+                                "disabled"
+                            ]
+                        },
+                        "multicast": {
+                            "type": "string",
+                            "description": "Runtime status of Multicast Storm Control on the port. - `enabled`- Actively monitoring and limiting multicast traffic. - `storming`- Storm condition detected; packets are being dropped. - `disabled`- Feature not applied on this port.",
+                            "enum": [
+                                "enabled",
+                                "storming",
+                                "disabled"
+                            ]
+                        },
+                        "unknown-unicast": {
+                            "type": "string",
+                            "description": "Runtime status of Unknown Unicast Storm Control on the port. - `enabled`- Actively monitoring and limiting unknown unicast traffic. - `storming`- Storm condition detected; packets are being dropped. - `disabled`- Feature not applied on this port.",
+                            "enum": [
+                                "enabled",
+                                "storming",
+                                "disabled"
+                            ]
+                        }
+                    }
                 }
             }
         },
