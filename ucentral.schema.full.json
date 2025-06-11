@@ -762,9 +762,10 @@
                                 "description": "When true, the port will be placed into an error-disabled state if any BPDU is received.",
                                 "type": "boolean"
                             },
-                            "auto-recovery-intvl-secs": {
-                                "description": "Time in 'seconds' after which a port that was err-disabled due to BPDU Guard violation will be automatically re-enabled. Set to 0 to also imply a disable of auto recovery.",
-                                "type": "integer"
+                            "auto-recovery-secs": {
+                                "description": "Time in 'seconds' after which a port that was err-disabled due to BPDU Guard violation will be automatically re-enabled.",
+                                "type": "integer",
+                                "default": 300
                             }
                         }
                     },

@@ -242,10 +242,10 @@ properties:
           transitions:
             type: integer
             description: Number of STP state transitions (forwarding/discarding) on this port.
-          oper-edge-port:
+          edge-port:
             type: boolean
             description: Whether the port is operating as an edge port (no BPDU expected).
-          bpdu-guard-status:
+          bpdu-guard:
             type: string
             description: Runtime status of BPDU Guard on the port. 
               - `enabled`- Actively monitoring for BPDUs.
@@ -253,10 +253,8 @@ properties:
               - `recovering`- Temporarily disabled and in auto-recovery interval.
               - `disabled`- BPDU Guard feature not applied.
             enum:
-              - enabled
               - errdisabled
               - recovering
-              - disabled
       lbd:
         description: Loopback Detection (LBD) status on this port.
         type: object

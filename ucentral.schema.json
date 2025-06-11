@@ -675,8 +675,9 @@
                         "enabled": {
                             "type": "boolean"
                         },
-                        "auto-recovery-intvl-secs": {
-                            "type": "integer"
+                        "auto-recovery-secs": {
+                            "type": "integer",
+                            "default": 300
                         }
                     }
                 },
