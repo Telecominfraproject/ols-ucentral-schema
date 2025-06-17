@@ -263,7 +263,7 @@ properties:
               - none
               - block
               - shutdown
-  storm-control:
+  storm-status:
     description: Runtime status of Storm Control feature on the port for each storm type.
     type: object
     properties:

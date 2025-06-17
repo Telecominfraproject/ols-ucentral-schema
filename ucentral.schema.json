@@ -671,44 +671,21 @@
                 },
                 "storm-control": {
                     "type": "object",
-                    "properties": {
-                        "broadcast": {
-                            "type": "object",
-                            "properties": {
-                                "enabled": {
-                                    "type": "boolean"
-                                },
-                                "limit-pps": {
-                                    "type": "integer",
-                                    "minimum": 0,
-                                    "default": 500
-                                }
-                            }
-                        },
-                        "multicast": {
-                            "type": "object",
-                            "properties": {
-                                "enabled": {
-                                    "type": "boolean"
-                                },
-                                "limit-pps": {
-                                    "type": "integer",
-                                    "minimum": 0
-                                }
-                            }
-                        },
-                        "unknown-unicast": {
-                            "type": "object",
-                            "properties": {
-                                "enabled": {
-                                    "type": "boolean"
-                                },
-                                "limit-pps": {
-                                    "type": "integer",
-                                    "minimum": 0
-                                }
-                            }
-                        }
+                    "properties": null,
+                    "broadcast-pps": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "default": 0
+                    },
+                    "multicast-pps": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "default": 0
+                    },
+                    "unknown-unicast-pps": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "default": 0
                     }
                 }
             }
