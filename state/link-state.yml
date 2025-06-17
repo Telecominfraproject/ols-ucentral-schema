@@ -242,9 +242,6 @@ properties:
           transitions:
             type: integer
             description: Number of STP state transitions (forwarding/discarding) on this port.
-          edge-port:
-            type: boolean
-            description: Whether the port is operating as an edge port (no BPDU expected).
           bpdu-guard:
             type: string
             description: Runtime status of BPDU Guard on the port, when it detects any issue. 
