@@ -1326,7 +1326,7 @@
                                 },
                                 "bpdu-guard": {
                                     "type": "string",
-                                    "description": "Runtime status of BPDU Guard on the port. - `enabled`- Actively monitoring for BPDUs. - `errdisabled`- Port is shutdown due to BPDU violation. - `recovering`- Temporarily disabled and in auto-recovery interval. - `disabled`- BPDU Guard feature not applied.",
+                                    "description": "Runtime status of BPDU Guard on the port, when it detects any issue. - `errdisabled`- Port is shutdown due to BPDU violation. - `recovering`- Temporarily disabled and in auto-recovery interval.",
                                     "enum": [
                                         "errdisabled",
                                         "recovering"

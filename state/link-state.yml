@@ -247,11 +247,9 @@ properties:
             description: Whether the port is operating as an edge port (no BPDU expected).
           bpdu-guard:
             type: string
-            description: Runtime status of BPDU Guard on the port. 
-              - `enabled`- Actively monitoring for BPDUs.
+            description: Runtime status of BPDU Guard on the port, when it detects any issue. 
               - `errdisabled`- Port is shutdown due to BPDU violation.
               - `recovering`- Temporarily disabled and in auto-recovery interval.
-              - `disabled`- BPDU Guard feature not applied.
             enum:
               - errdisabled
               - recovering
