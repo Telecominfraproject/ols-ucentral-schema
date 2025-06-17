@@ -1357,31 +1357,16 @@
                     "type": "object",
                     "properties": {
                         "broadcast": {
-                            "type": "string",
-                            "description": "Runtime status of Broadcast Storm Control on the port. - `enabled`- Actively monitoring and limiting broadcast traffic. - `storming`- Storm condition detected; packets are being dropped. - `disabled`- Feature not applied on this port.",
-                            "enum": [
-                                "enabled",
-                                "storming",
-                                "disabled"
-                            ]
+                            "type": "boolean",
+                            "description": "Runtime status of Broadcast Storm Control on the port. Return `true`if Storm condition is detected."
                         },
                         "multicast": {
-                            "type": "string",
-                            "description": "Runtime status of Multicast Storm Control on the port. - `enabled`- Actively monitoring and limiting multicast traffic. - `storming`- Storm condition detected; packets are being dropped. - `disabled`- Feature not applied on this port.",
-                            "enum": [
-                                "enabled",
-                                "storming",
-                                "disabled"
-                            ]
+                            "type": "boolean",
+                            "description": "Runtime status of Multicast Storm Control on the port. Return `true`if Storm condition is detected."
                         },
                         "unknown-unicast": {
-                            "type": "string",
-                            "description": "Runtime status of Unknown Unicast Storm Control on the port. - `enabled`- Actively monitoring and limiting unknown unicast traffic. - `storming`- Storm condition detected; packets are being dropped. - `disabled`- Feature not applied on this port.",
-                            "enum": [
-                                "enabled",
-                                "storming",
-                                "disabled"
-                            ]
+                            "type": "boolean",
+                            "description": "Runtime status of Unknown Unicast Storm Control on the port. Return `true`if Storm condition is detected."
                         }
                     }
                 }

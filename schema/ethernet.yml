@@ -515,6 +515,7 @@ properties:
             description: Maximum allowed broadcast packets per second. Traffic beyond this is dropped.
             type: integer
             minimum: 0
+            default: 500
       multicast:
         type: object
         properties:
