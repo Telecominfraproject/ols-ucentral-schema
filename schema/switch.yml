@@ -447,13 +447,11 @@ properties:
                     - trunk-group
                   default: trunk-group
                 value:
-                  description: Specifies the port or trunk-group ID for the peer-link.
-                  type: integer
-                  minimum: 1
-                  maximum: 64
+                  description: Specifies the port or trunk-group reference for the peer-link.
+                  type: string
             mclag-group:
-              description: Configures the MC-LAG group, which binds the interfaces into a multi-chassis LAG.
-              type: object
+              description: Configures the MC-LAG group(s), which binds the interfaces into a multi-chassis LAG.
+              type: array
               properties:
                 group-id:
                   description: Defines the unique MC-LAG group identifier.

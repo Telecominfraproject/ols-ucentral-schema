@@ -1447,14 +1447,12 @@
                                                 "default": "trunk-group"
                                             },
                                             "value": {
-                                                "type": "integer",
-                                                "minimum": 1,
-                                                "maximum": 64
+                                                "type": "string"
                                             }
                                         }
                                     },
                                     "mclag-group": {
-                                        "type": "object",
+                                        "type": "array",
                                         "properties": {
                                             "group-id": {
                                                 "type": "integer",
