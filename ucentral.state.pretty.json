@@ -1351,6 +1351,24 @@
                             }
                         }
                     }
+                },
+                "storm-status": {
+                    "description": "Runtime status of Storm Control feature on the port for each storm type.",
+                    "type": "object",
+                    "properties": {
+                        "broadcast": {
+                            "type": "boolean",
+                            "description": "Runtime status of Broadcast Storm Control on the port. Return `true`if Storm condition is detected."
+                        },
+                        "multicast": {
+                            "type": "boolean",
+                            "description": "Runtime status of Multicast Storm Control on the port. Return `true`if Storm condition is detected."
+                        },
+                        "unknown-unicast": {
+                            "type": "boolean",
+                            "description": "Runtime status of Unknown Unicast Storm Control on the port. Return `true`if Storm condition is detected."
+                        }
+                    }
                 }
             }
         },
