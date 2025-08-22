@@ -49,6 +49,10 @@ items:
           type: string
           description: Provides a textual description of the remote port, typically describing the interface or its purpose.
           example: "Ethernet Port on unit 1, port 2"
+        lldp-remote-sys-name:
+          type: string
+          description: Provides a textual description of the system name string (as defined by the sending device)
+          example: "Datacenter Switch-1"
         lldp-remote-port-max-mtu:
           type: string
           description: Displays the maximum transmission unit (MTU) size that the remote port supports, indicating the largest packet size the port can handle.
@@ -117,6 +121,19 @@ items:
               type: string
               description: Displays the PoE class of the remote device, indicating its power consumption classification.
               enum: ["Class-1", "Class-2", "Class-3", "Class-4","Class-5", "Class-6", "Class-7", "Class-8"]
+            lldp-remote-port-power-priority:
+              type: string
+              description: Indicates the power priority level assigned to the PD.
+              enum:
+                - low
+                - high
+                - critical
+            lldp-remote-port-pd-requested-power:
+              type: number
+              description: Power requested by the PD in watts (0.1W resolution possible). The values must be presented with real values like 25.5, 20.5 etc.
+            lldp-remote-port-pse-available-power:
+              type: number
+              description: Power that the PSE port is able to provide in watts (0.1W resolution).
         lldp-remote-port-lag-info:
           type: object
           description: Provides information about the remote port’s involvement in Link Aggregation Groups (LAG), if applicable.
@@ -130,3 +147,39 @@ items:
             lldp-remote-port-lag-port-id:
               type: integer
               description: Displays the identifier of the Link Aggregation Group (LAG) that the remote port belongs to.
+        lldp-remote-port-location:
+          type: object
+          description: Location information provided by LLDP-MED.
+          properties:
+            location-subtype:
+              type: string
+              description: Indicates the type of location information being conveyed.
+              enum:
+                - coordinate
+                - civic-address
+                - elin
+            civic-addr:
+              type: array
+              description: Civic address information consisting of CA-Type and CA-Value pairs as per LLDP-MED.
+              items:
+                type: object
+                properties:
+                  ca-type:
+                    type: integer
+                    description: Civic Address Type identifier (e.g., 1 = Language, 3 = Country, 6 = A1 state/province, etc.)
+                  ca-value:
+                    type: string
+                    description: Civic Address Value corresponding to the type.
+            coordinates:
+              type: object
+              description: Location coordinates information.
+              properties:
+                latitude:
+                  type: string
+                  description: Latitude in decimal degrees (e.g., +37.7749).
+                longitude:
+                  type: string
+                  description: Longitude in decimal degrees (e.g., -122.4194).
+            elin:
+              type: string
+              description: Emergency Location Identification Number (ELIN) assigned to endpoint location
