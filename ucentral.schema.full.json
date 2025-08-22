@@ -1254,60 +1254,73 @@
                                                 ],
                                                 "default": "trunk-group"
                                             },
-                                            "value": {
-                                                "description": "Specifies the port or trunk-group reference for the peer-link.",
-                                                "type": "string"
+                                            "port-id": {
+                                                "description": "Specifies the physical port name used as peer-link (only valid if type = port).",
+                                                "type": "string",
+                                                "examples": [
+                                                    "Ethernet1",
+                                                    "Ethernet2"
+                                                ]
+                                            },
+                                            "trunk-id": {
+                                                "description": "Specifies the trunk group ID used as peer-link (only valid if type = trunk-group).",
+                                                "type": "integer",
+                                                "minimum": 1,
+                                                "maximum": 64
                                             }
                                         }
                                     },
                                     "mclag-group": {
                                         "description": "Configures the MC-LAG group(s), which binds the interfaces into a multi-chassis LAG.",
                                         "type": "array",
-                                        "properties": {
-                                            "group-id": {
-                                                "description": "Defines the unique MC-LAG group identifier.",
-                                                "type": "integer",
-                                                "minimum": 1,
-                                                "maximum": 128
-                                            },
-                                            "members": {
-                                                "description": "List of interfaces that participate in the MC-LAG group.",
-                                                "type": "array",
-                                                "items": {
-                                                    "type": "string",
-                                                    "description": "Interface names that are part of the MC-LAG group.",
-                                                    "examples": [
-                                                        "eth0",
-                                                        "eth1"
-                                                    ]
-                                                }
-                                            },
-                                            "lacp-config": {
-                                                "description": "LACP configuration settings for the MC-LAG group.",
-                                                "type": "object",
-                                                "properties": {
-                                                    "lacp-enable": {
-                                                        "description": "Enables or disables LACP for the MC-LAG group.",
-                                                        "type": "boolean",
-                                                        "default": true
-                                                    },
-                                                    "lacp-role": {
-                                                        "description": "Configures the LACP role as 'actor' or 'partner'",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "group-id": {
+                                                    "description": "Defines the unique MC-LAG group identifier.",
+                                                    "type": "integer",
+                                                    "minimum": 1,
+                                                    "maximum": 128
+                                                },
+                                                "members": {
+                                                    "description": "List of interfaces that participate in the MC-LAG group.",
+                                                    "type": "array",
+                                                    "items": {
                                                         "type": "string",
-                                                        "enum": [
-                                                            "actor",
-                                                            "partner"
-                                                        ],
-                                                        "default": "actor"
-                                                    },
-                                                    "lacp-timeout": {
-                                                        "description": "Sets the LACP timeout as either 'short' or 'long'.",
-                                                        "type": "string",
-                                                        "enum": [
-                                                            "short",
-                                                            "long"
-                                                        ],
-                                                        "default": "long"
+                                                        "description": "Interface names that are part of the MC-LAG group.",
+                                                        "examples": [
+                                                            "eth0",
+                                                            "eth1"
+                                                        ]
+                                                    }
+                                                },
+                                                "lacp-config": {
+                                                    "description": "LACP configuration settings for the MC-LAG group.",
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "lacp-enable": {
+                                                            "description": "Enables or disables LACP for the MC-LAG group.",
+                                                            "type": "boolean",
+                                                            "default": true
+                                                        },
+                                                        "lacp-role": {
+                                                            "description": "Configures the LACP role as 'actor' or 'partner'",
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "actor",
+                                                                "partner"
+                                                            ],
+                                                            "default": "actor"
+                                                        },
+                                                        "lacp-timeout": {
+                                                            "description": "Sets the LACP timeout as either 'short' or 'long'.",
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "short",
+                                                                "long"
+                                                            ],
+                                                            "default": "long"
+                                                        }
                                                     }
                                                 }
                                             }
