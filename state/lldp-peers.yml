@@ -130,7 +130,7 @@ items:
                 - critical
             lldp-remote-port-pd-requested-power:
               type: number
-              description: Power requested by the PD in watts (0.1W resolution possible).
+              description: Power requested by the PD in watts (0.1W resolution possible). The values must be presented with real values like 25.5, 20.5 etc.
             lldp-remote-port-pse-available-power:
               type: number
               description: Power that the PSE port is able to provide in watts (0.1W resolution).
@@ -147,39 +147,39 @@ items:
             lldp-remote-port-lag-port-id:
               type: integer
               description: Displays the identifier of the Link Aggregation Group (LAG) that the remote port belongs to.
-      lldp-remote-port-location:
-        type: object
-        description: Location information provided by LLDP-MED.
-        properties:
-          location-subtype:
-            type: string
-            description: Indicates the type of location information being conveyed.
-            enum:
-              - coordinate
-              - civic-address
-              - elin
-          lldp-remote-port-loc-civic-addr:
-            type: array
-            description: Civic address information consisting of CA-Type and CA-Value pairs as per LLDP-MED.
-            items:
+        lldp-remote-port-location:
+          type: object
+          description: Location information provided by LLDP-MED.
+          properties:
+            location-subtype:
+              type: string
+              description: Indicates the type of location information being conveyed.
+              enum:
+                - coordinate
+                - civic-address
+                - elin
+            civic-addr:
+              type: array
+              description: Civic address information consisting of CA-Type and CA-Value pairs as per LLDP-MED.
+              items:
+                type: object
+                properties:
+                  ca-type:
+                    type: integer
+                    description: Civic Address Type identifier (e.g., 1 = Language, 3 = Country, 6 = A1 state/province, etc.)
+                  ca-value:
+                    type: string
+                    description: Civic Address Value corresponding to the type.
+            coordinates:
               type: object
+              description: Location coordinates information.
               properties:
-                ca-type:
-                  type: integer
-                  description: Civic Address Type identifier (e.g., 1 = Language, 3 = Country, 6 = A1 state/province, etc.)
-                ca-value:
+                latitude:
                   type: string
-                  description: Civic Address Value corresponding to the type.
-          lldp-remote-port-loc-coordin:
-            type: object
-            description: Location coordinates information.
-            properties:
-              latitude:
-                type: string
-                description: Latitude in decimal degrees (e.g., +37.7749).
-              longitude:
-                type: string
-                description: Longitude in decimal degrees (e.g., -122.4194).
-          lldp-remote-port-elin:
-            type: string
-            description: Emergency Location Identification Number (ELIN) assigned to endpoint location
+                  description: Latitude in decimal degrees (e.g., +37.7749).
+                longitude:
+                  type: string
+                  description: Longitude in decimal degrees (e.g., -122.4194).
+            elin:
+              type: string
+              description: Emergency Location Identification Number (ELIN) assigned to endpoint location
