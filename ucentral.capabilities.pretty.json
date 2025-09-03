@@ -310,6 +310,7 @@
                     "Spanning-Tree-Per-VLAN",
                     "Spanning-Tree-Per-VLAN-Rapid",
                     "Spanning-Tree-MSTP",
+                    "BPDU-Guard",
                     "SVI-StaticIPv4",
                     "SVI-StaticIPv6",
                     "Interface-StaticIPv4",

@@ -499,6 +499,24 @@ properties:
         type: string
         minLength: 1
         maxLength: 32
+  bpdu-guard:
+    description: BPDU Guard configuration block. Enables protection against unexpected BPDUs 
+      on edge ports to prevent loops and rogue switch connections.
+    type: object
+    properties:
+      enabled:
+        description: When true, the port will be placed into an error-disabled state if any BPDU is received.
+        type: boolean
+      auto-recovery-secs:
+        description: Time in 'seconds' after which a port that was err-disabled due to BPDU Guard
+          violation will be automatically re-enabled. 
+        type: integer
+        default: 300
+  edge-port:
+    description: When true, the port behaves as an STP Edge Port. When false, the port
+      participates fully in STP and is treated as a normal switch port.
+    type: boolean
+    default: false
   storm-control:
     description: Storm Control configuration per storm type. Allows enabling or disabling traffic storm control for broadcast, multicast, and unknown unicast packets,
       with independent packet-per-second (pps) thresholds. A limit-pps value of 0 implies the control is disabled for that traffic type.

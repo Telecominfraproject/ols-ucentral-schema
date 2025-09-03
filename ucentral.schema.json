@@ -669,6 +669,21 @@
                         }
                     }
                 },
+                "bpdu-guard": {
+                    "type": "object",
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean"
+                        },
+                        "auto-recovery-secs": {
+                            "type": "integer",
+                            "default": 300
+                        }
+                    }
+                },
+                "edge-port": {
+                    "type": "boolean",
+                    "default": false
                 "storm-control": {
                     "type": "object",
                     "properties": null,
