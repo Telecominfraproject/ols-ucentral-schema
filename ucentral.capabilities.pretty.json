@@ -343,6 +343,7 @@
                     "MAC-ACL",
                     "IP-ACL",
                     "Guest-VLAN",
+                    "Storm-Control",
                     "Service-SSH",
                     "Service-RSSH",
                     "Service-Telnet",
