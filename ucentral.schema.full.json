@@ -773,6 +773,7 @@
                         "description": "When true, the port behaves as an STP Edge Port. When false, the port participates fully in STP and is treated as a normal switch port.",
                         "type": "boolean",
                         "default": false
+                    },
                     "storm-control": {
                         "description": "Storm Control configuration per storm type. Allows enabling or disabling traffic storm control for broadcast, multicast, and unknown unicast packets, with independent packet-per-second (pps) thresholds. A limit-pps value of 0 implies the control is disabled for that traffic type.",
                         "type": "object",
