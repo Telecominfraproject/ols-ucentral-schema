@@ -1438,7 +1438,7 @@
                                     "peer-link": {
                                         "type": "object",
                                         "properties": {
-                                            "type": {
+                                            "link-type": {
                                                 "type": "string",
                                                 "enum": [
                                                     "port",
@@ -1475,8 +1475,8 @@
                                                     "items": {
                                                         "type": "string",
                                                         "examples": [
-                                                            "eth0",
-                                                            "eth1"
+                                                            "Ethernet0",
+                                                            "Ethernet1"
                                                         ]
                                                     }
                                                 },

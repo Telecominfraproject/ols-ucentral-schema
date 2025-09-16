@@ -439,7 +439,7 @@ properties:
               description: Configures the peer-link, which could be a physical port or a trunk group that connects the two MC-LAG peer switches.
               type: object
               properties:
-                type:
+                link-type:
                   description: Defines the type of peer-link, either 'port' or 'trunk-group'
                   type: string
                   enum:
@@ -475,8 +475,8 @@ properties:
                       type: string
                       description: Interface names that are part of the MC-LAG group.
                       examples:
-                        - eth0
-                        - eth1
+                        - Ethernet0
+                        - Ethernet1
                   lacp-config:
                     description: LACP configuration settings for the MC-LAG group.
                     type: object
