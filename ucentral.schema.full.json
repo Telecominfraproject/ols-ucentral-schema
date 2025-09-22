@@ -1739,6 +1739,10 @@
                                 "items": {
                                     "type": "object",
                                     "properties": {
+                                        "acl-rule-priority": {
+                                            "description": "Priority of the rule comparted with others in the list.",
+                                            "type": "integer"
+                                        },
                                         "acl-rule-action": {
                                             "description": "Defines whether to permit or deny traffic matching the rule",
                                             "type": "string",

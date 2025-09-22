@@ -970,6 +970,9 @@
                         "items": {
                             "type": "object",
                             "properties": {
+                                "acl-rule-priority": {
+                                    "type": "integer"
+                                },
                                 "acl-rule-action": {
                                     "type": "string",
                                     "enum": [
