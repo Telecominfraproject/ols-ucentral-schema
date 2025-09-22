@@ -965,95 +965,92 @@
                         ]
                     },
                     "acl-rules": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "type": "array",
-                            "uniqueItems": true,
-                            "items": {
-                                "type": "object",
-                                "properties": {
-                                    "acl-rule-action": {
-                                        "type": "string",
-                                        "enum": [
-                                            "permit",
-                                            "deny"
-                                        ]
-                                    },
-                                    "acl-source-macaddress": {
-                                        "type": "string",
-                                        "format": "uc-mac"
-                                    },
-                                    "acl-source-macbitmask": {
-                                        "type": "string",
-                                        "format": "uc-mac"
-                                    },
-                                    "acl-dest-macaddress": {
-                                        "type": "string",
-                                        "format": "uc-mac"
-                                    },
-                                    "acl-dest-macbitmask": {
-                                        "type": "string",
-                                        "format": "uc-mac"
-                                    },
-                                    "acl-packet-format": {
-                                        "type": "string",
-                                        "enum": [
-                                            "any",
-                                            "untagged-eth2",
-                                            "untagged-802.3",
-                                            "tagged-eth2",
-                                            "tagged-802.3"
-                                        ]
-                                    },
-                                    "acl-vlanid": {
-                                        "type": "integer",
-                                        "minimum": 1,
-                                        "maximum": 4094
-                                    },
-                                    "acl-vid-bitmask": {
-                                        "type": "integer",
-                                        "minimum": 1,
-                                        "maximum": 4095
-                                    },
-                                    "acl-ethertype": {
-                                        "type": "string",
-                                        "default": "800"
-                                    },
-                                    "acl-ethertype-bitmask": {
-                                        "type": "string",
-                                        "default": "FFFF"
-                                    },
-                                    "acl-cos": {
-                                        "type": "integer",
-                                        "minimum": 0,
-                                        "maximum": 7
-                                    },
-                                    "acl-cos-bitmask": {
-                                        "type": "integer",
-                                        "minimum": 0,
-                                        "maximum": 7
-                                    },
-                                    "acl-ipv4-source-address": {
-                                        "type": "string",
-                                        "format": "ipv4"
-                                    },
-                                    "acl-ipv4-source-subnetmask": {
-                                        "type": "string",
-                                        "format": "ipv4"
-                                    },
-                                    "acl-ipv4-dest-address": {
-                                        "type": "string",
-                                        "format": "ipv4"
-                                    },
-                                    "acl-ipv4-dest-subnetmask": {
-                                        "type": "string",
-                                        "format": "ipv4"
-                                    },
-                                    "acl-ip-proto": {
-                                        "type": "integer",
-                                        "minimum": 0,
-                                        "maximum": 255
-                                    }
+                        "type": "array",
+                        "uniqueItems": true,
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "acl-rule-action": {
+                                    "type": "string",
+                                    "enum": [
+                                        "permit",
+                                        "deny"
+                                    ]
+                                },
+                                "acl-source-macaddress": {
+                                    "type": "string",
+                                    "format": "uc-mac"
+                                },
+                                "acl-source-macbitmask": {
+                                    "type": "string",
+                                    "format": "uc-mac"
+                                },
+                                "acl-dest-macaddress": {
+                                    "type": "string",
+                                    "format": "uc-mac"
+                                },
+                                "acl-dest-macbitmask": {
+                                    "type": "string",
+                                    "format": "uc-mac"
+                                },
+                                "acl-packet-format": {
+                                    "type": "string",
+                                    "enum": [
+                                        "any",
+                                        "untagged-eth2",
+                                        "untagged-802.3",
+                                        "tagged-eth2",
+                                        "tagged-802.3"
+                                    ]
+                                },
+                                "acl-vlanid": {
+                                    "type": "integer",
+                                    "minimum": 1,
+                                    "maximum": 4094
+                                },
+                                "acl-vid-bitmask": {
+                                    "type": "integer",
+                                    "minimum": 1,
+                                    "maximum": 4095
+                                },
+                                "acl-ethertype": {
+                                    "type": "string",
+                                    "default": "800"
+                                },
+                                "acl-ethertype-bitmask": {
+                                    "type": "string",
+                                    "default": "FFFF"
+                                },
+                                "acl-cos": {
+                                    "type": "integer",
+                                    "minimum": 0,
+                                    "maximum": 7
+                                },
+                                "acl-cos-bitmask": {
+                                    "type": "integer",
+                                    "minimum": 0,
+                                    "maximum": 7
+                                },
+                                "acl-ipv4-source-address": {
+                                    "type": "string",
+                                    "format": "ipv4"
+                                },
+                                "acl-ipv4-source-subnetmask": {
+                                    "type": "string",
+                                    "format": "ipv4"
+                                },
+                                "acl-ipv4-dest-address": {
+                                    "type": "string",
+                                    "format": "ipv4"
+                                },
+                                "acl-ipv4-dest-subnetmask": {
+                                    "type": "string",
+                                    "format": "ipv4"
+                                },
+                                "acl-ip-proto": {
+                                    "type": "integer",
+                                    "minimum": 0,
+                                    "maximum": 255
                                 }
                             }
                         }
