@@ -811,24 +811,25 @@
                 "storm-control": {
                     "description": "Storm Control configuration per storm type. Allows enabling or disabling traffic storm control for broadcast, multicast, and unknown unicast packets, with independent packet-per-second (pps) thresholds. A limit-pps value of 0 implies the control is disabled for that traffic type.",
                     "type": "object",
-                    "properties": null,
-                    "broadcast-pps": {
-                        "type": "integer",
-                        "minimum": 0,
-                        "default": 0,
-                        "description": "Maximum allowed broadcast packets per second. 0 disables broadcast storm control."
-                    },
-                    "multicast-pps": {
-                        "type": "integer",
-                        "minimum": 0,
-                        "default": 0,
-                        "description": "Maximum allowed multicast packets per second. 0 disables multicast storm control."
-                    },
-                    "unknown-unicast-pps": {
-                        "type": "integer",
-                        "minimum": 0,
-                        "default": 0,
-                        "description": "Maximum allowed unknown unicast packets per second. 0 disables unknown unicast storm control."
+                    "properties": {
+                        "broadcast-pps": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "default": 0,
+                            "description": "Maximum allowed broadcast packets per second. 0 disables broadcast storm control."
+                        },
+                        "multicast-pps": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "default": 0,
+                            "description": "Maximum allowed multicast packets per second. 0 disables multicast storm control."
+                        },
+                        "unknown-unicast-pps": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "default": 0,
+                            "description": "Maximum allowed unknown unicast packets per second. 0 disables unknown unicast storm control."
+                        }
                     }
                 }
             }

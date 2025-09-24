@@ -687,21 +687,22 @@
                 },
                 "storm-control": {
                     "type": "object",
-                    "properties": null,
-                    "broadcast-pps": {
-                        "type": "integer",
-                        "minimum": 0,
-                        "default": 0
-                    },
-                    "multicast-pps": {
-                        "type": "integer",
-                        "minimum": 0,
-                        "default": 0
-                    },
-                    "unknown-unicast-pps": {
-                        "type": "integer",
-                        "minimum": 0,
-                        "default": 0
+                    "properties": {
+                        "broadcast-pps": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "default": 0
+                        },
+                        "multicast-pps": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "default": 0
+                        },
+                        "unknown-unicast-pps": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "default": 0
+                        }
                     }
                 }
             }
