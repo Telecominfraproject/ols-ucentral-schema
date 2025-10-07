@@ -1474,7 +1474,7 @@
                                     "peer-link": {
                                         "type": "object",
                                         "properties": {
-                                            "type": {
+                                            "link-type": {
                                                 "type": "string",
                                                 "enum": [
                                                     "port",
@@ -1482,7 +1482,14 @@
                                                 ],
                                                 "default": "trunk-group"
                                             },
-                                            "value": {
+                                            "port-id": {
+                                                "type": "string",
+                                                "examples": [
+                                                    "Ethernet1",
+                                                    "Ethernet2"
+                                                ]
+                                            },
+                                            "trunk-id": {
                                                 "type": "integer",
                                                 "minimum": 1,
                                                 "maximum": 64
@@ -1490,45 +1497,48 @@
                                         }
                                     },
                                     "mclag-group": {
-                                        "type": "object",
-                                        "properties": {
-                                            "group-id": {
-                                                "type": "integer",
-                                                "minimum": 1,
-                                                "maximum": 128
-                                            },
-                                            "members": {
-                                                "type": "array",
-                                                "items": {
-                                                    "type": "string",
-                                                    "examples": [
-                                                        "eth0",
-                                                        "eth1"
-                                                    ]
-                                                }
-                                            },
-                                            "lacp-config": {
-                                                "type": "object",
-                                                "properties": {
-                                                    "lacp-enable": {
-                                                        "type": "boolean",
-                                                        "default": true
-                                                    },
-                                                    "lacp-role": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "group-id": {
+                                                    "type": "integer",
+                                                    "minimum": 1,
+                                                    "maximum": 128
+                                                },
+                                                "members": {
+                                                    "type": "array",
+                                                    "items": {
                                                         "type": "string",
-                                                        "enum": [
-                                                            "actor",
-                                                            "partner"
-                                                        ],
-                                                        "default": "actor"
-                                                    },
-                                                    "lacp-timeout": {
-                                                        "type": "string",
-                                                        "enum": [
-                                                            "short",
-                                                            "long"
-                                                        ],
-                                                        "default": "long"
+                                                        "examples": [
+                                                            "Ethernet0",
+                                                            "Ethernet1"
+                                                        ]
+                                                    }
+                                                },
+                                                "lacp-config": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "lacp-enable": {
+                                                            "type": "boolean",
+                                                            "default": true
+                                                        },
+                                                        "lacp-role": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "actor",
+                                                                "partner"
+                                                            ],
+                                                            "default": "actor"
+                                                        },
+                                                        "lacp-timeout": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "short",
+                                                                "long"
+                                                            ],
+                                                            "default": "long"
+                                                        }
                                                     }
                                                 }
                                             }
