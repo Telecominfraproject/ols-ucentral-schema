@@ -188,3 +188,37 @@ properties:
           last-topology-change-seconds:
             type: integer
             description: Time (in seconds) since the last topology change.
+  access-lockout:
+    type: object
+    description: Represents the operational state and statistics of the Intrusion Detection and Access Lockout feature.
+    properties:
+      user-sessions:
+        type: array
+        description: Displays a list of user sessions being tracked for failed login attempts.
+        items:
+          type: object
+          properties:
+            username:
+              type: string
+              description: The username associated with the login attempts being tracked.
+            source-ip:
+              type: string
+              description: The IP address from which the login attempts originated.
+            failed-attempts:
+              type: integer
+              description: The number of consecutive failed login attempts recorded for this user session.
+            status:
+              type: string
+              description: Indicates whether the user account is currently locked or active.
+              enum:
+                - active
+                - locked
+            last-failed-attempt-time:
+              type: integer
+              description: UNIX timestamp (in seconds) of the most recent failed login attempt.
+            lockout-start-time:
+              type: integer
+              description: UNIX timestamp (in seconds) when the user account was locked.
+            lockout-expiry-time:
+              type: integer
+              description: UNIX timestamp (in seconds) when the lockout period will end and access will be restored.
