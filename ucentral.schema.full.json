@@ -853,6 +853,65 @@
                                 ]
                             }
                         },
+                        "bridge_prio": {
+                            "description": "Bridge priority for root election. Ranging from 0\u201361440 (in steps of 4096)",
+                            "type": "integer",
+                            "default": 32768
+                        },
+                        "forward_delay_secs": {
+                            "description": "Time in seconds a port stays in Listening and Learning states before transitioning to Forwarding.",
+                            "type": "integer"
+                        },
+                        "hello_time_secs": {
+                            "description": "Determines how often switches send BPDU.",
+                            "type": "integer"
+                        },
+                        "max_age_secs": {
+                            "description": "Maximum time (in seconds) before a BPDU is considered invalid.",
+                            "type": "integer"
+                        },
+                        "pathcost_method": {
+                            "description": "Specifies the method used for path cost calculation. - short, 16-bit values (0\u201365535), IEEE 802.1D - long, 32-bit values (0\u2013200,000,000), IEEE 802.1w",
+                            "type": "string",
+                            "enum": [
+                                "short",
+                                "long"
+                            ]
+                        },
+                        "bpdu_flooding": {
+                            "description": "Configures how BPDUs are flooded to spanning-tree disabled ports. - to-all, Flood to all STP-disabled ports - to-vlan, Flood to STP-disabled ports within the same VLAN",
+                            "type": "string",
+                            "enum": [
+                                "to-all",
+                                "to-vlan"
+                            ]
+                        },
+                        "bpdu_tx_limit": {
+                            "description": "Maximum number of BPDU transmissions allowed per Hello interval.",
+                            "type": "integer"
+                        },
+                        "root_guard": {
+                            "description": "Enable Root Guard globally to prevent designated ports from becoming root.",
+                            "type": "boolean"
+                        },
+                        "mst_region": {
+                            "description": "MSTP region-wide configuration. Applicable when protocol is mstp.",
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "description": "Name of multiple spanning tree region.",
+                                    "type": "string",
+                                    "maxLength": 32,
+                                    "minLength": 1
+                                },
+                                "revision": {
+                                    "description": "MST region revision number.",
+                                    "type": "integer",
+                                    "maximum": 65535,
+                                    "minimum": 0
+                                }
+                            }
+                        },
                         "instances": {
                             "description": "Define a list of configuration for each STP instance. Meaning of this field depends on current STP protocol (switch.loop-detection.protocol)",
                             "type": "array",
@@ -869,7 +928,7 @@
                                         "default": true
                                     },
                                     "priority": {
-                                        "description": "Bridge priority.",
+                                        "description": "MST priority.",
                                         "type": "integer",
                                         "default": 32768
                                     },
@@ -887,6 +946,18 @@
                                         "description": "Specifies the maximum time that a switch port should wait to receive a BPDU from its neighbor before considering the link as failed or disconnected.",
                                         "type": "integer",
                                         "default": 20
+                                    },
+                                    "path_cost": {
+                                        "description": "Path cost for this MST instance.",
+                                        "type": "integer"
+                                    },
+                                    "vlan_start": {
+                                        "description": "VLAN starting range assigned to this MST instance.",
+                                        "type": "integer"
+                                    },
+                                    "vlan_end": {
+                                        "description": "VLAN ending range assigned to this MST instance.",
+                                        "type": "integer"
                                     }
                                 }
                             }
