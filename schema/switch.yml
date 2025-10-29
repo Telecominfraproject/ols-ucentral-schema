@@ -550,10 +550,6 @@ properties:
       after a specified number of failed authentication attempts within a defined period.
     type: object
     properties:
-      enabled:
-        description: (Optional) Global flag to enable or disable the intrusion detection and access lockout feature. 
-          If the flag is not present but this object exists, then consider the feature enabled with other params below.
-        type: boolean
       lockout-attempt-count:
         description: Number of consecutive failed login attempts allowed before the user account is locked.
         type: integer
