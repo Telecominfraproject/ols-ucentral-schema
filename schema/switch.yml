@@ -45,21 +45,21 @@ properties:
           enum:
           - upstream
           - downstream
-      bridge_prio:
+      bridge-prio:
         description: Bridge priority for root election. Ranging from 0–61440 (in steps of 4096)
         type: integer
         default: 32768
-      forward_delay_secs:
+      forward-delay-secs:
         description: Time in seconds a port stays in Listening and Learning states
           before transitioning to Forwarding.
         type: integer
-      hello_time_secs:
+      hello-time-secs:
         description: Determines how often switches send BPDU.
         type: integer
-      max_age_secs:
+      max-age-secs:
         description: Maximum time (in seconds) before a BPDU is considered invalid.
         type: integer
-      pathcost_method:
+      pathcost-method:
         description: Specifies the method used for path cost calculation.
           - short, 16-bit values (0–65535), IEEE 802.1D
           - long, 32-bit values (0–200,000,000), IEEE 802.1w
@@ -67,7 +67,7 @@ properties:
         enum:
         - short
         - long
-      bpdu_flooding:
+      bpdu-flooding:
         description: Configures how BPDUs are flooded to spanning-tree disabled ports.
           - to-all, Flood to all STP-disabled ports
           - to-vlan, Flood to STP-disabled ports within the same VLAN
@@ -75,13 +75,13 @@ properties:
         enum:
         - to-all
         - to-vlan
-      bpdu_tx_limit:
+      bpdu-tx-limit:
         description: Maximum number of BPDU transmissions allowed per Hello interval.
         type: integer
-      root_guard:
+      root-guard:
         description: Enable Root Guard globally to prevent designated ports from becoming root.
         type: boolean
-      mst_region:
+      mst-region:
         description: MSTP region-wide configuration. Applicable when protocol is mstp.
         type: object
         properties:
@@ -118,28 +118,28 @@ properties:
               description: MST priority.
               type: integer
               default: 32768
-            forward_delay:
+            forward-delay:
               description: Defines the amount of time a switch port stays in the Listening
                 and Learning states before transitioning to the Forwarding state.
               type: integer
               default: 15
-            hello_time:
+            hello-time:
               description: Determines how often switches send BPDU.
               type: integer
               default: 2
-            max_age:
+            max-age:
               description: Specifies the maximum time that a switch port should wait to
                 receive a BPDU from its neighbor before 
                 considering the link as failed or disconnected.
               type: integer
               default: 20
-            path_cost:
+            path-cost:
               description: Path cost for this MST instance.
               type: integer
-            vlan_start:
+            vlan-start:
               description: VLAN starting range assigned to this MST instance.
               type: integer
-            vlan_end:
+            vlan-end:
               description: VLAN ending range assigned to this MST instance.
               type: integer
   ieee8021x:
