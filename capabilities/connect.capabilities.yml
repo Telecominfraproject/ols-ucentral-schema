@@ -282,6 +282,7 @@ properties:
       - IP-ACL
       - Guest-VLAN
       - Storm-Control
+      - Access-Lockout
       # Services
       - Service-SSH
       - Service-RSSH

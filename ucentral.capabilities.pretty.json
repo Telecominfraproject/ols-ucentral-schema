@@ -344,6 +344,7 @@
                     "IP-ACL",
                     "Guest-VLAN",
                     "Storm-Control",
+                    "Access-Lockout",
                     "Service-SSH",
                     "Service-RSSH",
                     "Service-Telnet",

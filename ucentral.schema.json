@@ -1656,6 +1656,18 @@
                         }
                     }
                 },
+                "intrusion-detection-access-lockout": {
+                    "type": "object",
+                    "properties": {
+                        "lockout-attempt-count": {
+                            "type": "integer",
+                            "minimum": 1
+                        },
+                        "lockout-period-seconds": {
+                            "type": "integer"
+                        }
+                    }
+                },
                 "arp-inspect": {
                     "$ref": "#/$defs/switch.arp-inspect"
                 },

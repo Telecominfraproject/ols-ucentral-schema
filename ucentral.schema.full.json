@@ -1505,6 +1505,21 @@
                         }
                     }
                 },
+                "intrusion-detection-access-lockout": {
+                    "description": "Enables protection against unauthorized login attempts by locking user access after a specified number of failed authentication attempts within a defined period.",
+                    "type": "object",
+                    "properties": {
+                        "lockout-attempt-count": {
+                            "description": "Number of consecutive failed login attempts allowed before the user account is locked.",
+                            "type": "integer",
+                            "minimum": 1
+                        },
+                        "lockout-period-seconds": {
+                            "description": "Duration (in seconds) for which the user account remains locked after exceeding  the failed attempt threshold.",
+                            "type": "integer"
+                        }
+                    }
+                },
                 "arp-inspect": {
                     "type": "object",
                     "description": "Global configuration for ARP Inspection on the switch.",
