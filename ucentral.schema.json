@@ -1107,6 +1107,54 @@
                                 ]
                             }
                         },
+                        "bridge-prio": {
+                            "type": "integer",
+                            "default": 32768
+                        },
+                        "forward-delay-secs": {
+                            "type": "integer"
+                        },
+                        "hello-time-secs": {
+                            "type": "integer"
+                        },
+                        "max-age-secs": {
+                            "type": "integer"
+                        },
+                        "pathcost-method": {
+                            "type": "string",
+                            "enum": [
+                                "short",
+                                "long"
+                            ]
+                        },
+                        "bpdu-flooding": {
+                            "type": "string",
+                            "enum": [
+                                "to-all",
+                                "to-vlan"
+                            ]
+                        },
+                        "bpdu-tx-limit": {
+                            "type": "integer"
+                        },
+                        "root-guard": {
+                            "type": "boolean"
+                        },
+                        "mst-region": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string",
+                                    "maxLength": 32,
+                                    "minLength": 1
+                                },
+                                "revision": {
+                                    "type": "integer",
+                                    "maximum": 65535,
+                                    "minimum": 0
+                                }
+                            }
+                        },
                         "instances": {
                             "type": "array",
                             "items": {
@@ -1123,17 +1171,26 @@
                                         "type": "integer",
                                         "default": 32768
                                     },
-                                    "forward_delay": {
+                                    "forward-delay": {
                                         "type": "integer",
                                         "default": 15
                                     },
-                                    "hello_time": {
+                                    "hello-time": {
                                         "type": "integer",
                                         "default": 2
                                     },
-                                    "max_age": {
+                                    "max-age": {
                                         "type": "integer",
                                         "default": 20
+                                    },
+                                    "path-cost": {
+                                        "type": "integer"
+                                    },
+                                    "vlan-start": {
+                                        "type": "integer"
+                                    },
+                                    "vlan-end": {
+                                        "type": "integer"
                                     }
                                 }
                             }
