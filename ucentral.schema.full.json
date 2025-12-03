@@ -219,6 +219,11 @@
                             "cloud_uplink_port"
                         ]
                     },
+                    "autoneg": {
+                        "description": "Controls whether link autonegotiation is enabled. When set to true, the switch negotiates speed and duplex with the link partner. When set to false, the configured speed and duplex values are forced.",
+                        "type": "boolean",
+                        "default": true
+                    },
                     "speed": {
                         "description": "The link speed that shall be forced.",
                         "type": "integer",
