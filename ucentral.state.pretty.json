@@ -436,6 +436,92 @@
                             }
                         }
                     }
+                },
+                "mclag-state": {
+                    "description": "This section describes the global (switch's device) state of the underlying state of MCLAG system.",
+                    "type": "object",
+                    "properties": {
+                        "domains": {
+                            "description": "holds MCLAG domain state information, including domain ID, role, session status, peer link status, number of interfaces, and interface statuses.",
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "mclag-domain": {
+                                        "description": "Configured domain-id state",
+                                        "type": "integer",
+                                        "minimum": 1,
+                                        "maximum": 1024,
+                                        "default": 1
+                                    },
+                                    "role": {
+                                        "description": "Role of the domain (Configured switch's domain-id state) Active means local switch posesses primary control responsibility (handles control protocol exchanges on behalf of the pair and is the default source for any shared virtual MAC addresses if they aren't explicitly configured) Standby means that local switch is the redundant switch that monitors the Active peer, maintains synchronized state information and is ready to take over full control plane responsibility if the Active peer fails.",
+                                        "type": "string",
+                                        "enum": [
+                                            "active",
+                                            "standby"
+                                        ]
+                                    },
+                                    "session-status": {
+                                        "description": "Logical status of the underlying MCLAG session between local switch and remote peer switch. The 'up' value shows the underlying session is fully setup. (peers can exchange keepalive messages - if configured, the synchronization is happening and the overall state of link is operational) The 'down' value means the logical session's status is <down> - potentially, peers can't establish a connection between each other; (either through a misconfiguration, a routing problem in the field, or due to keepalive messages not being received) The 'unknown' value means the state cannot be determined (no ports configured, remote peer issues etc)",
+                                        "type": "string",
+                                        "enum": [
+                                            "up",
+                                            "down",
+                                            "unknown"
+                                        ]
+                                    },
+                                    "peer-link-status": {
+                                        "description": "Operational state of the physical link(s) directly connecting the two Multi-Chassis Link Aggregation Group (MCLAG) peer switches.",
+                                        "type": "string",
+                                        "enum": [
+                                            "up",
+                                            "down",
+                                            "unknown"
+                                        ]
+                                    },
+                                    "interface-num": {
+                                        "description": "Number of MCLAG interfaces configured within current domain id.",
+                                        "type": "integer"
+                                    },
+                                    "interfaces": {
+                                        "description": "List of configured interfaces statuses (that are part of this domain id)",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "port": {
+                                                    "description": "Port name / identifier.",
+                                                    "type": "string",
+                                                    "examples": [
+                                                        "Ethernet1"
+                                                    ]
+                                                },
+                                                "local-status": {
+                                                    "description": "Represents local port's status.",
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "up",
+                                                        "down",
+                                                        "unknown"
+                                                    ]
+                                                },
+                                                "remote-status": {
+                                                    "description": "Represents remote peer's port status.",
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "up",
+                                                        "down",
+                                                        "unknown"
+                                                    ]
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         },

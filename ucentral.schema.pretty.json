@@ -1801,6 +1801,11 @@
                     "description": "This section defines the MC-LAG configuration parameters for the switch.",
                     "type": "object",
                     "properties": {
+                        "global-gateway-mac": {
+                            "description": "(Optional) Global Unique MCLAG system MAC address that is assigned to the MCLAG domain on both peers",
+                            "type": "string",
+                            "format": "uc-mac"
+                        },
                         "mclag-domains": {
                             "description": "List of MC-LAG domain configurations for the switch.",
                             "type": "array",
@@ -1813,6 +1818,46 @@
                                         "minimum": 1,
                                         "maximum": 1024,
                                         "default": 1
+                                    },
+                                    "gateway-mac": {
+                                        "description": "(Optional) Per-domain Unique MCLAG system MAC address that is assigned to the MCLAG domain on both peers This MAC address is used as the virtual MAC address for the Layer 3 VLAN Interfaces (Switch Virtual Interfaces or SVIs) across both MCLAG peers",
+                                        "type": "string",
+                                        "format": "uc-mac"
+                                    },
+                                    "source-ip": {
+                                        "description": "IPv4 address of the MCLAG keepalive link on the local switch",
+                                        "type": "string",
+                                        "format": "ipv4",
+                                        "examples": [
+                                            "192.168.0.5"
+                                        ]
+                                    },
+                                    "peer-ip": {
+                                        "description": "IPv4 address of the MCLAG keepalive link on the peer switch",
+                                        "type": "string",
+                                        "format": "ipv4",
+                                        "examples": [
+                                            "192.168.0.5"
+                                        ]
+                                    },
+                                    "system-mac-address": {
+                                        "description": "(Optional) Unique MCLAG system MAC address that is assigned to the MCLAG domain on both peers",
+                                        "type": "string",
+                                        "format": "uc-mac"
+                                    },
+                                    "keepalive-interval": {
+                                        "description": "Interval (in seconds) between sending keepalive messages over the peer link to determine if the remote peer is up or down",
+                                        "type": "integer",
+                                        "default": 30,
+                                        "minimum": 1,
+                                        "maximum": 64
+                                    },
+                                    "session-timeout": {
+                                        "description": "Time (in seconds) to wait before shutting down an MCLAG session with a remote peer if no keepalive reply is received",
+                                        "type": "integer",
+                                        "default": 50,
+                                        "minimum": 1,
+                                        "maximum": 64
                                     },
                                     "peer-link": {
                                         "description": "Configures the peer-link, which could be a physical port or a trunk group that connects the two MC-LAG peer switches.",
