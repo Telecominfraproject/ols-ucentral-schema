@@ -1639,6 +1639,11 @@
                                                             "default": "long"
                                                         }
                                                     }
+                                                },
+                                                "trunk-id": {
+                                                    "type": "integer",
+                                                    "minimum": 1,
+                                                    "maximum": 64
                                                 }
                                             }
                                         }
