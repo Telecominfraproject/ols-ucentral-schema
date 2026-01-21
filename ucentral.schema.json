@@ -217,6 +217,10 @@
                         "cloud_uplink_port"
                     ]
                 },
+                "autoneg": {
+                    "type": "boolean",
+                    "default": true
+                },
                 "speed": {
                     "type": "integer",
                     "enum": [
