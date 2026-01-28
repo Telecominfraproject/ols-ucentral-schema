@@ -708,6 +708,23 @@
                             "default": 0
                         }
                     }
+                },
+                "diffserv-policy": {
+                    "type": "object",
+                    "properties": {
+                        "ingress": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 32,
+                            "example": "PM-INGRESS-QOS"
+                        },
+                        "egress": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 32,
+                            "example": "PM-EGRESS-SHAPE"
+                        }
+                    }
                 }
             }
         },
@@ -1639,11 +1656,6 @@
                                                             "default": "long"
                                                         }
                                                     }
-                                                },
-                                                "trunk-id": {
-                                                    "type": "integer",
-                                                    "minimum": 1,
-                                                    "maximum": 64
                                                 }
                                             }
                                         }
@@ -1712,6 +1724,241 @@
                         },
                         "lockout-period-seconds": {
                             "type": "integer"
+                        }
+                    }
+                },
+                "class-maps": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string",
+                                "example": "CM-IP-VOICE"
+                            },
+                            "match-rule": {
+                                "type": "string",
+                                "enum": [
+                                    "match-any",
+                                    "match-all"
+                                ]
+                            },
+                            "matches": {
+                                "type": "array",
+                                "maxItems": 16,
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "match-type": {
+                                            "type": "string",
+                                            "enum": [
+                                                "access-list",
+                                                "cos",
+                                                "ip-dscp",
+                                                "ip-precedence",
+                                                "ipv6-dscp",
+                                                "vlan",
+                                                "source-port"
+                                            ],
+                                            "example": "ip-dscp"
+                                        },
+                                        "value": {
+                                            "type": "string",
+                                            "example": "46"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "policy-maps": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string",
+                                "example": "rd-policy"
+                            },
+                            "classes": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "class-name": {
+                                            "type": "string",
+                                            "example": "rd-class"
+                                        },
+                                        "marking-action": {
+                                            "type": "object",
+                                            "properties": {
+                                                "phb": {
+                                                    "type": "integer",
+                                                    "minimum": 0,
+                                                    "maximum": 7
+                                                },
+                                                "cos": {
+                                                    "type": "integer",
+                                                    "minimum": 0,
+                                                    "maximum": 7
+                                                },
+                                                "ip-dscp": {
+                                                    "type": "integer",
+                                                    "minimum": 0,
+                                                    "maximum": 63
+                                                }
+                                            }
+                                        },
+                                        "police": {
+                                            "type": "object",
+                                            "properties": {
+                                                "flow": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "committed-rate-kbps": {
+                                                            "type": "integer"
+                                                        },
+                                                        "committed-burst-bytes": {
+                                                            "type": "integer"
+                                                        },
+                                                        "conform-action": {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "action": {
+                                                                    "type": "string",
+                                                                    "enum": [
+                                                                        "transmit",
+                                                                        "new-dscp"
+                                                                    ]
+                                                                },
+                                                                "new-dscp": {
+                                                                    "type": "integer",
+                                                                    "minimum": 0,
+                                                                    "maximum": 63
+                                                                }
+                                                            }
+                                                        },
+                                                        "violate-action": {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "action": {
+                                                                    "type": "string",
+                                                                    "enum": [
+                                                                        "drop",
+                                                                        "new-dscp"
+                                                                    ]
+                                                                },
+                                                                "new-dscp": {
+                                                                    "type": "integer",
+                                                                    "minimum": 0,
+                                                                    "maximum": 63
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "srtcm": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "mode": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "color-blind",
+                                                                "color-aware"
+                                                            ]
+                                                        },
+                                                        "committed-rate-kbps": {
+                                                            "type": "integer"
+                                                        },
+                                                        "committed-burst-bytes": {
+                                                            "type": "integer"
+                                                        },
+                                                        "excess-burst-bytes": {
+                                                            "type": "integer"
+                                                        },
+                                                        "conform-action": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "transmit"
+                                                            ]
+                                                        },
+                                                        "exceed-action": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "drop",
+                                                                "new-dscp"
+                                                            ]
+                                                        },
+                                                        "violate-action": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "drop",
+                                                                "new-dscp"
+                                                            ]
+                                                        },
+                                                        "new-dscp": {
+                                                            "type": "integer",
+                                                            "minimum": 0,
+                                                            "maximum": 63
+                                                        }
+                                                    }
+                                                },
+                                                "trtcm": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "mode": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "color-blind",
+                                                                "color-aware"
+                                                            ]
+                                                        },
+                                                        "committed-rate-kbps": {
+                                                            "type": "integer"
+                                                        },
+                                                        "committed-burst-bytes": {
+                                                            "type": "integer"
+                                                        },
+                                                        "peak-rate-kbps": {
+                                                            "type": "integer"
+                                                        },
+                                                        "peak-burst-bytes": {
+                                                            "type": "integer"
+                                                        },
+                                                        "conform-action": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "transmit",
+                                                                "new-dscp"
+                                                            ]
+                                                        },
+                                                        "exceed-action": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "drop",
+                                                                "new-dscp"
+                                                            ]
+                                                        },
+                                                        "violate-action": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "drop",
+                                                                "new-dscp"
+                                                            ]
+                                                        },
+                                                        "new-dscp": {
+                                                            "type": "integer",
+                                                            "minimum": 0,
+                                                            "maximum": 63
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 },

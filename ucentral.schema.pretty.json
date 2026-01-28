@@ -836,6 +836,26 @@
                             "description": "Maximum allowed unknown unicast packets per second. 0 disables unknown unicast storm control."
                         }
                     }
+                },
+                "diffserv-policy": {
+                    "type": "object",
+                    "description": "Associates DiffServ policy maps with a physical interface. This object represents the binding of policy maps to the ingress and/or egress direction of an interface.",
+                    "properties": {
+                        "ingress": {
+                            "type": "string",
+                            "description": "Name of the policy map applied to ingress (input) traffic on the interface. The referenced policy map must be defined prior to binding.",
+                            "minLength": 1,
+                            "maxLength": 32,
+                            "example": "PM-INGRESS-QOS"
+                        },
+                        "egress": {
+                            "type": "string",
+                            "description": "Name of the policy map applied to egress (output) traffic on the interface. The referenced policy map must be defined prior to binding.",
+                            "minLength": 1,
+                            "maxLength": 32,
+                            "example": "PM-EGRESS-SHAPE"
+                        }
+                    }
                 }
             }
         },
@@ -1945,12 +1965,6 @@
                                                             "default": "long"
                                                         }
                                                     }
-                                                },
-                                                "trunk-id": {
-                                                    "description": "Specifies the trunk group ID used as the mclag-group.",
-                                                    "type": "integer",
-                                                    "minimum": 1,
-                                                    "maximum": 64
                                                 }
                                             }
                                         }
@@ -2031,6 +2045,284 @@
                         "lockout-period-seconds": {
                             "description": "Duration (in seconds) for which the user account remains locked after exceeding  the failed attempt threshold.",
                             "type": "integer"
+                        }
+                    }
+                },
+                "class-maps": {
+                    "type": "array",
+                    "description": "Defines a list of DiffServ class maps. Each class map represents a traffic classification container that groups one or more match rules used to identify packets based on Layer 2, Layer 3, or Layer 4 header fields.",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string",
+                                "description": "Unique name identifying the class map. This name is later referenced by policy maps to associate actions with the classified traffic.",
+                                "example": "CM-IP-VOICE"
+                            },
+                            "match-rule": {
+                                "type": "string",
+                                "description": "Determines how multiple match rules within the class map are evaluated. - match-any -  Packet matches if any rule matches - match-all -  Packet matches only if all rules match",
+                                "enum": [
+                                    "match-any",
+                                    "match-all"
+                                ]
+                            },
+                            "matches": {
+                                "type": "array",
+                                "description": "List of match rules that define the traffic classification criteria for this class map. Up to \"n\" match rules may be configured per class maps, per defined as maxItems. Mutual exclusivity rules may apply between the match rules.",
+                                "maxItems": 16,
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "match-type": {
+                                            "type": "string",
+                                            "description": "Specifies the type of match criterion used for traffic classification.",
+                                            "enum": [
+                                                "access-list",
+                                                "cos",
+                                                "ip-dscp",
+                                                "ip-precedence",
+                                                "ipv6-dscp",
+                                                "vlan",
+                                                "source-port"
+                                            ],
+                                            "example": "ip-dscp"
+                                        },
+                                        "value": {
+                                            "type": "string",
+                                            "description": "value associated with the selected match type. The interpretation of this field depends on the match type. Numeric values must be encoded as strings, to keep the type-value pair simple.",
+                                            "example": "46"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "policy-maps": {
+                    "type": "array",
+                    "description": "Defines a list of DiffServ policy maps. Each policy map associates one or more previously defined class maps with specific QoS actions such as packet marking and traffic policing. Policy maps are later applied to interfaces using DiffServ service-policy bindings.",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string",
+                                "description": "Unique name identifying the policy map. This name is referenced when binding the policy map to an interface for ingress or egress traffic processing.",
+                                "example": "rd-policy"
+                            },
+                            "classes": {
+                                "type": "array",
+                                "description": "List of class map references included in this policy map. Each class entry applies a defined set of QoS actions to traffic matching the referenced class map.",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "class-name": {
+                                            "type": "string",
+                                            "description": "Name of a previously defined class map whose matching traffic will be subject to the configured marking and/or policing actions.",
+                                            "example": "rd-class"
+                                        },
+                                        "marking-action": {
+                                            "type": "object",
+                                            "description": "Packet marking actions applied to traffic matching this class. Marking may update internal forwarding behavior, VLAN CoS bits, or IP DSCP values. Only one marking action is typically effective per packet processing stage.",
+                                            "properties": {
+                                                "phb": {
+                                                    "type": "integer",
+                                                    "description": "Per-Hop Behavior (PHB) value used for internal packet processing and queue selection within the forwarding pipeline.",
+                                                    "minimum": 0,
+                                                    "maximum": 7
+                                                },
+                                                "cos": {
+                                                    "type": "integer",
+                                                    "description": "Class of Service (CoS) value written to the VLAN priority field (802.1p) of matching packets.",
+                                                    "minimum": 0,
+                                                    "maximum": 7
+                                                },
+                                                "ip-dscp": {
+                                                    "type": "integer",
+                                                    "description": "Differentiated Services Code Point (DSCP) value written to the IP header of matching packets.",
+                                                    "minimum": 0,
+                                                    "maximum": 63
+                                                }
+                                            }
+                                        },
+                                        "police": {
+                                            "type": "object",
+                                            "description": "Traffic policing configuration applied to packets matching this class. Policing enforces bandwidth limits and applies actions based on traffic conformance. Only one policing mode may be configured per class.",
+                                            "properties": {
+                                                "flow": {
+                                                    "type": "object",
+                                                    "description": "Single-rate, two-color policing based on a token bucket defined by a committed rate and burst size. Traffic is classified as conforming or violating.",
+                                                    "properties": {
+                                                        "committed-rate-kbps": {
+                                                            "type": "integer",
+                                                            "description": "Committed Information Rate (CIR) in kilobits per second enforced by the policer."
+                                                        },
+                                                        "committed-burst-bytes": {
+                                                            "type": "integer",
+                                                            "description": "Committed Burst Size (BC) in bytes allowed by the policer."
+                                                        },
+                                                        "conform-action": {
+                                                            "type": "object",
+                                                            "description": "Action applied when traffic conforms to the committed rate and burst limits.",
+                                                            "properties": {
+                                                                "action": {
+                                                                    "type": "string",
+                                                                    "description": "Action taken for conforming packets.",
+                                                                    "enum": [
+                                                                        "transmit",
+                                                                        "new-dscp"
+                                                                    ]
+                                                                },
+                                                                "new-dscp": {
+                                                                    "type": "integer",
+                                                                    "description": "DSCP value applied to conforming packets when action is set to new-dscp.",
+                                                                    "minimum": 0,
+                                                                    "maximum": 63
+                                                                }
+                                                            }
+                                                        },
+                                                        "violate-action": {
+                                                            "type": "object",
+                                                            "description": "Action applied when traffic exceeds the committed rate or burst size.",
+                                                            "properties": {
+                                                                "action": {
+                                                                    "type": "string",
+                                                                    "description": "Action taken for violating packets.",
+                                                                    "enum": [
+                                                                        "drop",
+                                                                        "new-dscp"
+                                                                    ]
+                                                                },
+                                                                "new-dscp": {
+                                                                    "type": "integer",
+                                                                    "description": "DSCP value applied to violating packets when action is set to new-dscp.",
+                                                                    "minimum": 0,
+                                                                    "maximum": 63
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "srtcm": {
+                                                    "type": "object",
+                                                    "description": "Single Rate Three Color Meter (srTCM) policing, supporting color-blind or color-aware modes. Traffic is classified as green, yellow, or red.",
+                                                    "properties": {
+                                                        "mode": {
+                                                            "type": "string",
+                                                            "description": "Specifies whether the policer operates in color-blind or color-aware mode.",
+                                                            "enum": [
+                                                                "color-blind",
+                                                                "color-aware"
+                                                            ]
+                                                        },
+                                                        "committed-rate-kbps": {
+                                                            "type": "integer",
+                                                            "description": "Committed Information Rate (CIR) in kilobits per second."
+                                                        },
+                                                        "committed-burst-bytes": {
+                                                            "type": "integer",
+                                                            "description": "Committed Burst Size (CBS) in bytes."
+                                                        },
+                                                        "excess-burst-bytes": {
+                                                            "type": "integer",
+                                                            "description": "Excess Burst Size (EBS) in bytes used to classify packets as exceeding committed limits."
+                                                        },
+                                                        "conform-action": {
+                                                            "type": "string",
+                                                            "description": "Action applied to packets classified as conforming (green).",
+                                                            "enum": [
+                                                                "transmit"
+                                                            ]
+                                                        },
+                                                        "exceed-action": {
+                                                            "type": "string",
+                                                            "description": "Action applied to packets classified as exceeding (yellow).",
+                                                            "enum": [
+                                                                "drop",
+                                                                "new-dscp"
+                                                            ]
+                                                        },
+                                                        "violate-action": {
+                                                            "type": "string",
+                                                            "description": "Action applied to packets classified as violating (red).",
+                                                            "enum": [
+                                                                "drop",
+                                                                "new-dscp"
+                                                            ]
+                                                        },
+                                                        "new-dscp": {
+                                                            "type": "integer",
+                                                            "description": "DSCP value applied when exceed or violate action is set to new-dscp.",
+                                                            "minimum": 0,
+                                                            "maximum": 63
+                                                        }
+                                                    }
+                                                },
+                                                "trtcm": {
+                                                    "type": "object",
+                                                    "description": "Two Rate Three Color Meter (trTCM) policing, enforcing both committed and peak rate limits with three traffic colors.",
+                                                    "properties": {
+                                                        "mode": {
+                                                            "type": "string",
+                                                            "description": "Specifies whether the policer operates in color-blind or color-aware mode.",
+                                                            "enum": [
+                                                                "color-blind",
+                                                                "color-aware"
+                                                            ]
+                                                        },
+                                                        "committed-rate-kbps": {
+                                                            "type": "integer",
+                                                            "description": "Committed Information Rate (CIR) in kilobits per second."
+                                                        },
+                                                        "committed-burst-bytes": {
+                                                            "type": "integer",
+                                                            "description": "Committed Burst Size (CBS) in bytes."
+                                                        },
+                                                        "peak-rate-kbps": {
+                                                            "type": "integer",
+                                                            "description": "Peak Information Rate (PIR) in kilobits per second."
+                                                        },
+                                                        "peak-burst-bytes": {
+                                                            "type": "integer",
+                                                            "description": "Peak Burst Size (PBS) in bytes."
+                                                        },
+                                                        "conform-action": {
+                                                            "type": "string",
+                                                            "description": "Action applied to packets conforming to committed rate limits.",
+                                                            "enum": [
+                                                                "transmit",
+                                                                "new-dscp"
+                                                            ]
+                                                        },
+                                                        "exceed-action": {
+                                                            "type": "string",
+                                                            "description": "Action applied to packets exceeding committed rate but within peak rate.",
+                                                            "enum": [
+                                                                "drop",
+                                                                "new-dscp"
+                                                            ]
+                                                        },
+                                                        "violate-action": {
+                                                            "type": "string",
+                                                            "description": "Action applied to packets exceeding peak rate.",
+                                                            "enum": [
+                                                                "drop",
+                                                                "new-dscp"
+                                                            ]
+                                                        },
+                                                        "new-dscp": {
+                                                            "type": "integer",
+                                                            "description": "DSCP value applied when exceed or violate action is set to new-dscp.",
+                                                            "minimum": 0,
+                                                            "maximum": 63
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 },

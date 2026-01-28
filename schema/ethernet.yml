@@ -544,3 +544,23 @@ properties:
         minimum: 0
         default: 0
         description:  Maximum allowed unknown unicast packets per second. 0 disables unknown unicast storm control.
+  diffserv-policy:
+    type: object
+    description: Associates DiffServ policy maps with a physical interface.
+      This object represents the binding of policy maps to the
+      ingress and/or egress direction of an interface.
+    properties:
+      ingress:
+        type: string
+        description: Name of the policy map applied to ingress (input) traffic
+          on the interface. The referenced policy map must be defined prior to binding.
+        minLength: 1
+        maxLength: 32
+        example: "PM-INGRESS-QOS"
+      egress:
+        type: string
+        description: Name of the policy map applied to egress (output) traffic
+          on the interface. The referenced policy map must be defined prior to binding.
+        minLength: 1
+        maxLength: 32
+        example: "PM-EGRESS-SHAPE"
