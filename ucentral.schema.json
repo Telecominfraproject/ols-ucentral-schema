@@ -708,6 +708,41 @@
                             "default": 0
                         }
                     }
+                },
+                "port-security": {
+                    "type": "object",
+                    "properties": {
+                        "max-mac-count": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4096
+                        },
+                        "violation-action": {
+                            "type": "string",
+                            "enum": [
+                                "shutdown",
+                                "rtevent",
+                                "rtevent-and-shutdown"
+                            ],
+                            "example": "rtevent-and-shutdown"
+                        },
+                        "sticky-mac": {
+                            "type": "boolean"
+                        },
+                        "permanent-mac": {
+                            "type": "boolean"
+                        },
+                        "mac-learning": {
+                            "type": "boolean"
+                        },
+                        "secure-mac-aging": {
+                            "type": "string",
+                            "enum": [
+                                "enable",
+                                "disable"
+                            ]
+                        }
+                    }
                 }
             }
         },
@@ -1639,11 +1674,6 @@
                                                             "default": "long"
                                                         }
                                                     }
-                                                },
-                                                "trunk-id": {
-                                                    "type": "integer",
-                                                    "minimum": 1,
-                                                    "maximum": 64
                                                 }
                                             }
                                         }
