@@ -1582,6 +1582,37 @@
                             "description": "Runtime status of Unknown Unicast Storm Control on the port. Return `true`if Storm condition is detected."
                         }
                     }
+                },
+                "port-security": {
+                    "type": "object",
+                    "description": "Operational state and security status information related to the Port Security feature on a physical interface. This state data provides visibility into enforcement status, learned secure MAC addresses, and the most recent security violation.",
+                    "properties": {
+                        "oper-state": {
+                            "type": "string",
+                            "description": "Indicates the current operational Port Security state of the interface. This reflects whether Port Security is actively enforcing policy(secure-up), temporarily down due to violation (secure-down), or has placed the port in a shutdown state due to a security violation.",
+                            "enum": [
+                                "secure-up",
+                                "secure-down",
+                                "shutdown"
+                            ]
+                        },
+                        "secure-mac-count": {
+                            "type": "integer",
+                            "description": "The current number of secure MAC address entries associated with the interface. This includes static MAC addresses and dynamically learned secure or sticky MAC addresses.",
+                            "minimum": 0,
+                            "maximum": 1024
+                        },
+                        "last-violation-mac": {
+                            "type": "string",
+                            "description": "The source MAC address that most recently triggered a Port Security violation on this interface. If no violation has been detected since the last clear or reboot, this field may be empty or undefined.",
+                            "example": "00:10:22:AA:BB:CC"
+                        },
+                        "last-violation-seconds": {
+                            "type": "integer",
+                            "description": "Unix epoch timestamp (in seconds) indicating when the most recent Port Security violation was detected on the interface. This value corresponds to the time at which enforcement action was triggered.",
+                            "example": 1680085100
+                        }
+                    }
                 }
             }
         },

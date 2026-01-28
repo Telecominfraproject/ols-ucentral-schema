@@ -802,6 +802,48 @@
                                 "description": "Maximum allowed unknown unicast packets per second. 0 disables unknown unicast storm control."
                             }
                         }
+                    },
+                    "port-security": {
+                        "type": "object",
+                        "description": "Configuration of Port Security on a Layer 2 access interface. Port Security restricts network access by limiting and authorizing source MAC addresses learned on the port and enforcing actions upon security violations.",
+                        "properties": {
+                            "max-mac-count": {
+                                "type": "integer",
+                                "description": "Specifies the maximum number of secure MAC address entries that may be learned or configured on the interface. Once the limit is reached, the switch stops learning new MAC addresses and treats additional source MAC addresses as violations.",
+                                "minimum": 0,
+                                "maximum": 4096
+                            },
+                            "violation-action": {
+                                "type": "string",
+                                "description": "Defines the action the switch shall take when a port security violation is detected, such as the appearance of an unauthorized MAC address or a secure MAC address learned on another port.",
+                                "enum": [
+                                    "shutdown",
+                                    "rtevent",
+                                    "rtevent-and-shutdown"
+                                ],
+                                "example": "rtevent-and-shutdown"
+                            },
+                            "sticky-mac": {
+                                "type": "boolean",
+                                "description": "Enables sticky MAC learning on the interface. When enabled, MAC addresses learned through Port Security are marked as sticky and bound to the port, preventing them from being learned on other interfaces."
+                            },
+                            "permanent-mac": {
+                                "type": "boolean",
+                                "description": "Converts MAC addresses learned through Port Security into permanent (static) MAC address table entries. These entries persist across reboots and are treated as statically configured secure MAC addresses."
+                            },
+                            "mac-learning": {
+                                "type": "boolean",
+                                "description": "Controls MAC address learning behavior on the interface. When disabled, the switch does not learn new MAC addresses dynamically and only allows traffic from MAC addresses already present in the static or secure MAC address table."
+                            },
+                            "secure-mac-aging": {
+                                "type": "string",
+                                "description": "Controls the aging behavior of secure MAC address entries learned by Port Security. When disabled, secure MAC addresses are retained indefinitely unless manually cleared.",
+                                "enum": [
+                                    "enable",
+                                    "disable"
+                                ]
+                            }
+                        }
                     }
                 }
             }
@@ -1487,12 +1529,6 @@
                                                             "default": "long"
                                                         }
                                                     }
-                                                },
-                                                "trunk-id": {
-                                                    "description": "Specifies the trunk group ID used as the mclag-group.",
-                                                    "type": "integer",
-                                                    "minimum": 1,
-                                                    "maximum": 64
                                                 }
                                             }
                                         }
