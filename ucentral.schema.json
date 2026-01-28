@@ -1639,11 +1639,6 @@
                                                             "default": "long"
                                                         }
                                                     }
-                                                },
-                                                "trunk-id": {
-                                                    "type": "integer",
-                                                    "minimum": 1,
-                                                    "maximum": 64
                                                 }
                                             }
                                         }
@@ -1712,6 +1707,90 @@
                         },
                         "lockout-period-seconds": {
                             "type": "integer"
+                        }
+                    }
+                },
+                "rspan-sessions": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "session-id": {
+                                "type": "integer"
+                            },
+                            "rspan-vlan-id": {
+                                "type": "integer",
+                                "minimum": 1,
+                                "maximum": 4094
+                            },
+                            "role": {
+                                "type": "string",
+                                "enum": [
+                                    "source",
+                                    "intermediate",
+                                    "destination"
+                                ]
+                            },
+                            "source": {
+                                "type": "object",
+                                "properties": {
+                                    "monitor-ports": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "examples": [
+                                                "Ethernet1",
+                                                "Ethernet2"
+                                            ]
+                                        }
+                                    },
+                                    "direction": {
+                                        "type": "string",
+                                        "enum": [
+                                            "rx",
+                                            "tx",
+                                            "rx-tx"
+                                        ]
+                                    }
+                                }
+                            },
+                            "destination": {
+                                "type": "object",
+                                "properties": {
+                                    "analysis-ports": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "examples": [
+                                                "Ethernet1",
+                                                "Ethernet2"
+                                            ]
+                                        }
+                                    },
+                                    "tag-mode": {
+                                        "type": "string",
+                                        "enum": [
+                                            "tagged",
+                                            "untagged"
+                                        ]
+                                    }
+                                }
+                            },
+                            "remote": {
+                                "type": "object",
+                                "properties": {
+                                    "uplink-ports": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "examples": [
+                                                "Ethernet1",
+                                                "Ethernet2"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 },

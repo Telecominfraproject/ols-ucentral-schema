@@ -1487,12 +1487,6 @@
                                                             "default": "long"
                                                         }
                                                     }
-                                                },
-                                                "trunk-id": {
-                                                    "description": "Specifies the trunk group ID used as the mclag-group.",
-                                                    "type": "integer",
-                                                    "minimum": 1,
-                                                    "maximum": 64
                                                 }
                                             }
                                         }
@@ -1573,6 +1567,102 @@
                         "lockout-period-seconds": {
                             "description": "Duration (in seconds) for which the user account remains locked after exceeding  the failed attempt threshold.",
                             "type": "integer"
+                        }
+                    }
+                },
+                "rspan-sessions": {
+                    "description": "A list of Remote SPAN (RSPAN) sessions configured on the switch. Each session operates independently and may use its own RSPAN VLAN. The configuration applied depends on the switch\u2019s role in the session (source, intermediate, or destination).",
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "session-id": {
+                                "description": "Numeric identifier of the RSPAN session. Each session-id represents a distinct mirroring instance configured on the Switch",
+                                "type": "integer"
+                            },
+                            "rspan-vlan-id": {
+                                "description": "The VLAN ID used as the RSPAN transport VLAN for this session. Traffic replicated at the source is encapsulated with this VLAN tag and carried across the Layer-2 network to the destination switch.",
+                                "type": "integer",
+                                "minimum": 1,
+                                "maximum": 4094
+                            },
+                            "role": {
+                                "description": "Defines the function of this switch in the RSPAN session. A switch may act as - source- where traffic is captured and injected into the RSPAN VLAN - intermediate- forwards the RSPAN VLAN transparently - destination- where mirrored traffic exits toward analysis tools",
+                                "type": "string",
+                                "enum": [
+                                    "source",
+                                    "intermediate",
+                                    "destination"
+                                ]
+                            },
+                            "source": {
+                                "description": "Configuration applicable only when the switch is operating as the RSPAN source. Specifies which ports generate mirrored traffic and the direction of traffic replication.",
+                                "type": "object",
+                                "properties": {
+                                    "monitor-ports": {
+                                        "description": "List of ingress/egress interfaces whose traffic is mirrored. Source ports must support forwarding the RSPAN VLAN (typically trunk or hybrid mode ports)",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "examples": [
+                                                "Ethernet1",
+                                                "Ethernet2"
+                                            ]
+                                        }
+                                    },
+                                    "direction": {
+                                        "description": "Direction of the traffic to be mirrored from the source ports - rx- mirror ingress traffic only - tx- mirror egress traffic only - rx-tx- mirror both ingress and egress",
+                                        "type": "string",
+                                        "enum": [
+                                            "rx",
+                                            "tx",
+                                            "rx-tx"
+                                        ]
+                                    }
+                                }
+                            },
+                            "destination": {
+                                "description": "Configuration applicable only when the switch acts as the RSPAN destination. Determines which ports output the replicated traffic arriving on the RSPAN VLAN.",
+                                "type": "object",
+                                "properties": {
+                                    "analysis-ports": {
+                                        "description": "One or more interfaces that receive the final mirrored traffic. These ports typically connect to packet analyzers, probes, or traffic capture tools.",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "examples": [
+                                                "Ethernet1",
+                                                "Ethernet2"
+                                            ]
+                                        }
+                                    },
+                                    "tag-mode": {
+                                        "description": "Specifies whether the mirrored packets should exit the destination port with the RSPAN VLAN tag preserved (tagged) or with the VLAN tag removed (untagged), depending on the analyzer requirements.",
+                                        "type": "string",
+                                        "enum": [
+                                            "tagged",
+                                            "untagged"
+                                        ]
+                                    }
+                                }
+                            },
+                            "remote": {
+                                "description": "Defines configuration used by both intermediate and destination switches. It identifies which uplink ports should carry the RSPAN VLAN transparently across the switching fabric.",
+                                "type": "object",
+                                "properties": {
+                                    "uplink-ports": {
+                                        "description": "List of trunk/hybrid uplink ports through which the RSPAN VLAN is forwarded. These ports must allow the RSPAN VLAN to pass unchanged throughout the L2 domain.",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "examples": [
+                                                "Ethernet1",
+                                                "Ethernet2"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 },
