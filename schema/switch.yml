@@ -648,6 +648,37 @@ properties:
       lockout-period-seconds:
         description: Duration (in seconds) for which the user account remains locked after exceeding  the failed attempt threshold.
         type: integer
+  qos-queue-config:
+    type: object
+    description: Global configuration for QoS priority queue scheduling and processing on L2 switches.
+    properties:
+      queue-scheduler-mode:
+        type: string
+        description: Sets the scheduling mode used for processing each of the Class of Service (CoS) priority queues.
+        enum:
+          - strict
+          - wrr
+          - strict-wrr
+          - wfq
+          - dwrr
+      queue-config:
+        type: array
+        description: List of priority queue configurations applied at the global QoS layer.
+        items:
+          type: object
+          properties:
+            queue-id:
+              type: integer
+              description: Identifier of the priority queue under configuration.
+              minimum: 0
+            queue-weight:
+              type: integer
+              description: Assigns weights to the CoS priority queues when using WRR or hybrid scheduling modes.
+              minimum: 1
+            queue-strict-mode:
+              type: boolean
+              description: Ensures that the highest priority packets are always serviced first, ahead of all other traffic.
+              default: false
   arp-inspect:
     $ref: "https://ucentral.io/schema/v1/switch/arp-inspect/"
   ip-source-guard:

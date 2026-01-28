@@ -544,3 +544,113 @@ properties:
         minimum: 0
         default: 0
         description:  Maximum allowed unknown unicast packets per second. 0 disables unknown unicast storm control.
+  qos-priority-mapping:
+    type: object
+    description: Interface-level QoS priority mapping configuration. Defines how ingress packet
+      markings (IP Precedence, CoS, DSCP) are interpreted and mapped to internal
+      per-hop behavior (PHB), drop precedence, and egress queue selection.
+    properties:
+      priority-untagged:
+        type: integer
+        description: Sets the default priority for incoming untagged Ethernet frames.
+        minimum: 0
+        maximum: 7
+      qos-map-trust-mode:
+        type: string
+        description: Determines which packet header field is trusted for ingress classification.
+        enum:
+          - cos
+          - dscp
+          - ip-precedence
+      qos-map-ipprec2dscp:
+        type: array
+        description: Maps IP Precedence values (0–7) in ingress packets to per-hop behavior (PHB)
+          and drop precedence. Used when trust mode is set to ip-precedence.
+        items:
+          type: object
+          properties:
+            preced:
+              type: integer
+              description: IP Precedence value in the incoming packet.
+              minimum: 0
+              maximum: 7
+            phb:
+              type: integer
+              description: Per-hop behavior (PHB) assigned to this IP Precedence.
+              minimum: 0
+              maximum: 63
+            drop-preced:
+              type: string
+              description: Drop precedence assigned for congestion control.
+              enum:
+                - green
+                - yellow
+                - red
+      qos-map-cos2dscp:
+        type: array
+        description: Maps CoS/CFI values in ingress packets to PHB and drop precedence.
+          Applied when trust mode is set to cos.
+        items:
+          type: object
+          properties:
+            cos:
+              type: integer
+              description: CoS value extracted from ingress frames.
+              minimum: 0
+              maximum: 7
+            cfi:
+              type: integer
+              description: Canonical Format Indicator (0 or 1).
+              minimum: 0
+              maximum: 1
+            phb:
+              type: integer
+              description: PHB assigned to this CoS/CFI mapping.
+              minimum: 0
+              maximum: 63
+            drop-preced:
+              type: string
+              description: Drop precedence for congestion handling.
+              enum:
+                - green
+                - yellow
+                - red
+      qos-map-dscpmutate:
+        type: array
+        description: Maps DSCP values (0–63) in ingress packets to custom PHB and drop precedence.
+          Used when trust mode is set to dscp.
+        items:
+          type: object
+          properties:
+            dscp:
+              type: integer
+              description: DSCP value from the IP header.
+              minimum: 0
+              maximum: 63
+            phb:
+              type: integer
+              description: PHB derived from DSCP-to-internal-priority mapping.
+              minimum: 0
+              maximum: 63
+            drop-preced:
+              type: string
+              description: Drop precedence classification for congestion.
+              enum:
+                - green
+                - yellow
+                - red
+      qos-map-phb2queue:
+        type: array
+        description: Maps PHB to output hardware queues for traffic scheduling.
+        items:
+          type: object
+          properties:
+            phb:
+              type: integer
+              description: Per-hop behavior value (internal priority).
+              minimum: 0
+              maximum: 63
+            queue-id:
+              type: integer
+              description: Hardware queue ID chosen for this PHB.
+              minimum: 0

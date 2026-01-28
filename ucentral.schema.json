@@ -708,6 +708,124 @@
                             "default": 0
                         }
                     }
+                },
+                "qos-priority-mapping": {
+                    "type": "object",
+                    "properties": {
+                        "priority-untagged": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 7
+                        },
+                        "qos-map-trust-mode": {
+                            "type": "string",
+                            "enum": [
+                                "cos",
+                                "dscp",
+                                "ip-precedence"
+                            ]
+                        },
+                        "qos-map-ipprec2dscp": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "preced": {
+                                        "type": "integer",
+                                        "minimum": 0,
+                                        "maximum": 7
+                                    },
+                                    "phb": {
+                                        "type": "integer",
+                                        "minimum": 0,
+                                        "maximum": 63
+                                    },
+                                    "drop-preced": {
+                                        "type": "string",
+                                        "enum": [
+                                            "green",
+                                            "yellow",
+                                            "red"
+                                        ]
+                                    }
+                                }
+                            }
+                        },
+                        "qos-map-cos2dscp": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "cos": {
+                                        "type": "integer",
+                                        "minimum": 0,
+                                        "maximum": 7
+                                    },
+                                    "cfi": {
+                                        "type": "integer",
+                                        "minimum": 0,
+                                        "maximum": 1
+                                    },
+                                    "phb": {
+                                        "type": "integer",
+                                        "minimum": 0,
+                                        "maximum": 63
+                                    },
+                                    "drop-preced": {
+                                        "type": "string",
+                                        "enum": [
+                                            "green",
+                                            "yellow",
+                                            "red"
+                                        ]
+                                    }
+                                }
+                            }
+                        },
+                        "qos-map-dscpmutate": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "dscp": {
+                                        "type": "integer",
+                                        "minimum": 0,
+                                        "maximum": 63
+                                    },
+                                    "phb": {
+                                        "type": "integer",
+                                        "minimum": 0,
+                                        "maximum": 63
+                                    },
+                                    "drop-preced": {
+                                        "type": "string",
+                                        "enum": [
+                                            "green",
+                                            "yellow",
+                                            "red"
+                                        ]
+                                    }
+                                }
+                            }
+                        },
+                        "qos-map-phb2queue": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "phb": {
+                                        "type": "integer",
+                                        "minimum": 0,
+                                        "maximum": 63
+                                    },
+                                    "queue-id": {
+                                        "type": "integer",
+                                        "minimum": 0
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -1639,11 +1757,6 @@
                                                             "default": "long"
                                                         }
                                                     }
-                                                },
-                                                "trunk-id": {
-                                                    "type": "integer",
-                                                    "minimum": 1,
-                                                    "maximum": 64
                                                 }
                                             }
                                         }
@@ -1712,6 +1825,41 @@
                         },
                         "lockout-period-seconds": {
                             "type": "integer"
+                        }
+                    }
+                },
+                "qos-queue-config": {
+                    "type": "object",
+                    "properties": {
+                        "queue-scheduler-mode": {
+                            "type": "string",
+                            "enum": [
+                                "strict",
+                                "wrr",
+                                "strict-wrr",
+                                "wfq",
+                                "dwrr"
+                            ]
+                        },
+                        "queue-config": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "queue-id": {
+                                        "type": "integer",
+                                        "minimum": 0
+                                    },
+                                    "queue-weight": {
+                                        "type": "integer",
+                                        "minimum": 1
+                                    },
+                                    "queue-strict-mode": {
+                                        "type": "boolean",
+                                        "default": false
+                                    }
+                                }
+                            }
                         }
                     }
                 },
