@@ -2082,6 +2082,12 @@
                                                             "default": "long"
                                                         }
                                                     }
+                                                },
+                                                "trunk-id": {
+                                                    "description": "Specifies the trunk group ID used as the mclag-group.",
+                                                    "type": "integer",
+                                                    "minimum": 1,
+                                                    "maximum": 64
                                                 }
                                             }
                                         }
