@@ -1188,19 +1188,16 @@
             "type": "object",
             "properties": {
                 "port-mirror": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "monitor-ports": {
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
-                                }
-                            },
-                            "analysis-port": {
+                    "type": "object",
+                    "properties": {
+                        "monitor-ports": {
+                            "type": "array",
+                            "items": {
                                 "type": "string"
                             }
+                        },
+                        "analysis-port": {
+                            "type": "string"
                         }
                     }
                 },
