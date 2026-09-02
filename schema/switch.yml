@@ -692,6 +692,8 @@ properties:
     $ref: "https://ucentral.io/schema/v1/switch/rtevent/"
   acl:
     $ref: "https://ucentral.io/schema/v1/switch/acl/"
+  pim:
+    $ref: "https://ucentral.io/schema/v1/switch/pim/"
   dns:
     description: Define a global list of dns servers.
     type: array

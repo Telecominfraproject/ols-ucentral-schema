@@ -178,6 +178,8 @@ properties:
           - mvr-intf-mvr-role
           - mvr-intf-immed-leave
           - mvr-intf-assoc-domain
+      pim:
+        $ref: "https://ucentral.io/schema/v1/interface/ipv4/multicast/pim/"
   send-hostname:
     description:
       include the devices hostname inside DHCP requests

@@ -1,0 +1,69 @@
+description: Operational state of PIM-SM (Protocol Independent Multicast – Sparse Mode) on the switch.
+type: object
+properties:
+  neighbors:
+    description: List of discovered PIM neighbors across all VLAN interfaces.
+    type: array
+    items:
+      type: object
+      properties:
+        interface:
+          description: VLAN interface on which this PIM neighbor was discovered (e.g., Vlan10).
+          type: string
+        neighbor-address:
+          description: IPv4 address of the PIM neighbor.
+          type: string
+          format: ipv4
+          examples:
+            - 10.1.1.2
+        uptime:
+          description: Time in seconds since this PIM neighbor relationship was established.
+          type: integer
+          minimum: 0
+        expires:
+          description: Remaining holdtime in seconds before this neighbor is declared unreachable. A value near 0 indicates the neighbor may be going down.
+          type: integer
+          minimum: 0
+        dr-priority:
+          description: Designated Router (DR) priority advertised by this neighbor. The neighbor with the highest priority wins the DR election.
+          type: integer
+          minimum: 0
+  mroutes:
+    description: List of IP multicast routing table entries (mroutes) maintained by PIM-SM.
+    type: array
+    items:
+      type: object
+      properties:
+        source:
+          description: Source IP address of the multicast stream. The value "*" indicates a shared-tree (*,G) entry where the source is any.
+          type: string
+        group:
+          description: IPv4 multicast group address for this mroute entry.
+          type: string
+          format: ipv4
+          examples:
+            - 239.1.1.1
+        rp-address:
+          description: IPv4 address of the Rendezvous Point (RP) responsible for this multicast group. Present only for shared-tree (*,G) entries.
+          type: string
+          format: ipv4
+          examples:
+            - 10.0.0.1
+        uptime:
+          description: Time in seconds since this mroute entry was created.
+          type: integer
+          minimum: 0
+        incoming-interface:
+          description: Interface (VLAN) on which multicast traffic for this entry is received (the RPF interface toward the source or RP).
+          type: string
+        rpf-neighbor:
+          description: IPv4 address of the upstream RPF neighbor for this mroute entry. Traffic is expected to arrive from this neighbor.
+          type: string
+          format: ipv4
+          examples:
+            - 10.1.1.2
+        outgoing-interfaces:
+          description: List of interfaces on which multicast traffic for this entry is forwarded to downstream receivers.
+          type: array
+          items:
+            type: string

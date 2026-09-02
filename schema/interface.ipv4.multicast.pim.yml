@@ -1,0 +1,43 @@
+description: PIM sparse-mode (PIM-SM) configuration for this VLAN interface.
+type: object
+properties:
+  enable:
+    description: Enable PIM sparse-mode on this VLAN interface.
+    type: boolean
+    default: false
+  hello-interval:
+    description: Interval (seconds) between PIM Hello messages sent on this interface.
+    type: integer
+    minimum: 1
+    maximum: 65535
+    default: 30
+  hello-holdtime:
+    description: Time (seconds) a neighbor waits before declaring this router unreachable. Must be greater than hello-interval.
+    type: integer
+    minimum: 1
+    maximum: 65535
+    default: 105
+  dr-priority:
+    description: Designated Router election priority for this interface. Higher value wins the DR election.
+    type: integer
+    minimum: 0
+    maximum: 4294967294
+    default: 1
+  join-prune-interval:
+    description: Interval (seconds) between PIM Join/Prune messages sent on this interface.
+    type: integer
+    minimum: 1
+    maximum: 65535
+    default: 60
+  propagation-delay:
+    description: Estimated link propagation delay (milliseconds) for this LAN segment, used in PIM assert and override calculations.
+    type: integer
+    minimum: 100
+    maximum: 5000
+    default: 500
+  override-interval:
+    description: Time (milliseconds) a downstream router waits before overriding a prune on this interface.
+    type: integer
+    minimum: 500
+    maximum: 6000
+    default: 2500
