@@ -150,6 +150,15 @@ properties:
                   format: ipv4
                   examples:
                   - 225.0.0.1
+          mrouter:
+            description: Statically configure ports as multicast router (mrouter) ports on this VLAN interface. Mrouter ports forward all inbound multicast traffic to the upstream router.
+            type: object
+            properties:
+              ports:
+                description: List of port names to be statically designated as multicast router ports on this VLAN.
+                type: array
+                items:
+                  type: string
       mvr:
         type: object
         description: MVR attributes on a given interface
