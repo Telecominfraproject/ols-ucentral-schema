@@ -159,4 +159,114 @@ properties:
             type: boolean
             description: Enable/Disable DHCP Snooping violation cleared event.
             default: false
-  # Continue similarly for ARP Inspection, IPSG, PoE Status, PoE Fault, and Device Events.
+  poe-status:
+    description: Enable/Disable PoE Status events reporting the operational state of PSE port PD detection.
+    type: object
+    properties:
+      enabled:
+        type: boolean
+        description: Enable/Disable PoE Status category.
+        default: false
+      sub-events:
+        type: object
+        properties:
+          wired.poe.status.disabled:
+            type: boolean
+            description: Enable/Disable event indicating PSE State is DISABLED (PoE disabled on port by configuration).
+            default: false
+          wired.poe.status.searching:
+            type: boolean
+            description: Enable/Disable event indicating PSE is in an intermediate state searching for a powered device.
+            default: false
+          wired.poe.status.delivering_power:
+            type: boolean
+            description: Enable/Disable event indicating PSE State is POWER_ON and a powered device is receiving power.
+            default: false
+          wired.poe.status.fault:
+            type: boolean
+            description: Enable/Disable event indicating PSE State is IDLE due to internal error conditions preventing power delivery.
+            default: false
+          wired.poe.status.overload:
+            type: boolean
+            description: Enable/Disable event indicating PSE State is OVERLOAD.
+            default: false
+  poe-fault:
+    description: Enable/Disable PoE Fault events reporting the specific error condition when a PSE port is in fault status.
+    type: object
+    properties:
+      enabled:
+        type: boolean
+        description: Enable/Disable PoE Fault category.
+        default: false
+      sub-events:
+        type: object
+        properties:
+          wired.poe.fault.ovlo:
+            type: boolean
+            description: Enable/Disable event indicating the port has detected an over voltage lockout condition.
+            default: false
+          wired.poe.fault.mps_absent:
+            type: boolean
+            description: Enable/Disable event indicating the PSE port has detected an absence of Maintain Power Signature (MPS).
+            default: false
+          wired.poe.fault.short:
+            type: boolean
+            description: Enable/Disable event indicating the PSE port has detected a short circuit condition.
+            default: false
+          wired.poe.fault.overload:
+            type: boolean
+            description: Enable/Disable event indicating the connected PD attempted to draw more power than permissible by hardware.
+            default: false
+          wired.poe.fault.power_denied:
+            type: boolean
+            description: Enable/Disable event indicating the powered device port was denied power due to power shortage or administrative action.
+            default: false
+          wired.poe.fault.thermal_shutdown:
+            type: boolean
+            description: Enable/Disable event indicating the thermal threshold has been exceeded for the PSE port.
+            default: false
+          wired.poe.fault.startup_failure:
+            type: boolean
+            description: Enable/Disable event indicating the port does not have sufficient voltage to start up.
+            default: false
+          wired.poe.fault.uvlo:
+            type: boolean
+            description: Enable/Disable event indicating the port has detected an under voltage lockout condition.
+            default: false
+          wired.poe.fault.hw_pin_disable:
+            type: boolean
+            description: Enable/Disable event indicating the hardware disable-all-ports pin is active.
+            default: false
+          wired.poe.fault.port_undefined:
+            type: boolean
+            description: Enable/Disable event indicating the port is not mapped to a physical port and is in an unknown state.
+            default: false
+          wired.poe.fault.internal_hw_fault:
+            type: boolean
+            description: Enable/Disable event indicating the port does not respond due to a communication failure.
+            default: false
+          wired.poe.fault.user_setting:
+            type: boolean
+            description: Enable/Disable event indicating the port was disabled by a user command.
+            default: false
+          wired.poe.fault.non_standard_pd:
+            type: boolean
+            description: Enable/Disable event indicating a non-802.3AF/AT powered device is connected.
+            default: false
+          wired.poe.fault.underload:
+            type: boolean
+            description: Enable/Disable event indicating the connected PD attempted to draw less power than permissible by hardware.
+            default: false
+          wired.poe.fault.pwr_budget_exceeded:
+            type: boolean
+            description: Enable/Disable event indicating the power management function shut down the port due to insufficient power budget.
+            default: false
+          wired.poe.fault.oor_capacitor_value:
+            type: boolean
+            description: Enable/Disable event indicating power sourcing failed due to an out-of-range capacitor value.
+            default: false
+          wired.poe.fault.class_error:
+            type: boolean
+            description: Enable/Disable event indicating power sourcing failed because the powered device requested an illegal power class.
+            default: false
+  # Continue similarly for ARP Inspection, IPSG, and Device Events.
