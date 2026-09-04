@@ -1184,6 +1184,109 @@
                 }
             }
         },
+        "switch.pim": {
+            "type": "object",
+            "properties": {
+                "spt-threshold": {
+                    "type": "object",
+                    "properties": {
+                        "infinity": {
+                            "type": "boolean",
+                            "default": false
+                        },
+                        "group-prefix": {
+                            "type": "object",
+                            "properties": {
+                                "address": {
+                                    "type": "string",
+                                    "format": "ipv4",
+                                    "examples": [
+                                        "239.0.0.0"
+                                    ]
+                                },
+                                "mask": {
+                                    "type": "string",
+                                    "format": "ipv4",
+                                    "examples": [
+                                        "255.0.0.0"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "ssm-ranges": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "address": {
+                                "type": "string",
+                                "format": "ipv4",
+                                "examples": [
+                                    "232.0.0.0"
+                                ]
+                            },
+                            "mask": {
+                                "type": "string",
+                                "format": "ipv4",
+                                "examples": [
+                                    "255.0.0.0"
+                                ]
+                            }
+                        },
+                        "required": [
+                            "address",
+                            "mask"
+                        ]
+                    }
+                },
+                "rendezvous-points": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "address": {
+                                "type": "string",
+                                "format": "ipv4",
+                                "examples": [
+                                    "10.0.0.1"
+                                ]
+                            },
+                            "group-prefix": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "address": {
+                                            "type": "string",
+                                            "format": "ipv4",
+                                            "examples": [
+                                                "224.0.0.0"
+                                            ]
+                                        },
+                                        "mask": {
+                                            "type": "string",
+                                            "format": "ipv4",
+                                            "examples": [
+                                                "240.0.0.0"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "address",
+                                        "mask"
+                                    ]
+                                }
+                            }
+                        },
+                        "required": [
+                            "address"
+                        ]
+                    }
+                }
+            }
+        },
         "switch": {
             "type": "object",
             "properties": {
@@ -1880,6 +1983,9 @@
                 "acl": {
                     "$ref": "#/$defs/switch.acl"
                 },
+                "pim": {
+                    "$ref": "#/$defs/switch.pim"
+                },
                 "dns": {
                     "type": "array",
                     "items": {
@@ -1989,6 +2095,57 @@
                         "auto"
                     ],
                     "default": "auto"
+                }
+            }
+        },
+        "interface.ipv4.multicast.pim": {
+            "type": "object",
+            "properties": {
+                "enable": {
+                    "type": "boolean",
+                    "default": false
+                },
+                "hello-interval": {
+                    "type": "integer",
+                    "default": 30,
+                    "examples": [
+                        30
+                    ]
+                },
+                "hello-holdtime": {
+                    "type": "integer",
+                    "default": 105,
+                    "examples": [
+                        105
+                    ]
+                },
+                "dr-priority": {
+                    "type": "integer",
+                    "default": 1,
+                    "examples": [
+                        1
+                    ]
+                },
+                "join-prune-interval": {
+                    "type": "integer",
+                    "default": 60,
+                    "examples": [
+                        60
+                    ]
+                },
+                "propagation-delay": {
+                    "type": "integer",
+                    "default": 500,
+                    "examples": [
+                        500
+                    ]
+                },
+                "override-interval": {
+                    "type": "integer",
+                    "default": 2500,
+                    "examples": [
+                        2500
+                    ]
                 }
             }
         },
@@ -2287,6 +2444,9 @@
                                 "mvr-intf-immed-leave",
                                 "mvr-intf-assoc-domain"
                             ]
+                        },
+                        "pim": {
+                            "$ref": "#/$defs/interface.ipv4.multicast.pim"
                         }
                     }
                 },

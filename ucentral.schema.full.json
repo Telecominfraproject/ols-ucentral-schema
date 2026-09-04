@@ -2179,6 +2179,123 @@
                         }
                     }
                 },
+                "pim": {
+                    "description": "Global PIM-SM (Protocol Independent Multicast \u2013 Sparse Mode) configuration for the switch.",
+                    "type": "object",
+                    "properties": {
+                        "spt-threshold": {
+                            "description": "Controls when a first-hop router switches from the shared tree to the shortest-path tree.",
+                            "type": "object",
+                            "properties": {
+                                "infinity": {
+                                    "description": "When true, the router never switches to the shortest-path tree and always uses the shared tree via the RP.",
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "group-prefix": {
+                                    "description": "Restrict SPT-threshold infinity behaviour to a specific multicast group prefix.",
+                                    "type": "object",
+                                    "properties": {
+                                        "address": {
+                                            "description": "IPv4 multicast group network address.",
+                                            "type": "string",
+                                            "format": "ipv4",
+                                            "examples": [
+                                                "239.0.0.0"
+                                            ]
+                                        },
+                                        "mask": {
+                                            "description": "Subnet mask for the multicast group prefix.",
+                                            "type": "string",
+                                            "format": "ipv4",
+                                            "examples": [
+                                                "255.0.0.0"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "ssm-ranges": {
+                            "description": "List of Source-Specific Multicast (SSM) address ranges. Multiple non-contiguous ranges may be specified.",
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "address": {
+                                        "description": "Starting IPv4 multicast group address for the SSM range.",
+                                        "type": "string",
+                                        "format": "ipv4",
+                                        "examples": [
+                                            "232.0.0.0"
+                                        ]
+                                    },
+                                    "mask": {
+                                        "description": "Subnet mask for the SSM address range.",
+                                        "type": "string",
+                                        "format": "ipv4",
+                                        "examples": [
+                                            "255.0.0.0"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "address",
+                                    "mask"
+                                ]
+                            }
+                        },
+                        "rendezvous-points": {
+                            "description": "List of PIM Rendezvous Point (RP) addresses and their associated group prefixes.",
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "address": {
+                                        "description": "IPv4 address of the Rendezvous Point.",
+                                        "type": "string",
+                                        "format": "ipv4",
+                                        "examples": [
+                                            "10.0.0.1"
+                                        ]
+                                    },
+                                    "group-prefix": {
+                                        "description": "List of multicast group prefixes served by this RP. If omitted, the RP serves all groups.",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "address": {
+                                                    "description": "IPv4 multicast group network address.",
+                                                    "type": "string",
+                                                    "format": "ipv4",
+                                                    "examples": [
+                                                        "224.0.0.0"
+                                                    ]
+                                                },
+                                                "mask": {
+                                                    "description": "Subnet mask for the multicast group prefix.",
+                                                    "type": "string",
+                                                    "format": "ipv4",
+                                                    "examples": [
+                                                        "240.0.0.0"
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "address",
+                                                "mask"
+                                            ]
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "address"
+                                ]
+                            }
+                        }
+                    }
+                },
                 "dns": {
                     "description": "Define a global list of dns servers.",
                     "type": "array",
@@ -2575,6 +2692,65 @@
                                             "mvr-intf-immed-leave",
                                             "mvr-intf-assoc-domain"
                                         ]
+                                    },
+                                    "pim": {
+                                        "description": "PIM sparse-mode (PIM-SM) configuration for this VLAN interface.",
+                                        "type": "object",
+                                        "properties": {
+                                            "enable": {
+                                                "description": "Enable PIM sparse-mode on this VLAN interface.",
+                                                "type": "boolean",
+                                                "default": false
+                                            },
+                                            "hello-interval": {
+                                                "description": "Interval (seconds) between PIM Hello messages sent on this interface.",
+                                                "type": "integer",
+                                                "default": 30,
+                                                "examples": [
+                                                    30
+                                                ]
+                                            },
+                                            "hello-holdtime": {
+                                                "description": "Time (seconds) a neighbor waits before declaring this router unreachable. Must be greater than hello-interval.",
+                                                "type": "integer",
+                                                "default": 105,
+                                                "examples": [
+                                                    105
+                                                ]
+                                            },
+                                            "dr-priority": {
+                                                "description": "Designated Router election priority for this interface. Higher value wins the DR election.",
+                                                "type": "integer",
+                                                "default": 1,
+                                                "examples": [
+                                                    1
+                                                ]
+                                            },
+                                            "join-prune-interval": {
+                                                "description": "Interval (seconds) between PIM Join/Prune messages sent on this interface.",
+                                                "type": "integer",
+                                                "default": 60,
+                                                "examples": [
+                                                    60
+                                                ]
+                                            },
+                                            "propagation-delay": {
+                                                "description": "Estimated link propagation delay (milliseconds) for this LAN segment, used in PIM assert and override calculations.",
+                                                "type": "integer",
+                                                "default": 500,
+                                                "examples": [
+                                                    500
+                                                ]
+                                            },
+                                            "override-interval": {
+                                                "description": "Time (milliseconds) a downstream router waits before overriding a prune on this interface.",
+                                                "type": "integer",
+                                                "default": 2500,
+                                                "examples": [
+                                                    2500
+                                                ]
+                                            }
+                                        }
                                     }
                                 }
                             },
