@@ -2526,6 +2526,21 @@
                                             }
                                         }
                                     }
+                                },
+                                "static-mrouter-ports": {
+                                    "type": "object",
+                                    "properties": {
+                                        "ports": {
+                                            "type": "array",
+                                            "uniqueItems": true,
+                                            "items": {
+                                                "type": "string",
+                                                "examples": [
+                                                    "Ethernet0"
+                                                ]
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         },
