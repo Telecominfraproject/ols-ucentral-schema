@@ -257,6 +257,7 @@ properties:
       - Routing-IPv4-Multicast-IGMP-Snooping
       - Routing-IPv4-Multicast-IGMP-Querier
       - Routing-IPv4-Multicast-IGMP-Static
+      - Routing-IPv4-Multicast-PIM-SM
       - Routing-IPv4-DHCP-Server
       - Routing-IPv4-DHCP-Relay
       - Routing-IPv4-DHCP-Snooping

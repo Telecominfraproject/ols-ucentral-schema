@@ -56,6 +56,8 @@ properties:
     $ref: "https://ucentral.io/state/v1/static-trunks/"
   lacp-trunks:
     $ref: "https://ucentral.io/state/v1/lacp-trunks/"
+  pim:
+    $ref: "https://ucentral.io/state/v1/pim/"
   uplink_interface:
     type: string
     description:
