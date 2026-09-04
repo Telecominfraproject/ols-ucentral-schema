@@ -306,6 +306,20 @@
                     }
                 }
             }
+        },
+        "management": {
+            "description": "Currently active management interface (failover state).",
+            "type": "object",
+            "properties": {
+                "active_interface": {
+                    "description": "Name of the currently active management interface (e.g. \"Vlan200\").",
+                    "type": "string"
+                },
+                "active_priority": {
+                    "description": "Priority value of the currently active management interface.",
+                    "type": "integer"
+                }
+            }
         }
     },
     "$defs": {
@@ -762,6 +776,10 @@
                         "description": "VLAN-ID of the logical interface",
                         "type": "integer",
                         "maximum": 4094
+                    },
+                    "mgmt_iface_priority": {
+                        "description": "Priority value reported per interface when management priority is configured.",
+                        "type": "integer"
                     },
                     "ntp_server": {
                         "type": "string",

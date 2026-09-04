@@ -3007,6 +3007,12 @@
                         ]
                     }
                 },
+                "mgmt-iface-priority": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 32,
+                    "default": 0
+                },
                 "vlan-awareness": {
                     "type": "object",
                     "properties": {
