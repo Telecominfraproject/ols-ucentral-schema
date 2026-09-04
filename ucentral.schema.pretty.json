@@ -3527,6 +3527,13 @@
                         ]
                     }
                 },
+                "mgmt-iface-priority": {
+                    "description": "Management interface fallback priority. 0 = not used for management (default); 1 = highest priority / primary; N = N-th fallback (higher number = lower priority). Values must be unique across all interfaces. Priority 1 must use ipv4.addressing \"dynamic\" or \"static\"; fallback interfaces (>= 2) may also use \"none\".",
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 32,
+                    "default": 0
+                },
                 "vlan-awareness": {
                     "description": "Setup additional VLANs inside the bridge",
                     "type": "object",

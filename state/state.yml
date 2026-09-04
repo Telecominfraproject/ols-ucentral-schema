@@ -224,3 +224,13 @@ properties:
             lockout-expiry-time:
               type: integer
               description: UNIX timestamp (in seconds) when the lockout period will end and access will be restored.
+  management:
+    description: Currently active management interface (failover state).
+    type: object
+    properties:
+      active_interface:
+        description: Name of the currently active management interface (e.g. "Vlan200").
+        type: string
+      active_priority:
+        description: Priority value of the currently active management interface.
+        type: integer

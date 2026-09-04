@@ -20,6 +20,9 @@ items:
       description: VLAN-ID of the logical interface
       type: integer
       maximum: 4094
+    mgmt_iface_priority:
+      description: Priority value reported per interface when management priority is configured.
+      type: integer
     ntp_server:
       type: string
       description:
