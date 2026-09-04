@@ -150,6 +150,24 @@ properties:
                   format: ipv4
                   examples:
                   - 225.0.0.1
+          static-mrouter-ports:
+            description:
+              Statically designate Layer 2 ports as multicast router (mrouter) ports for this VLAN.
+              When set, IGMP snooping forwards all inbound multicast traffic to these ports
+              regardless of dynamic IGMP querier detection. If omitted, no static mrouter ports
+              are configured and the switch relies on dynamic IGMP querier detection.
+            type: object
+            properties:
+              ports:
+                description:
+                  List of port names statically designated as mrouter ports on this VLAN
+                  (e.g. "Ethernet0"). Duplicate entries are not permitted.
+                type: array
+                uniqueItems: true
+                items:
+                  type: string
+                  examples:
+                  - Ethernet0
       mvr:
         type: object
         description: MVR attributes on a given interface
