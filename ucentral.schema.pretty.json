@@ -1258,6 +1258,148 @@
                             }
                         }
                     }
+                },
+                "poe-status": {
+                    "description": "Enable/Disable PoE Status events.",
+                    "type": "object",
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean",
+                            "description": "Enable/Disable PoE Status category.",
+                            "default": false
+                        },
+                        "sub-events": {
+                            "type": "object",
+                            "properties": {
+                                "wired.poe.status.disabled": {
+                                    "type": "boolean",
+                                    "description": "Enable/Disable the event reported when a PoE port is administratively or operationally disabled and delivers no power.",
+                                    "default": false
+                                },
+                                "wired.poe.status.searching": {
+                                    "type": "boolean",
+                                    "description": "Enable/Disable the event reported when a PoE port is searching for and detecting a powered device (PD) before delivering power.",
+                                    "default": false
+                                },
+                                "wired.poe.status.delivering_power": {
+                                    "type": "boolean",
+                                    "description": "Enable/Disable the event reported when a PoE port has detected a valid powered device and is delivering power.",
+                                    "default": false
+                                },
+                                "wired.poe.status.fault": {
+                                    "type": "boolean",
+                                    "description": "Enable/Disable the event reported when a PoE port enters a fault state that prevents power delivery.",
+                                    "default": false
+                                },
+                                "wired.poe.status.overload": {
+                                    "type": "boolean",
+                                    "description": "Enable/Disable the event reported when a PoE port draws more current than its configured or negotiated limit.",
+                                    "default": false
+                                }
+                            }
+                        }
+                    }
+                },
+                "poe-fault": {
+                    "description": "Enable/Disable PoE Fault events.",
+                    "type": "object",
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean",
+                            "description": "Enable/Disable PoE Fault category.",
+                            "default": false
+                        },
+                        "sub-events": {
+                            "type": "object",
+                            "properties": {
+                                "wired.poe.fault.ovlo": {
+                                    "type": "boolean",
+                                    "description": "Enable/Disable the over-voltage lockout (OVLO) fault, reported when the PSE input voltage exceeds the safe operating range and power delivery is stopped.",
+                                    "default": false
+                                },
+                                "wired.poe.fault.mps_absent": {
+                                    "type": "boolean",
+                                    "description": "Enable/Disable the maintain power signature (MPS) absent fault, reported when the powered device stops presenting a valid MPS and the port is powered down.",
+                                    "default": false
+                                },
+                                "wired.poe.fault.short": {
+                                    "type": "boolean",
+                                    "description": "Enable/Disable the short-circuit fault, reported when a short circuit is detected on the PoE port.",
+                                    "default": false
+                                },
+                                "wired.poe.fault.overload": {
+                                    "type": "boolean",
+                                    "description": "Enable/Disable the overload fault, reported when the powered device draws current beyond the port's rated limit.",
+                                    "default": false
+                                },
+                                "wired.poe.fault.power_denied": {
+                                    "type": "boolean",
+                                    "description": "Enable/Disable the power-denied fault, reported when the PSE refuses to power the port (for example, insufficient power budget).",
+                                    "default": false
+                                },
+                                "wired.poe.fault.thermal_shutdown": {
+                                    "type": "boolean",
+                                    "description": "Enable/Disable the thermal shutdown fault, reported when the PSE disables the port because its temperature exceeded a safe threshold.",
+                                    "default": false
+                                },
+                                "wired.poe.fault.startup_failure": {
+                                    "type": "boolean",
+                                    "description": "Enable/Disable the startup failure fault, reported when the port fails to complete the PoE power-up sequence.",
+                                    "default": false
+                                },
+                                "wired.poe.fault.uvlo": {
+                                    "type": "boolean",
+                                    "description": "Enable/Disable the under-voltage lockout (UVLO) fault, reported when the PSE input voltage drops below the minimum operating range.",
+                                    "default": false
+                                },
+                                "wired.poe.fault.hw_pin_disable": {
+                                    "type": "boolean",
+                                    "description": "Enable/Disable the hardware pin disable fault, reported when a hardware disable pin forces the port off.",
+                                    "default": false
+                                },
+                                "wired.poe.fault.port_undefined": {
+                                    "type": "boolean",
+                                    "description": "Enable/Disable the port-undefined fault, reported when the port is in an undefined or unrecognized PoE state.",
+                                    "default": false
+                                },
+                                "wired.poe.fault.internal_hw_fault": {
+                                    "type": "boolean",
+                                    "description": "Enable/Disable the internal hardware fault, reported when the PSE detects an internal hardware error preventing power delivery.",
+                                    "default": false
+                                },
+                                "wired.poe.fault.user_setting": {
+                                    "type": "boolean",
+                                    "description": "Enable/Disable the user-setting fault, reported when a user configuration prevents the port from delivering power.",
+                                    "default": false
+                                },
+                                "wired.poe.fault.non_standard_pd": {
+                                    "type": "boolean",
+                                    "description": "Enable/Disable the non-standard powered device fault, reported when a connected device does not comply with the IEEE PoE standard.",
+                                    "default": false
+                                },
+                                "wired.poe.fault.underload": {
+                                    "type": "boolean",
+                                    "description": "Enable/Disable the underload fault, reported when the powered device draws less current than the minimum required to maintain power.",
+                                    "default": false
+                                },
+                                "wired.poe.fault.pwr_budget_exceeded": {
+                                    "type": "boolean",
+                                    "description": "Enable/Disable the power-budget-exceeded fault, reported when powering the port would exceed the system's total PoE power budget.",
+                                    "default": false
+                                },
+                                "wired.poe.fault.oor_capacitor_value": {
+                                    "type": "boolean",
+                                    "description": "Enable/Disable the out-of-range capacitor value fault, reported when the detected PD capacitance is outside the valid range.",
+                                    "default": false
+                                },
+                                "wired.poe.fault.class_error": {
+                                    "type": "boolean",
+                                    "description": "Enable/Disable the classification error fault, reported when the powered device presents an invalid or out-of-range power classification.",
+                                    "default": false
+                                }
+                            }
+                        }
+                    }
                 }
             }
         },

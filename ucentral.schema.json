@@ -1062,6 +1062,122 @@
                             }
                         }
                     }
+                },
+                "poe-status": {
+                    "type": "object",
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean",
+                            "default": false
+                        },
+                        "sub-events": {
+                            "type": "object",
+                            "properties": {
+                                "wired.poe.status.disabled": {
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "wired.poe.status.searching": {
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "wired.poe.status.delivering_power": {
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "wired.poe.status.fault": {
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "wired.poe.status.overload": {
+                                    "type": "boolean",
+                                    "default": false
+                                }
+                            }
+                        }
+                    }
+                },
+                "poe-fault": {
+                    "type": "object",
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean",
+                            "default": false
+                        },
+                        "sub-events": {
+                            "type": "object",
+                            "properties": {
+                                "wired.poe.fault.ovlo": {
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "wired.poe.fault.mps_absent": {
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "wired.poe.fault.short": {
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "wired.poe.fault.overload": {
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "wired.poe.fault.power_denied": {
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "wired.poe.fault.thermal_shutdown": {
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "wired.poe.fault.startup_failure": {
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "wired.poe.fault.uvlo": {
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "wired.poe.fault.hw_pin_disable": {
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "wired.poe.fault.port_undefined": {
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "wired.poe.fault.internal_hw_fault": {
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "wired.poe.fault.user_setting": {
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "wired.poe.fault.non_standard_pd": {
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "wired.poe.fault.underload": {
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "wired.poe.fault.pwr_budget_exceeded": {
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "wired.poe.fault.oor_capacitor_value": {
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "wired.poe.fault.class_error": {
+                                    "type": "boolean",
+                                    "default": false
+                                }
+                            }
+                        }
+                    }
                 }
             }
         },
