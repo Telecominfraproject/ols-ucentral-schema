@@ -125,6 +125,36 @@ properties:
           - "high"
           - "medium"
           - "low"
+      scheduling:
+        description:
+          This section describes the per-port PoE scheduling configuration.
+          The referenced profiles are defined in unit.poe.scheduling-profiles.
+        type: object
+        properties:
+          enable:
+            description:
+              Enable or disable PoE scheduling on this port.
+              When set to <true> and at least one profile is listed in profiles,
+              PoE power on this port is controlled by the referenced profiles.
+              When set to <true> but profiles is empty or not set, PoE scheduling
+              is treated as disabled on this port.
+              When set to <false>, PoE power on this port follows admin-mode only.
+              PoE scheduling only takes effect while admin-mode is <true>;
+              if admin-mode is <false>, no PoE power is delivered regardless of
+              the schedule.
+            type: boolean
+            default: false
+          profiles:
+            description:
+              Names of the PoE scheduling profiles applied to this port.
+              PoE power is delivered while any of the referenced profiles is active
+              and is turned off outside of all referenced time windows.
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+            examples:
+              - [ "schedule1", "schedule3" ]
   ieee8021x:
     description:
       This section describes the per-port specific 802.1X (port access control) configuration.
