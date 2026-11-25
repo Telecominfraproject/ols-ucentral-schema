@@ -131,6 +131,83 @@
                             "description": "Configure a power alarm threshold for the Power sourcing equipment (in percentages %).",
                             "type": "number",
                             "default": 90
+                        },
+                        "scheduling-profiles": {
+                            "description": "List of system-wide PoE scheduling profiles. Each profile is a named time window that can be referenced by PoE ports (ethernet.poe.scheduling.profiles). During the time window of a profile referenced by a port, PoE power is delivered on that port; outside of all referenced time windows, PoE power is turned off. Times are evaluated in the device local time (see unit.timezone). A profile normally uses either the absolute time window or the periodic time window. If both are set in the same profile, they are treated independently, without merging, and the profile is active whenever either window's condition is met.",
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "description": "Unique name of the scheduling profile. Referenced by ethernet.poe.scheduling.profiles.",
+                                        "type": "string",
+                                        "minLength": 1,
+                                        "maxLength": 32,
+                                        "examples": [
+                                            "schedule1"
+                                        ]
+                                    },
+                                    "absolute-start-time": {
+                                        "description": "Absolute (one-time) start date and time of the profile, in the format \"YYYY-MM-DD HH:MM\". Empty string means not used.",
+                                        "type": "string",
+                                        "pattern": "^$|^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01]) ([01][0-9]|2[0-3]):[0-5][0-9]$",
+                                        "examples": [
+                                            "2026-12-24 00:00"
+                                        ]
+                                    },
+                                    "absolute-end-time": {
+                                        "description": "Absolute (one-time) end date and time of the profile, in the format \"YYYY-MM-DD HH:MM\". Empty string means not used.",
+                                        "type": "string",
+                                        "pattern": "^$|^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01]) ([01][0-9]|2[0-3]):[0-5][0-9]$",
+                                        "examples": [
+                                            "2026-12-26 00:00"
+                                        ]
+                                    },
+                                    "periodic-weekdays": {
+                                        "description": "Days of the week on which the periodic time window applies.",
+                                        "type": "array",
+                                        "uniqueItems": true,
+                                        "items": {
+                                            "type": "string",
+                                            "enum": [
+                                                "Mon",
+                                                "Tue",
+                                                "Wed",
+                                                "Thu",
+                                                "Fri",
+                                                "Sat",
+                                                "Sun"
+                                            ]
+                                        },
+                                        "examples": [
+                                            [
+                                                "Wed",
+                                                "Thu",
+                                                "Fri"
+                                            ]
+                                        ]
+                                    },
+                                    "periodic-start-time": {
+                                        "description": "Daily start time of the periodic window, in the format \"HH:MM\". The periodic window is defined per day within 00:00-24:00 and must not cross midnight, so periodic-start-time must be earlier than periodic-end-time. A window spanning midnight must be configured as separate profiles (e.g. 22:00-24:00 and 00:00-06:00). Empty string means not used.",
+                                        "type": "string",
+                                        "pattern": "^$|^([01][0-9]|2[0-3]):[0-5][0-9]$",
+                                        "examples": [
+                                            "00:00"
+                                        ]
+                                    },
+                                    "periodic-end-time": {
+                                        "description": "Daily end time of the periodic window, in the format \"HH:MM\". \"24:00\" means the end of the day (midnight). Empty string means not used.",
+                                        "type": "string",
+                                        "pattern": "^$|^([01][0-9]|2[0-3]):[0-5][0-9]$|^24:00$",
+                                        "examples": [
+                                            "12:00"
+                                        ]
+                                    }
+                                }
+                            }
                         }
                     }
                 },
@@ -342,6 +419,31 @@
                                 "medium",
                                 "low"
                             ]
+                        },
+                        "scheduling": {
+                            "description": "This section describes the per-port PoE scheduling configuration. The referenced profiles are defined in unit.poe.scheduling-profiles.",
+                            "type": "object",
+                            "properties": {
+                                "enable": {
+                                    "description": "Enable or disable PoE scheduling on this port. When set to <true> and at least one profile is listed in profiles, PoE power on this port is controlled by the referenced profiles. When set to <true> but profiles is empty or not set, PoE scheduling is treated as disabled on this port. When set to <false>, PoE power on this port follows admin-mode only. PoE scheduling only takes effect while admin-mode is <true>; if admin-mode is <false>, no PoE power is delivered regardless of the schedule.",
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "profiles": {
+                                    "description": "Names of the PoE scheduling profiles applied to this port. PoE power is delivered while any of the referenced profiles is active and is turned off outside of all referenced time windows.",
+                                    "type": "array",
+                                    "uniqueItems": true,
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "examples": [
+                                        [
+                                            "schedule1",
+                                            "schedule3"
+                                        ]
+                                    ]
+                                }
+                            }
                         }
                     }
                 },
