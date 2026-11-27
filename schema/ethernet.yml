@@ -125,6 +125,72 @@ properties:
           - "high"
           - "medium"
           - "low"
+      scheduling:
+        description:
+          This section describes the per-port PoE scheduling configuration.
+          The referenced profiles are defined in unit.poe.scheduling-profiles.
+        type: object
+        properties:
+          enable:
+            description:
+              Enable or disable PoE scheduling on this port.
+              When set to <true> and at least one profile is listed in profiles,
+              PoE power on this port is controlled by the referenced profiles.
+              When set to <true> but profiles is empty or not set, PoE scheduling
+              is treated as disabled on this port.
+              When set to <false>, PoE power on this port follows admin-mode only.
+              PoE scheduling only takes effect while admin-mode is <true>;
+              if admin-mode is <false>, no PoE power is delivered regardless of
+              the schedule.
+            type: boolean
+            default: false
+          profiles:
+            description:
+              Names of the PoE scheduling profiles applied to this port.
+              PoE power is delivered while any of the referenced profiles is active
+              and is turned off outside of all referenced time windows.
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+            examples:
+              - [ "schedule1", "schedule3" ]
+      pd-alive:
+        description:
+          This section describes the per-port PoE PD Alive configuration.
+          The switch monitors whether the powered device (PD) connected to this
+          port is still alive by sending ping requests to its IP address.
+          If the PD fails to respond to 3 consecutive pings, it is considered
+          dead and the port is reset by a PoE power cycle (see do-reset).
+          PD Alive is only active while admin-mode is <true>, and is suspended
+          while PoE power is turned off by PoE scheduling. Whenever PoE power is
+          (re)applied, including at the start of a scheduled power-on window,
+          PD Alive waits start-time seconds before it starts monitoring again.
+        type: object
+        properties:
+          enable:
+            description:
+              Enable or disable PD Alive on this port.
+            type: boolean
+            default: false
+          client-ip:
+            description:
+              IP address (IPv4 or IPv6) of the powered device (PD) to be
+              monitored. Whether IPv6 is supported depends on the device
+              implementation.
+            type: string
+            format: uc-ip
+            examples:
+              - 192.168.2.111
+          start-time:
+            description:
+              Time in seconds to wait after PoE power is delivered on this port
+              before PD Alive starts monitoring the PD, to allow the PD to boot up.
+            type: integer
+            minimum: 0
+            default: 30
+            examples:
+              - 30
   ieee8021x:
     description:
       This section describes the per-port specific 802.1X (port access control) configuration.
