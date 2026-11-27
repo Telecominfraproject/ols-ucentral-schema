@@ -387,6 +387,30 @@
                                     ]
                                 }
                             }
+                        },
+                        "pd-alive": {
+                            "type": "object",
+                            "properties": {
+                                "enable": {
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "client-ip": {
+                                    "type": "string",
+                                    "format": "uc-ip",
+                                    "examples": [
+                                        "192.168.2.111"
+                                    ]
+                                },
+                                "start-time": {
+                                    "type": "integer",
+                                    "minimum": 0,
+                                    "default": 30,
+                                    "examples": [
+                                        30
+                                    ]
+                                }
+                            }
                         }
                     }
                 },
